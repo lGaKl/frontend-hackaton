@@ -1,0 +1,4 @@
+nav.navigation-bar {
+    display: flex;
+    justify-content: space-around;
+}
