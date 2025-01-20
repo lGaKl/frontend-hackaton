@@ -1,5 +1,5 @@
     import {NavLink} from "react-router";
-    import {Container, Nav, Navbar as NavbarBs} from "react-bootstrap"
+    import {Container, Nav, Navbar, Navbar as NavbarBs, NavDropdown} from "react-bootstrap"
     import "./NavigationBarComponent.css";
 
     export function NavigationBarComponent() {
@@ -11,21 +11,19 @@
                             Home
                         </Nav.Link>
 
-                        <Nav.Link to="/transactions" as={NavLink} className="nav-link-custom">
-                            Transactions
-                        </Nav.Link>
-
-                        {/*<NavDropdown title="Transactions" id="basic-nav-dropdown" className="nav-link-custom">
-                            <NavDropdown.Item as={NavLink} to="/transactions/add">
-                                Add Transaction
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={NavLink} to="/transactions/update">
-                                Update Transaction
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={NavLink} to="/transactions/delete">
-                                Delete Transaction
-                            </NavDropdown.Item>
-                        </NavDropdown>*/}
+                        <Navbar.Collapse id="responsive-navbar-nav" className="nav-link-custom">
+                            <Nav className="nav-link-custom">
+                                <NavDropdown
+                                    title="Transactions"
+                                    id="collapsible-nav-dropdown"
+                                    className="vertical-dropdown"
+                                >
+                                    <NavDropdown.Item as={NavLink} to="/transactions/add">Add transaction</NavDropdown.Item>
+                                    <NavDropdown.Item as={NavLink} to="/transactions/modify">Update transaction</NavDropdown.Item>
+                                    <NavDropdown.Item as={NavLink} to="/transactions/remove">Remove transaction</NavDropdown.Item>
+                                </NavDropdown>
+                            </Nav>
+                        </Navbar.Collapse>
 
                         <Nav.Link to="/budget" as={NavLink} className="nav-link-custom">
                             Budget
