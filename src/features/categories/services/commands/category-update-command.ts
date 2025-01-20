@@ -1,4 +1,4 @@
 export interface CategoryUpdateCommand {
-    nameCategory: string;
+    name: string;
     maxBudget: number;
 }

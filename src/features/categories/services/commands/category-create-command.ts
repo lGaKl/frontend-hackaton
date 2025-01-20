@@ -1,3 +1,4 @@
 export interface CategoryCreateCommand {
-    nameCategory: string;
+    name: string;
+    maxBudget: number;
 }

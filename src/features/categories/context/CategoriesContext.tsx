@@ -1,5 +1,6 @@
 import {Category} from "../types/category.ts";
 import {createContext, ReactNode, useContext, useEffect, useReducer} from "react";
+import {fetchCategories} from "../services/category-service.tsx";
 
 export interface Action {
     type: string
@@ -12,7 +13,10 @@ const CategoryDispatchContext = createContext<(action: Action) => void>(null!!);
 function reducer(categories: Category[], action: Action) {
     switch (action.type) {
         case "add":
-            return[...categories, action.category];
+            if (categories.some(cat => cat.id === action.category.id)) {
+                return categories;
+            }
+            return [...categories, action.category];
         case "update":
             return categories.map(category => category.id === action.category.id ? action.category : category);
         case "delete":
@@ -23,18 +27,24 @@ function reducer(categories: Category[], action: Action) {
 }
 
 export function CategoryProvider({ children }: { children: ReactNode }) {
-    const [categories, dispatch] = useReducer(reducer, [
-        { id: 1, nameCategory: "Alimentation", maxBudget: 200 },
-        { id: 2, nameCategory: "Transport", maxBudget: 100 },
-        { id: 3, nameCategory: "Loisirs", maxBudget: 150 },
-    ]);
+    const [categories, dispatch] = useReducer(reducer, []);
 
     useEffect(() => {
+        let isMounted = true;
         const getData = async () => {
-            /*const categories = await fetchCategories();
-            categories.forEach(category => dispatch({type: "add", category: category}));*/
-        }
+            const fetchedCategories = await fetchCategories();
+            if (isMounted) {
+                fetchedCategories.forEach(category => {
+                    if (!categories.some(cat => cat.id === category.id)) {
+                        dispatch({ type: "add", category: category });
+                    }
+                });
+            }
+        };
         getData();
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
     return <>
