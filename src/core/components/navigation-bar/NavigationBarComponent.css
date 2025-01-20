@@ -5,7 +5,17 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     font-size: 1.4rem;
-    font-family: "Elephant";
+    font-family: "Elephant", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5.8rem;
 }
 
 .nav-link {
@@ -93,7 +103,7 @@ body {
 }
 
 @keyframes festive-border {
-    0% { background-position: 0%; }
+    0% { background-position: 0; }
     100% { background-position: 100%; }
 }
 
