@@ -28,6 +28,8 @@
                         <Nav.Link to="/budget" as={NavLink} className="nav-link-custom">
                             Budget
                         </Nav.Link>
+
+                    <Nav.Link to="/categories/manager" as={NavLink} className="nav-link-custom"> Categories </Nav.Link>
                     </Nav>
                 </Container>
             </NavbarBs>

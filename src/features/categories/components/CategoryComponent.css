@@ -1,0 +1,205 @@
+body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-family: "Elephant", sans-serif;
+}
+
+/* FORMULAIRE */
+h1 {
+    color: #9E8B75;
+    text-align: center;
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+h3 {
+    color: #9E8B75;
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+form {
+    background-color: #cdb878;
+    border: 2px solid #d32f2f;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    margin: 1rem auto;
+    opacity: 90%;
+}
+
+form h2 {
+    text-align: center;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
+    font-size: 1.2rem;
+}
+
+form input[type="text"],
+form input[type="number"] {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+form input[type="submit"] {
+    background-color: #d4af37;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #bfa331;
+}
+
+/* LISTE */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem auto;
+    max-width: 90%;
+    opacity: 90%;
+}
+
+li {
+    background-color: #cdb878; /* Couleur de Noël */
+    border: 1px solid #d32f2f; /* Rouge pour Noël */
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+li span {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+li div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+li input {
+    margin-bottom: 0.8rem;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+li button {
+    align-self: flex-end;
+    background-color: #d4af37;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+li button:hover {
+    background-color: #bfa331;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    form {
+        padding: 1rem;
+    }
+
+    form label {
+        font-size: 1rem;
+    }
+
+    form input[type="text"],
+    form input[type="number"] {
+        font-size: 0.9rem;
+    }
+
+    form input[type="submit"] {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    li {
+        padding: 0.8rem;
+    }
+
+    li span {
+        font-size: 1rem;
+    }
+
+    li button {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    form {
+        padding: 0.8rem;
+    }
+
+    form label {
+        font-size: 0.9rem;
+    }
+
+    form input[type="text"],
+    form input[type="number"] {
+        font-size: 0.8rem;
+    }
+
+    form input[type="submit"] {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    li {
+        padding: 0.6rem;
+    }
+
+    li span {
+        font-size: 0.9rem;
+    }
+
+    li button {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.7rem;
+    }
+}
