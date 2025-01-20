@@ -5,8 +5,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     font-size: 1.4rem;
-    align-items: center;
-    justify-items: center;
     font-family: "Elephant";
 }
 
@@ -59,7 +57,6 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Style des items du dropdown */
 .navbar .dropdown-menu {
     background-color: #65a656;
     border: 3px solid #ff6363;
@@ -68,7 +65,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Style des liens dans le dropdown */
 .navbar .dropdown-menu .dropdown-item {
     color: #e9ffdf !important;
     padding: 0.5rem 1rem;

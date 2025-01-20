@@ -1,5 +1,5 @@
 body {
-    background: url('public/assets/noel.jpg') no-repeat center center fixed; /* Image de fond */
+    background: url('public/assets/noel.jpg') no-repeat center center fixed;
     background-size: cover;
     background-attachment: fixed;
     background-color: rgba(232, 44, 56, 0.78);
