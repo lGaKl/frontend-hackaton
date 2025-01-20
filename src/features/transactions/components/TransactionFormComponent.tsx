@@ -6,28 +6,28 @@ interface TransactionFormComponentProps {
 }
 
 export function TransactionFormComponent({onTransactionCreated}: TransactionFormComponentProps) {
-    const [inputsDescription] = useState({description:""});
-    const [inputsAmount] = useState({amount: 0});
     const [formValid, setFormValid] = useState(false);
+    const [inputsDescription, setInputsDescription] = useState({ description: "" });
+    const [inputsAmount, setInputsAmount] = useState({ amount: 0 });
 
+    function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setInputsDescription({ description: e.target.value });
+    }
 
+    function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setInputsAmount({ amount: parseFloat(e.target.value) });
+    }
 
     useEffect(() => {
         checkFormValidity();
-        checkData();
-    },[inputsDescription, inputsAmount]);
+    }, [inputsDescription, inputsAmount]);
 
-    // looking if the informations are write implemented
-    function checkData() {
-        const isDescriptionValid=!!inputsDescription.description;
-        const isAmountValid=!!inputsAmount.amount && inputsAmount.amount>0;
-        return (isDescriptionValid && isAmountValid);
-    }
-
-    //checking if the button can be clickable by checking the encoded informations
     function checkFormValidity() {
-        setFormValid(!!inputsDescription.description || !!inputsAmount.amount);
+        const isDescriptionValid = !!inputsDescription.description;
+        const isAmountValid = !!inputsAmount.amount && inputsAmount.amount > 0;
+        setFormValid(isDescriptionValid && isAmountValid);
     }
+
 
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -46,22 +46,19 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
         setFormValid(false);
     }
 
-    return <form onSubmit={handleSubmit}>
-        <div>
-            <h1>
-                Add an Transaction
-            </h1>
-            <label>
-                Description
-            </label>
-            <input type="text" name="Description"/>
-            <label>
-                Amount
-            </label>
-            <input type="number" name="Amount"/>
-            <input type="submit" disabled={formValid}/>
-        </div>
-    </form>
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <h1>Add a Transaction</h1>
+                <label>Description</label>
+                <input type="text" name="Description" onChange={handleDescriptionChange} />
+                <label>Amount</label>
+                <input type="number" name="Amount" onChange={handleAmountChange} />
+                <input type="submit" disabled={!formValid} />
+            </div>
+        </form>
+    );
+
 
 }
 

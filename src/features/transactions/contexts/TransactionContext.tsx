@@ -15,7 +15,7 @@ function reducer (transactions: Transaction[], action: Action){
         case "add":
             return [...transactions, action.transaction];
         case "update" :
-            return transactions.map(transaction =>transaction.idTransaction ==action.transaction.idTransaction? action.transaction : transaction);
+            return transactions.map(transaction =>transaction.idTransaction ===action.transaction.idTransaction? action.transaction : transaction);
         case "delete":
                 return  transactions.filter(transaction =>transaction.idTransaction !== action.transaction.idTransaction );
                 default:
@@ -43,6 +43,6 @@ export function TransactionProvider({children}:{children: ReactNode}){
     </>
 }
 
-export const UseTransactions = ()=> useContext(TransactionContext);
+export const useTransactions = ()=> useContext(TransactionContext);
 
-export const UseTransactionDispatch = () => useContext(TransactionDispatchContext);
+export const useTransactionDispatch = () => useContext(TransactionDispatchContext);

@@ -26,7 +26,7 @@ export const deleteTransaction : (transactionId: number) => Promise<Response> = 
     });
 }
 
-export const UpdateTransaction : (id: number, transaction: TransactionUpdateCommand) => Promise<Response> = async(id:number, transaction: TransactionUpdateCommand )=>{
+export const updateTransaction : (id: number, transaction: TransactionUpdateCommand) => Promise<Response> = async(id:number, transaction: TransactionUpdateCommand )=>{
     return await fetch (`${TRANSACTION_API_URL}/${id}`,{
         method: "PATCH",
         headers:{
