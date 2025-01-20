@@ -50,11 +50,11 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
         <form onSubmit={handleSubmit}>
             <div>
                 <h1>Add a Transaction</h1>
-                <label>Description</label>
-                <input type="text" name="Description" onChange={handleDescriptionChange} />
-                <label>Amount</label>
-                <input type="number" name="Amount" onChange={handleAmountChange} />
-                <input type="submit" disabled={!formValid} />
+                <label>Description</label><br/>
+                <input type="text" name="Description" onChange={handleDescriptionChange}/><br/>
+                <label>Amount</label><br/>
+                <input type="number" name="Amount" onChange={handleAmountChange}/><br/>
+                <input type="submit" disabled={!formValid}/>
             </div>
         </form>
     );
