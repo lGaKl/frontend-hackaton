@@ -17,8 +17,13 @@ export const postCategory: (category: CategoryCreateCommand) => Promise<Category
 
 export const fetchCategories: () => Promise<Category[]> = async () => {
     const response = await fetch(CATEGORY_API_URL);
-    return await response.json();
-}
+    const data = await response.json();
+    return data.map((category: { name: any; }) => ({
+        ...category,
+        nameCategory: category.name
+    }));
+};
+
 
 export const deleteCategory: (categoryId: number) => Promise<Response> = async (id: number) => {
     return await fetch(`${CATEGORY_API_URL}/${id}`, {
@@ -26,12 +31,12 @@ export const deleteCategory: (categoryId: number) => Promise<Response> = async (
     });
 }
 
-export const updateCategory: (id: number, category: CategoryUpdateCommand) => Promise<Response> = async (id:number, category: CategoryUpdateCommand) => {
-    return await fetch(`${CATEGORY_API_URL}/${id}`, {
-        method: "PATCH",
+export const updateCategory: (category: CategoryUpdateCommand) => Promise<Response> = async (category) => {
+    return await fetch(CATEGORY_API_URL, { // L'URL reste sans ID
+        method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify(category)
+        body: JSON.stringify(category),
     });
-}
+};

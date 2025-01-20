@@ -12,44 +12,48 @@ export function CategoryListComponent({ onCategoryDeleted, onCategoryUpdated }: 
     const dispatch = useCategoryDispatch();
     const categories = useCategories();
 
-    const placeholderCategories = [
-        { id: 1, nameCategory: "Placeholder 1", maxBudget: 100 },
-        { id: 2, nameCategory: "Placeholder 2", maxBudget: 200 },
-    ];
-
     function processCategoryDeletion(category: Category) {
-        if(!confirm("Etes-vous sûr de vouloir supprimer?")) return;
+        if (!confirm("Etes-vous sûr de vouloir supprimer?")) return;
         onCategoryDeleted(category);
     }
 
     function processCategoryUpdating(e: ChangeEvent<HTMLInputElement>, category: Category) {
-        const valuename = e.target.value;
-        const valuebudget = e.target.value;
+        const updatedCategory = {...category};
+        const value = e.target.value;
 
-        switch (e.target.name){
-            case "name":
-                category.nameCategory = valuename;
+        switch (e.target.name) {
+            case "nameCategory":
+                updatedCategory.nameCategory = value;
                 break;
-            case "Budget":
-                category.maxBudget = Number(valuebudget);
+            case "maxBudget":
+                updatedCategory.maxBudget = Number(value);
                 break;
         }
-        dispatch({type: "update", category: category});
-        onCategoryUpdated(category);
+        dispatch({type: "update", category: updatedCategory});
+        onCategoryUpdated(updatedCategory);
     }
 
-    const categoryLiElements = (categories.length ? categories : placeholderCategories).map(category => (
+    const categoryLiElements = categories.map(category => (
         <li key={category.id}>
             <span>Numéro: {category.id}</span>
             <div>
-                <input type="text" value={category.nameCategory} name={'nameCategory'}
-                       onChange={e => processCategoryUpdating(e, category)}/>
-                <input type="text" value={category.maxBudget} name={'maxBudget'}
-                       onChange={e => processCategoryUpdating(e, category)}/>
+                <input
+                    type="text"
+                    value={category.nameCategory}
+                    name={'nameCategory'}
+                    onChange={e => processCategoryUpdating(e, category)}
+                />
+                <input
+                    type="text"
+                    value={category.maxBudget}
+                    name={'maxBudget'}
+                    onChange={e => processCategoryUpdating(e, category)}
+                />
                 <button onClick={() => processCategoryDeletion(category)}>Supprimer</button>
             </div>
         </li>
     ));
 
+    //console.log(categoryLiElements);
     return <ul>{categoryLiElements}</ul>;
 }

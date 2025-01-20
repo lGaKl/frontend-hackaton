@@ -63,6 +63,9 @@ form input[type="submit"] {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: block;
+    margin: 1rem auto;
+    width: 50%;
 }
 
 form input[type="submit"]:hover {
@@ -123,6 +126,9 @@ li button {
     font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: block;
+    margin: 1rem auto;
+    width: 50%;
 }
 
 li button:hover {
