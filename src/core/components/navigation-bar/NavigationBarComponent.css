@@ -5,8 +5,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     font-size: 1.4rem;
-    justify-items: center;
-    font-family: "Elephant";
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-family: "Elephant", serif;
     font-weight: bold;
 }
 
@@ -31,12 +34,12 @@
 
 .container {
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 body {
-    /*background: linear-gradient(to bottom, #fad0d7, rgba(232, 44, 56, 0.78));*/
     position: relative;
-    margin-top: 5px;
+    margin: 0;
     padding: 0;
     font-family: "Elephant", sans-serif;
 }
@@ -49,8 +52,6 @@ body {
     right: 0;
     bottom: 0;
     height: 4px;
-    /*background: linear-gradient(90deg, #ff0000, #006400, #ff4500);
-    animation: festive-border 5s infinite linear;*/
 }
 
 @keyframes festive-border {
@@ -82,11 +83,15 @@ body {
 
 @media (max-width: 576px) {
     .navbar {
-        font-size: 1rem;
-        padding: 0.8rem;
+        font-size: 0.9rem;
+        padding: 0.6rem;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
     .nav-link {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         padding: 0.3rem 0.6rem;
+        text-align: center;
     }
 }
