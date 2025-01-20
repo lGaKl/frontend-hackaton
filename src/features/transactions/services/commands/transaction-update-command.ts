@@ -3,4 +3,5 @@
     dateTransaction : Date;
     idCategory : number;
     idBudget : number;
+    description : string;
 }
