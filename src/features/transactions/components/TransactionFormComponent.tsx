@@ -20,7 +20,7 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
 
     useEffect(() => {
         checkFormValidity();
-    }, [inputsDescription, inputsAmount]);
+    },[inputsDescription, inputsAmount]);
 
     function checkFormValidity() {
         const isDescriptionValid = !!inputsDescription.description;
