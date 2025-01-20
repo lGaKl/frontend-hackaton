@@ -11,12 +11,15 @@ export default function CategoryManagerComponent() {
     const dispatch = useCategoryDispatch();
 
     const onCategoryCreated: (category: Category) => void = category => {
-        const sendCategory = async(category: Category) => {
-            const categoryCreated = await postCategory({nameCategory: category.nameCategory});
-            dispatch({type: "add", category: categoryCreated});
-        }
+        const sendCategory = async (category: Category) => {
+            const categoryCreated = await postCategory({
+                name: category.nameCategory, // Mapper nameCategory vers name
+                maxBudget: category.maxBudget,
+            });
+            dispatch({ type: "add", category: { ...category, id: categoryCreated.id } });
+        };
         sendCategory(category);
-    }
+    };
 
     const onCategoryDeleted: (categoryDeleted: Category) => void = categoryDeleted => {
         if(!categoryDeleted.id)
@@ -31,17 +34,19 @@ export default function CategoryManagerComponent() {
         sendDeleteCategory(categoryDeleted);
     }
 
-    const onCategoryUpdated: (categoryUpdated: Category) => void = categoryUpdated => {
+    const onCategoryUpdated: (categoryUpdated: Category) => void = debounce((categoryUpdated: Category) => {
         const sendUpdateCategory = async (category: Category) => {
-            const response = await updateCategory(category.id!!, {
-                nameCategory: category.nameCategory,
+            const response = await updateCategory({
+                id: category.id,
+                name: category.nameCategory,
                 maxBudget: category.maxBudget,
             });
-            if(!response.ok)
+            if (!response.ok) {
                 throw new ApiError(await response.json());
-        }
+            }
+        };
         sendUpdateCategory(categoryUpdated);
-    }
+    }, 500);
 
     return <>
         <h1>Category Manager Component</h1>

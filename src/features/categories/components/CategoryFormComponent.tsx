@@ -38,11 +38,11 @@ export function CategoryFormComponent({onCategoryCreated}: CategoryFormComponent
         <div>
             <h2>Ajouter une catégorie</h2>
             <label>
-                Nom de la Catégorie: <input type="text" name="nameCategory" onChange={handleChange}/>
+                Nom de la Catégorie <input type="text" name="nameCategory" onChange={handleChange}/>
             </label>
             <br/>
             <label>
-                Budget Maximum : <input type="number" name="maxBudget" onChange={handleChange}/>
+                Budget Maximum  <input type="number" name="maxBudget" onChange={handleChange}/>
             </label>
         </div>
         <input type="submit" disabled={!formValid}/>
