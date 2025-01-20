@@ -1,16 +1,17 @@
 import './App.css'
 import {NavigationBarComponent} from "./core/components/navigation-bar/NavigationBarComponent.tsx";
 import {Route, Routes} from "react-router";
-import {HomeComponent} from "./HomeComponent.tsx";
+import {Container} from "react-bootstrap"
+import {HomeComponent} from "./core/components/HomeComponent.tsx";
 
 function App() {
     return <>
         <NavigationBarComponent/>
-        <main>
+        <Container className="mb-4">
             <Routes>
-                <Route index element={<HomeComponent/>}></Route>
+                <Route path="/" element={<HomeComponent/>} />
             </Routes>
-        </main>
+        </Container>
     </>
 }
 
