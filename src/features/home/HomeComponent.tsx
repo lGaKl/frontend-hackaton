@@ -19,8 +19,48 @@ export function HomeComponent() {
                 </div>
             </section>
         </div>
+
+        <div className="snowflakes" aria-hidden="true">
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+            <div className="snowflake">
+                <div className="inner">❅</div>
+            </div>
+        </div>
     </>
 }
+
 
 /*interface User {
     id: number;
