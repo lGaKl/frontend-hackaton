@@ -24,8 +24,6 @@ export function NavigationBarComponent() {
 
                     <Nav.Link to="/budget" as={NavLink}>Budget</Nav.Link>
                     <Nav.Link to="/categories/manager" as={NavLink} className="nav-link-custom"> Categories </Nav.Link>
-                    <Nav.Link to="/login" as={NavLink} className="nav-link-custom"> Login </Nav.Link>
-
                 </Nav>
             </Container>
         </NavbarBs>
