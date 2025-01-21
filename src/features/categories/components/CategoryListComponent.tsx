@@ -34,26 +34,26 @@ export function CategoryListComponent({ onCategoryDeleted, onCategoryUpdated }: 
     }
 
     const categoryLiElements = categories.map(category => (
-        <li key={category.id}>
-            <span>Numéro: {category.id}</span>
-            <div>
+        <li key={category.id} className="li-category">
+            <span className="span-category">Numéro: {category.id}</span>
+            <div className="div-category">
                 <input
                     type="text"
                     value={category.nameCategory}
-                    name={'nameCategory'}
+                    className="input-category"
                     onChange={e => processCategoryUpdating(e, category)}
                 />
                 <input
                     type="text"
                     value={category.maxBudget}
-                    name={'maxBudget'}
+                    className="input-category"
                     onChange={e => processCategoryUpdating(e, category)}
                 />
-                <button onClick={() => processCategoryDeletion(category)}>Supprimer</button>
+                <button onClick={() => processCategoryDeletion(category)} className="button-category">Supprimer</button>
             </div>
         </li>
     ));
 
     //console.log(categoryLiElements);
-    return <ul>{categoryLiElements}</ul>;
+    return <ul className="ul-category">{categoryLiElements}</ul>;
 }

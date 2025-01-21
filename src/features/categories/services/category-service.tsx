@@ -32,7 +32,7 @@ export const deleteCategory: (categoryId: number) => Promise<Response> = async (
 }
 
 export const updateCategory: (category: CategoryUpdateCommand) => Promise<Response> = async (category) => {
-    return await fetch(CATEGORY_API_URL, { // L'URL reste sans ID
+    return await fetch(CATEGORY_API_URL, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
