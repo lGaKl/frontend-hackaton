@@ -1,14 +1,27 @@
-import {Col, Row, Card} from "react-bootstrap";
-import categoriesItems from "../../../data/categories.json";
-import {BudgetItemsComponent} from "../budget-items/BudgetItemsComponent.tsx";
+import { Col, Row, Card } from "react-bootstrap";
+import "./BudgetPageComponent.css";
+import {useEffect, useState} from "react";
+import {Category} from "../../../features/categories/types/category.ts";
+import {fetchCategories} from "../../../features/categories/services/category-service.tsx";
 
 export function BudgetPageComponent() {
     const totalBudget = 3500;
     const remainingBudget = 1250.49;
 
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+        loadCategories();
+    },[]);
+
+    async function loadCategories() : Promise<void> {
+        const categoriesFromAPI = await fetchCategories();
+        setCategories(categoriesFromAPI);
+    }
+
     return (
         <>
-            <h1>Budget</h1>
+            <h1 className="title-h1">Budget</h1>
 
             <Row className="g-3 mb-5">
                 <Col md={6} sm={12}>
@@ -29,13 +42,22 @@ export function BudgetPageComponent() {
                 </Col>
             </Row>
 
-            {/* Affichage des catégories sous forme de cartes */}
-            <Row md={2} xs={1} lg={3} className="g-3">
-                {categoriesItems.map((item) => (
-                    <Col key={item.id}>
-                        <BudgetItemsComponent totalBudget={totalBudget} remainingBudget={remainingBudget} {...item} />
-                    </Col>
-                ))}
+            <Row className="g-3">
+                <Col xs={12}>
+                    <h3 className="title-h3">Your categories</h3>
+                    <ul className="ul-category">
+                        {categories.length > 0 ? (
+                            categories.map((category) => (
+                                <li key={category.id} className="li-category">
+                                    <span className="span-category">{category.nameCategory}</span>
+                                    <span className="span-category">Budget max: {category.maxBudget} €</span>
+                                </li>
+                            ))
+                        ) : (
+                            <p className="p-no-found">No categories founded :(</p>
+                        )}
+                    </ul>
+                </Col>
             </Row>
         </>
     );
