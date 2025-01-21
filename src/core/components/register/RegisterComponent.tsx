@@ -67,10 +67,10 @@ export function RegisterComponent() {
     return (
         <div className="register-container">
             <form onSubmit={handleSubmit} className="register-form">
-                <h2>Register</h2>
+                <h2>Enregistrer</h2>
                 {error && <p className="error">{error}</p>}
                 <div className="form-group">
-                    <label htmlFor="firstName">First Name</label>
+                    <label htmlFor="firstName">Prénom</label>
                     <input
                         type="text"
                         id="firstName"
@@ -80,7 +80,7 @@ export function RegisterComponent() {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="lastName">Last Name</label>
+                    <label htmlFor="lastName">Nom</label>
                     <input
                         type="text"
                         id="lastName"
@@ -100,7 +100,7 @@ export function RegisterComponent() {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Mot de passe</label>
                     <input
                         type="password"
                         id="password"
@@ -110,7 +110,7 @@ export function RegisterComponent() {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <label htmlFor="confirmPassword">Confirmation</label>
                     <input
                         type="password"
                         id="confirmPassword"
@@ -119,9 +119,10 @@ export function RegisterComponent() {
                         className="form-control"
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Register</button>
+                <button type="submit" className="btn-register">S'enregistrer</button>
             </form>
-            Already have an account? Click <a href="/login">here</a> to login.
+            Vous avez déjà un compte?
+            <span>Cliquez <a href="/login">ici</a> pour vous connecter.</span>
         </div>
     );
 }
