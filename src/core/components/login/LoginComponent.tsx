@@ -34,6 +34,7 @@ export function LoginComponent() {
 
                 const token = await response.text();
                 console.log("Logging in with", email, password, "Token:", token);
+                window.location.href = "/";
             } catch (error) {
                 setError("Login failed. Please try again.");
             }
@@ -70,7 +71,7 @@ export function LoginComponent() {
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>
             <br/>
-            You don't have an account? Click <a href="/register">here</a> to register.
+            Don't have an account yet? Click <a href="/register">here</a> to register.
         </div>
     );
 }
