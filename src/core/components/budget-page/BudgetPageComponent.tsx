@@ -24,7 +24,7 @@ export function BudgetPageComponent() {
             <h1 className="title-h1">Budget</h1>
             <div className="budget-container g-3 mb-5">
                 <div className="budget-item">
-                    <h2 className="budget-title">Remaining Budget</h2>
+                    <h2 className="budget-title">Budget Restant</h2>
                     <p className="budget-text">... €</p>
                 </div>
             </div>
