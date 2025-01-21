@@ -51,6 +51,7 @@ export function BudgetPageComponent() {
                                 <li key={category.id} className="li-category">
                                     <span className="span-category">{category.nameCategory}</span>
                                     <span className="span-category">Budget max: {category.maxBudget} €</span>
+                                    <span className="span-category">Remaining budget: ... €</span>
                                 </li>
                             ))
                         ) : (
