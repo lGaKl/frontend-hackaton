@@ -1,6 +1,6 @@
 import {useCategoryDispatch} from "../context/CategoriesContext.tsx";
 import {Category} from "../types/category.ts";
-import {deleteCategory, postCategory, updateCategory} from "../services/category-service.tsx";
+import {deleteCategory, fetchCategories, postCategory, updateCategory} from "../services/category-service.tsx";
 import {ApiError} from "../../../shared/exceptions/ApiError.ts";
 import {CategoryFormComponent} from "./CategoryFormComponent.tsx";
 import {CategoryListComponent} from "./CategoryListComponent.tsx";
@@ -10,16 +10,24 @@ import "./CategoryComponent.css";
 export default function CategoryManagerComponent() {
     const dispatch = useCategoryDispatch();
 
-    const onCategoryCreated: (category: Category) => void = category => {
-        const sendCategory = async (category: Category) => {
-            const categoryCreated = await postCategory({
-                name: category.nameCategory, // Mapper nameCategory vers name
-                maxBudget: category.maxBudget,
-            });
-            dispatch({ type: "add", category: { ...category, id: categoryCreated.id } });
-        };
-        sendCategory(category);
+    const onCategoryCreated: (category: Category) => void = async (category) => {
+    const existingCategories = await fetchCategories();
+    const categoryExists = existingCategories.some(c => c.nameCategory === category.nameCategory);
+
+    if (categoryExists) {
+        alert("Category with this name already exists!");
+        return;
+    }
+
+    const sendCategory = async (category: Category) => {
+        const categoryCreated = await postCategory({
+            name: category.nameCategory, // Mapper nameCategory vers name
+            maxBudget: category.maxBudget,
+        });
+        dispatch({ type: "add", category: { ...category, id: categoryCreated.id } });
     };
+    sendCategory(category);
+};
 
     const onCategoryDeleted: (categoryDeleted: Category) => void = categoryDeleted => {
         if(!categoryDeleted.id)
@@ -37,6 +45,7 @@ export default function CategoryManagerComponent() {
     const onCategoryUpdated: (categoryUpdated: Category) => void = debounce((categoryUpdated: Category) => {
         const sendUpdateCategory = async (category: Category) => {
             const response = await updateCategory({
+                // @ts-ignore
                 id: category.id,
                 name: category.nameCategory,
                 maxBudget: category.maxBudget,

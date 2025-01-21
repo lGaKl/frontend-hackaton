@@ -27,7 +27,7 @@ export function CategoryFormComponent({onCategoryCreated}: CategoryFormComponent
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!formValid) return;
-        let category = {nameCategory: inputs.nameCategory, maxBudget: Number(inputs.maxBudget)};
+        const category = {nameCategory: inputs.nameCategory, maxBudget: Number(inputs.maxBudget)};
         onCategoryCreated(category);
         const form = e.target as HTMLFormElement;
         form.reset();
