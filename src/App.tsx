@@ -2,7 +2,7 @@ import './App.css'
 import {NavigationBarComponent} from "./core/components/navigation-bar/NavigationBarComponent.tsx";
 import {Route, Routes} from "react-router";
 import {Container} from "react-bootstrap"
-import {HomeComponent} from "./core/components/HomeComponent.tsx";
+import {HomeComponent} from "./features/home/HomeComponent.tsx";
 import {BudgetPageComponent} from "./core/components/budget-page/BudgetPageComponent.tsx";
 import categoriesRoutes from "./features/categories/categories-routes.tsx";
 
