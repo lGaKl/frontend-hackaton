@@ -7,5 +7,9 @@ export default [
         <Route path="manager" element={
             <SuspenseWrapper key="category-manager" importFn={() => import("./components/CategoryManagerComponent.tsx")}/>
         }/>
+
+        <Route path="add" element={
+            <SuspenseWrapper key="category-add" importFn={() => import("./components/CategoryManagerFormComponent.tsx")}/>
+        }/>
     </Route>
 ]

@@ -1,12 +1,12 @@
 import "./HomeComponent.css";
 
 export function HomeComponent() {
-    const snowflakes = Array.from({ length: 12 }, (_, index) => (
+    const snowflakes = Array.from({ length: 6 }, (_, index) => (
         <div key={index} className="snowflake">
             <div className="inner">❅</div>
         </div>
     ));
-
+  
     return (
         <>
             <h1 className="home-title">Bienvenue</h1>

@@ -1,5 +1,5 @@
 export interface Category {
     id?: number;
-    nameCategory: string;
+    name: string;
     maxBudget: number;
 }

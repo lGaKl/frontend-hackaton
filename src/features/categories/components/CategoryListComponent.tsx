@@ -2,6 +2,7 @@ import {Category} from "../types/category.ts";
 import {useCategories, useCategoryDispatch} from "../context/CategoriesContext.tsx";
 import {ChangeEvent} from "react";
 import "./CategoryComponent.css";
+import {useNavigate} from "react-router";
 
 interface CategoryListComponentProps {
     onCategoryDeleted: (categoryDeleted: Category) => void,
@@ -9,6 +10,7 @@ interface CategoryListComponentProps {
 }
 
 export function CategoryListComponent({ onCategoryDeleted, onCategoryUpdated }: CategoryListComponentProps) {
+    const navigate = useNavigate(); //hook pour la navigation askip
     const dispatch = useCategoryDispatch();
     const categories = useCategories();
 
@@ -18,18 +20,18 @@ export function CategoryListComponent({ onCategoryDeleted, onCategoryUpdated }: 
     }
 
     function processCategoryUpdating(e: ChangeEvent<HTMLInputElement>, category: Category) {
-        const updatedCategory = {...category};
+        const updatedCategory = { ...category };
         const value = e.target.value;
 
         switch (e.target.name) {
-            case "nameCategory":
-                updatedCategory.nameCategory = value;
+            case "name": // Correspond à la propriété utilisée dans l'API
+                updatedCategory.name = value;
                 break;
             case "maxBudget":
-                updatedCategory.maxBudget = Number(value);
+                updatedCategory.maxBudget = parseFloat(value) || 0; // Permet les valeurs décimales
                 break;
         }
-        dispatch({type: "update", category: updatedCategory});
+        dispatch({ type: "update", category: updatedCategory });
         onCategoryUpdated(updatedCategory);
     }
 
@@ -39,13 +41,15 @@ export function CategoryListComponent({ onCategoryDeleted, onCategoryUpdated }: 
             <div className="div-category">
                 <input
                     type="text"
-                    value={category.nameCategory}
+                    value={category.name}
+                    name="name"
                     className="input-category"
                     onChange={e => processCategoryUpdating(e, category)}
                 />
                 <input
-                    type="text"
+                    type="number"
                     value={category.maxBudget}
+                    name="maxBudget"
                     className="input-category"
                     onChange={e => processCategoryUpdating(e, category)}
                 />
@@ -54,6 +58,13 @@ export function CategoryListComponent({ onCategoryDeleted, onCategoryUpdated }: 
         </li>
     ));
 
-    //console.log(categoryLiElements);
-    return <ul className="ul-category">{categoryLiElements}</ul>;
+    return (
+        <ul className="ul-category">
+            {categoryLiElements}
+            {/* Ajouter une tuile "vide" pour naviguer vers le formulaire */}
+            <li className="li-category add-category" onClick={() => navigate("/categories/add")}>
+                <span className="plus-icon">+</span>
+            </li>
+        </ul>
+    );
 }
