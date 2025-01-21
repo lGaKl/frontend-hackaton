@@ -63,9 +63,9 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
         <form onSubmit={handleSubmit} className="form-transaction">
             <div className="div-transaction">
                 <h1 className="h2-category">Add a Transaction</h1>
-                <label className="label-category">Description</label><br/>
+                <label className="label-transaction">Description</label>
                 <input type="text" name="Description" className="input-transaction" onChange={handleDescriptionChange}/><br/>
-                <label className="label-transaction">Amount</label><br/>
+                <label className="label-transaction">Amount</label>
                 <input type="number" name="Amount" className="input-transaction" onChange={handleAmountChange}/><br/>
                 <label htmlFor="options" className="label-transaction">Select a category :</label>
                 <select id="options" className="option-transaction" value={selectedCategory} onChange={handleCategoryChange}>
