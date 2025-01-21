@@ -5,19 +5,23 @@ import {TransactionUpdateCommand} from "./commands/transaction-update-command.ts
 const TRANSACTION_API_URL = import.meta.env.VITE_API_URL + "/transactions";
 
 export const postTransaction: (transaction: TransactionCreateCommand) => Promise<Transaction> = async (transaction: TransactionCreateCommand)=>{
+    console.log("Transaction API URL:", TRANSACTION_API_URL);
+    console.log(transaction);
     const response = await fetch (TRANSACTION_API_URL,{
         method: "POST",
         headers:{
-            "content-Type" : "application/json"
+            "Content-Type" : "application/json"
         },
         body: JSON.stringify(transaction)
     });
+    console.log("Payload JSON:", JSON.stringify(transaction));
     return await response.json();
 }
 
 export const fetchTransactions: () => Promise<Transaction[]> = async () =>{
     const response = await fetch (TRANSACTION_API_URL);
     return await response.json();
+
 }
 
 export const deleteTransaction : (transactionId: number) => Promise<Response> = async (id : number)=>{
@@ -30,7 +34,7 @@ export const updateTransaction : (id: number, transaction: TransactionUpdateComm
     return await fetch (`${TRANSACTION_API_URL}/${id}`,{
         method: "PATCH",
         headers:{
-            "content-Type" : "application/json"
+            "Content-Type" : "application/json"
         },
         body:JSON.stringify(transaction)
     });

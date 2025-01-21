@@ -10,11 +10,12 @@ export default function TransactionManagerComponent() {
         const sendTransaction = async (transaction: Transaction) => {
             const transactionCreated = await postTransaction({
                 amount: transaction.amount,
-                dateTransaction: transaction.dateTransaction,
-                idBudget: transaction.idBudget,
-                idCategory: transaction.idCategory,
-                description: transaction.description
+                date_transaction: transaction.date_transaction,
+                description: transaction.description,
+                budgetId: transaction.budgetId,
+                categoryId: transaction.categoryId
             });
+            console.log("transaction réer",transactionCreated);
             dispatch({type: "add", transaction: transactionCreated});
         }
         sendTransaction(transaction);

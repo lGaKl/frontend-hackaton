@@ -5,6 +5,7 @@ import {fetchCategories} from "../../categories/services/category-service.tsx";
 import "./TransactionComponent.css"
 interface TransactionFormComponentProps {
     onTransactionCreated: (t: Transaction) => void;
+
 }
 
 export function TransactionFormComponent({onTransactionCreated}: TransactionFormComponentProps) {
@@ -47,12 +48,14 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
         if(!formValid) return;
         let transaction = {
             amount: inputsAmount.amount,
-            dateTransaction: new Date(),
+            date_transaction: new Date().toISOString().split('T')[0],
+            description: inputsDescription.description,
             //Ajouter idCategory et idBudget
-            idBudget: 1,
-            idCategory: parseInt(selectedCategory),
-            description: inputsDescription.description
+            budgetId: 1,
+            categoryId: parseInt(selectedCategory),
+
         };
+        console.log(transaction);
         onTransactionCreated(transaction);
         const form = e.target as HTMLFormElement;
         form.reset();

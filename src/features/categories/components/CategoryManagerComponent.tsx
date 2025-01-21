@@ -11,23 +11,23 @@ export default function CategoryManagerComponent() {
     const dispatch = useCategoryDispatch();
 
     const onCategoryCreated: (category: Category) => void = async (category) => {
-    const existingCategories = await fetchCategories();
-    const categoryExists = existingCategories.some(c => c.nameCategory === category.nameCategory);
+        const existingCategories = await fetchCategories();
+        const categoryExists = existingCategories.some(c => c.nameCategory === category.nameCategory);
 
-    if (categoryExists) {
-        alert("Category with this name already exists!");
-        return;
-    }
+        if (categoryExists) {
+            alert("Category with this name already exists!");
+            return;
+        }
 
-    const sendCategory = async (category: Category) => {
-        const categoryCreated = await postCategory({
-            name: category.nameCategory, // Mapper nameCategory vers name
-            maxBudget: category.maxBudget,
-        });
-        dispatch({ type: "add", category: { ...category, id: categoryCreated.id } });
+        const sendCategory = async (category: Category) => {
+            const categoryCreated = await postCategory({
+                name: category.nameCategory, // Mapper nameCategory vers name
+                maxBudget: category.maxBudget,
+            });
+            dispatch({ type: "add", category: { ...category, id: categoryCreated.id } });
+        };
+        sendCategory(category);
     };
-    sendCategory(category);
-};
 
     const onCategoryDeleted: (categoryDeleted: Category) => void = categoryDeleted => {
         if(!categoryDeleted.id)
