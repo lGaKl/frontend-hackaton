@@ -1,0 +1,174 @@
+﻿body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-family: "Elephant", sans-serif;
+}
+
+/* FORMULAIRE */
+h1 {
+    color: #9E8B75;
+    text-align: center;
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+h3 {
+    color: #9E8B75;
+    text-align: center;
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.form-transaction {
+    background-color: #cdb878;
+    border: 2px solid #d32f2f;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    margin: 1rem auto;
+    opacity: 90%;
+}
+
+.h2-transaction {
+    text-align: center;
+}
+
+.label-transaction {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.input-transaction {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.option-transaction {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+/* Liste déroulante des options */
+.option-transaction option {
+    padding: 10px;
+    background-color: #c4a55c;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Option survolée */
+.option-transaction option:hover {
+    background-color: white;
+    color: #000;
+}
+
+.submit-transaction {
+    background-color: #d4af37;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 1rem auto;
+    width: 50%;
+}
+
+.submit-transaction:hover {
+    background-color: #bfa331;
+}
+
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    form {
+        padding: 1rem;
+    }
+
+    form label {
+        font-size: 1rem;
+    }
+
+    form input[type="text"],
+    form input[type="number"] {
+        font-size: 0.9rem;
+    }
+
+    form input[type="submit"] {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    li {
+        padding: 0.8rem;
+    }
+
+    li span {
+        font-size: 1rem;
+    }
+
+    li button {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    form {
+        padding: 0.8rem;
+    }
+
+    form label {
+        font-size: 0.9rem;
+    }
+
+    form input[type="text"],
+    form input[type="number"] {
+        font-size: 0.8rem;
+    }
+
+    form input[type="submit"] {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    li {
+        padding: 0.6rem;
+    }
+
+    li span {
+        font-size: 0.9rem;
+    }
+
+    li button {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.7rem;
+    }
+}

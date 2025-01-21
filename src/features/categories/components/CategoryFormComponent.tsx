@@ -45,6 +45,6 @@ export function CategoryFormComponent({onCategoryCreated}: CategoryFormComponent
                 Budget Maximum  <input type="number" name="maxBudget" className="input-category" onChange={handleChange}/>
             </label>
         </div>
-        <input type="submit" className="submit-category" disabled={!formValid}/>
+        <input type="submit" disabled={!formValid}/>
     </form>
 }
