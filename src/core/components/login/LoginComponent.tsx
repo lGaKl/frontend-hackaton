@@ -46,7 +46,7 @@ export function LoginComponent() {
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit} className="login-form">
-                <h2>Login</h2>
+                <h2>Connexion</h2>
                 {error && <p className="error">{error}</p>}
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
@@ -59,7 +59,7 @@ export function LoginComponent() {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Mot de passe</label>
                     <input
                         type="password"
                         id="password"
@@ -68,10 +68,11 @@ export function LoginComponent() {
                         className="form-control"
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
+                <button type="submit" className="btn-login">Connexion</button>
             </form>
             <br/>
-            Don't have an account yet? Click <a href="/register">here</a> to register.
+            Vous n'avez pas encore de compte?<br/>
+            <span>Cliquez <a href="/register">ici</a> pour vous enregistrer.</span>
         </div>
     );
 }

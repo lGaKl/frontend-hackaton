@@ -36,7 +36,6 @@
 }
 
 body {
-    /*background: linear-gradient(to bottom, #fad0d7, rgba(232, 44, 56, 0.78));*/
     position: relative;
     margin-top: 5px;
     padding: 0;
@@ -51,8 +50,6 @@ body {
     right: 0;
     bottom: 0;
     height: 4px;
-    /*background: linear-gradient(90deg, #ff0000, #006400, #ff4500);
-    animation: festive-border 5s infinite linear;*/
 }
 
 .navbar .nav-dropdown {

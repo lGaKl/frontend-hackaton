@@ -1,62 +1,58 @@
-.title-h1 {
+.title-h1, .title-h3 {
     color: #d32f2f;
     -webkit-text-stroke: 1px #cdb878;
     font-family: "Elephant", sans-serif;
     text-align: center;
-    font-size: 3rem;
     margin: 1rem 0;
+}
+
+.title-h1 {
+    font-size: 2.5rem;
 }
 
 .title-h3 {
-    color: #d32f2f;
-    -webkit-text-stroke: 1px #cdb878;
-    font-family: "Elephant", sans-serif;
-    text-align: center;
-    font-size: 3rem;
-    margin: 1rem 0;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
+
 .budget-container {
+    font-family: "Elephant", sans-serif;
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     margin-bottom: 2rem;
     max-width: 90%;
     margin: 0 auto;
-    opacity: 100%;
 }
 
 .budget-item {
-    background-color: #cdb878; /* Couleur de Noël */
-    border: 3px solid #d32f2f; /* Rouge pour Noël */
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: "Elephant", sans-serif;
+    background-color: #cdb878;
+    border: 2px solid #d32f2f;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 90%;
-}
-
-.budget-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .budget-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 0.5rem;
     color: #9e4d0d;
-    font-family: "Elephant", sans-serif;
 }
 
 .budget-text {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: black;
-    font-family: "Elephant", sans-serif;
 }
 
-/* LISTE DES CATÉGORIES */
 .ul-category {
+    font-family: "Elephant", sans-serif;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
     list-style: none;
     padding: 0;
     margin: 1rem auto;
@@ -65,85 +61,73 @@
 }
 
 .li-category {
-    background-color: #cdb878; /* Couleur de Noël */
-    border: 2px solid #095228; /* Rouge pour Noël */
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #cdb878;
+    border: 1px solid #095228;
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-between;
+    font-size: 0.8rem;
 }
 
-.li-category:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.div-category {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
 }
 
 .span-category-name {
-    display: block;
-    font-size: 1.5rem;
-    color: #9e4d0d;
-    margin-bottom: 0.5rem;
-    font-family: "Elephant", sans-serif;
-    text-align: left;
-}
-
-.span-category-budget, .span-category-budgetmax {
-    display: block;
     font-size: 1.2rem;
-    color: black;
-    margin-bottom: 0.5rem;
-    font-family: "Elephant", sans-serif;
-    text-align: left;
+    color: #9e4d0d;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
 }
 
-/* RESPONSIVE DESIGN */
+.span-category-budget,
+.span-category-budgetmax {
+    color: black;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+}
+
 @media (max-width: 768px) {
-    .title-h1 {
-        font-size: 3rem;
+    .categories-container {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
 
-    .title-h3 {
-        font-size: 3rem;
+    .li-category {
+        padding: 0.8rem;
     }
 
-    .budget-item, .li-category {
-        margin-bottom: 1rem;
+    .span-category-name {
+        font-size: 1rem;
     }
 
-    .budget-title {
-        font-size: 2.5rem;
-    }
-
-    .span-category-budget, .span-category-budgetmax {
-        font-size: 1.2rem;
-    }
-
-    .budget-text {
-        font-size: 1.2rem;
+    .span-category-budget,
+    .span-category-budgetmax {
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 576px) {
-    .title-h1 {
-        font-size: 3rem;
+    .categories-container {
+        grid-template-columns: 1fr;
     }
 
-    .title-h3 {
-        font-size: 3rem;
+    .li-category {
+        padding: 0.8rem;
     }
 
-    .span-category-budget, .span-category-budgetmax {
-        font-size: 1.2rem;
-    }
-
-    .budget-title{
-        font-size: 1.7rem;
-    }
-
-    .budget-text {
+    .span-category-name {
         font-size: 1rem;
     }
 }

@@ -5,7 +5,6 @@ body {
     font-family: "Elephant", sans-serif;
 }
 
-/* FORMULAIRE */
 .h1-category {
     color: #d32f2f;
     -webkit-text-stroke: 1px #cdb878;
@@ -75,11 +74,10 @@ h3 {
     background-color: #bfa331;
 }
 
-/* GRID LIST */
 .ul-category {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Deux colonnes */
-    gap: 0.5rem; /* Espacement réduit entre les tuiles */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
     list-style: none;
     padding: 0;
     margin: 1rem auto;
@@ -88,22 +86,22 @@ h3 {
 }
 
 .li-category {
-    background-color: #cdb878; /* Couleur de Noël */
-    border: 1px solid #095228; /* Bordures plus fines */
-    border-radius: 5px; /* Coins légèrement arrondis */
-    padding: 0.5rem; /* Réduction des espaces internes */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre plus discrète */
+    background-color: #cdb878;
+    border: 1px solid #095228;
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    font-size: 0.8rem; /* Taille de texte réduite */
+    font-size: 0.8rem;
 }
 
 .span-category {
     color: black;
-    margin-bottom: 0.3rem; /* Réduction de l'espacement entre les éléments */
-    font-size: 0.9rem; /* Texte plus petit */
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
     font-weight: bold;
     text-align: center;
     width: 100%;
@@ -120,6 +118,19 @@ h3 {
     font-size: 0.8rem;
     padding: 0.3rem;
     border-radius: 3px;
+}
+
+.button-category {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .add-category {
@@ -142,8 +153,6 @@ h3 {
     text-align: center;
 }
 
-
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .h1-category {
         font-size: 3rem;
