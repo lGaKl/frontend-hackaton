@@ -41,7 +41,7 @@ export function CategoryFormComponent({onCategoryCreated}: CategoryFormComponent
                 Nom de la Catégorie <input type="text" name="nameCategory" className="input-category" onChange={handleChange}/>
             </label>
             <br/>
-            <label>
+            <label className="label-category">
                 Budget Maximum  <input type="number" name="maxBudget" className="input-category" onChange={handleChange}/>
             </label>
         </div>
