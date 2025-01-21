@@ -1,10 +1,14 @@
 ﻿import {useTransactionDispatch} from "../contexts/TransactionContext.tsx";
 import {Transaction} from "../types/transaction.ts";
-import {postTransaction} from "../services/transaction-service.tsx";
-import {TransactionFormComponent} from "./TransactionFormComponent.tsx";
+import {postTransaction, updateTransaction} from "../services/transaction-service.tsx";
+import TransactionFormComponent from "./TransactionFormComponent.tsx";
+import {useLocation} from "react-router-dom";
+import TransactionListComponent from "./TransactionListComponent.tsx";
+import {ApiError} from "../../../shared/exceptions/ApiError.ts";
 
 export default function TransactionManagerComponent() {
     const dispatch = useTransactionDispatch();
+    const location = useLocation();
 
     const onTransactionCreated: (transaction: Transaction) => void = transaction => {
         const sendTransaction = async (transaction: Transaction) => {
@@ -20,21 +24,7 @@ export default function TransactionManagerComponent() {
         sendTransaction(transaction);
     }
 
-    /*const onTransactionDeleted:  (transaction: Transaction) => void = transactionDeleted => {
-        if(!transactionDeleted) return;
-
-        const sendDeleteTransaction = async (transaction: Transaction) => {
-            const response = await deleteTransaction(transaction.idBudget);
-            if(response.ok) {
-                dispatch({type: "delete", transaction: transaction});
-            }else{
-                throw ApiError.fromResponseJson(await response.json());
-            }
-        }
-        sendDeleteTransaction(transactionDeleted);
-    }*/
-
-    /*  const onTransactionUpdated: (transaction: Transaction) => void = transactionUpdated => {
+    const onTransactionUpdated: (transaction: Transaction) => void = transactionUpdated => {
         const sendUpdateTransaction = async (transaction: Transaction) => {
             const response = await updateTransaction(transaction.idTransaction!!,{
                 amount: transaction.amount,
@@ -47,10 +37,22 @@ export default function TransactionManagerComponent() {
                 throw new ApiError(await response.json())
         }
         sendUpdateTransaction(transactionUpdated);
-    }*/
+    }
+
+    let content;
+    switch (location.pathname) {
+        case "/transactions/transactionForm":
+            content = <TransactionFormComponent onTransactionCreated={onTransactionCreated}/>;
+            break;
+        case "/transactions/transactionList":
+            content = <TransactionListComponent onTransactionUpdated={onTransactionUpdated} />;
+            console.log("hello");
+            break;
+        default:
+            content = <div>Page not found</div>;
+    }
 
     return <>
-        <TransactionFormComponent onTransactionCreated={onTransactionCreated}/>
-
+        {content}
     </>
 }

@@ -172,3 +172,79 @@ h3 {
         font-size: 0.7rem;
     }
 }
+/* LISTE DES TRANSACTIONS */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem auto;
+    max-width: 90%;
+    opacity: 90%;
+}
+
+li {
+    background-color: #cdb878; /* Couleur de Noël */
+    border: 1px solid #d32f2f; /* Rouge pour Noël */
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+li span {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+li div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+li input[type="text"],
+li input[type="number"],
+li input[type="date"] {
+    margin: 0.2rem 0;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+li input[type="text"]:focus,
+li input[type="number"]:focus,
+li input[type="date"]:focus {
+    border-color: #d4af37;
+    outline: none;
+}
+
+h1 {
+    color: #9E8B75;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 1rem 0;
+}
+
+.button-category {
+    align-self: flex-end;
+    background-color: #d4af37;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 1rem auto;
+    width: 50%;
+}
+
+.button-category:hover {
+    background-color: #bfa331;
+}

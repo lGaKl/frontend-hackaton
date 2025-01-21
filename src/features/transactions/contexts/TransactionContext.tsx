@@ -1,48 +1,61 @@
-﻿import {Transaction} from "../types/transaction.ts";
-import {createContext, ReactNode, useContext, useEffect, useReducer} from "react";
-import {fetchTransactions} from "../services/transaction-service.tsx";
+﻿import { Transaction } from "../types/transaction.ts";
+import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
+import { fetchTransactions } from "../services/transaction-service.tsx";
 
-export interface Action{
-    type : string;
-    transaction: Transaction;
+interface Action {
+    type: "set" | "add" | "update" | "delete";
+    transaction?: Transaction;
+    transactions?: Transaction[];
 }
 
 const TransactionContext = createContext<Transaction[]>([]);
-const TransactionDispatchContext = createContext<(action: Action)=> void >(null!!);
+const TransactionDispatchContext = createContext<(action: Action) => void>(() => {
+    throw new Error("TransactionDispatchContext not initialized!");
+});
 
-function reducer (transactions: Transaction[], action: Action){
-    switch (action.type){
+function reducer(transactions: Transaction[], action: Action) {
+    switch (action.type) {
+        case "set":
+            return action.transactions ?? []; // Assure que ce soit un tableau valide
         case "add":
-            return [...transactions, action.transaction];
-        case "update" :
-            return transactions.map(transaction =>transaction.idTransaction ===action.transaction.idTransaction? action.transaction : transaction);
+            return action.transaction ? [...transactions, action.transaction] : transactions;
+        case "update":
+            return action.transaction
+                ? transactions.map(t => (t.id === action.transaction!.id ? action.transaction! : t))
+                : transactions;
         case "delete":
-                return  transactions.filter(transaction =>transaction.idTransaction !== action.transaction.idTransaction );
-                default:
-                    throw Error("Unknown action type " + action.type);
+            return action.transaction
+                ? transactions.filter(t => t.id !== action.transaction!.id)
+                : transactions;
+        default:
+            throw new Error("Unknown action type " + action.type);
     }
 }
 
-export function TransactionProvider({children}:{children: ReactNode}){
-    const [transactions,dispatch] = useReducer(reducer, []);
+export function TransactionProvider({ children }: { children: ReactNode }) {
+    const [transactions, dispatch] = useReducer(reducer, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         const getData = async () => {
-            const transactions= await fetchTransactions();
-            transactions.forEach(transaction=>dispatch({type: "add", transaction: transaction}));
-        }
+            try {
+                const transactions = await fetchTransactions();
+                console.log("Transactions récupérées :", transactions); // ✅ Log des données récupérées
+                dispatch({ type: "set", transactions });
+            } catch (error) {
+                console.error("Erreur lors de la récupération des transactions :", error);
+            }
+        };
         getData();
-    },[]);
+    }, []);
 
-    return<>
+    return (
         <TransactionContext.Provider value={transactions}>
             <TransactionDispatchContext.Provider value={dispatch}>
                 {children}
             </TransactionDispatchContext.Provider>
         </TransactionContext.Provider>
-    </>
+    );
 }
 
-export const useTransactions = ()=> useContext(TransactionContext);
-
+export const useTransactions = () => useContext(TransactionContext);
 export const useTransactionDispatch = () => useContext(TransactionDispatchContext);
