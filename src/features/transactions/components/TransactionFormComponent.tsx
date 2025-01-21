@@ -12,8 +12,7 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
     const [selectedCategory, setSelectedCategory] = useState("");
     const [inputsDescription, setInputsDescription] = useState({ description: "" });
     const [inputsAmount, setInputsAmount] = useState({ amount: 0 });
-
-    let categories: Category[] = [];
+    const [categories, setCategories] = useState<Category[]>([]);
 
     function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>) {
         setInputsDescription({ description: e.target.value });
@@ -31,12 +30,13 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
     function checkFormValidity() {
         const isDescriptionValid = !!inputsDescription.description;
         const isAmountValid = !!inputsAmount.amount && inputsAmount.amount > 0;
-        setFormValid(isDescriptionValid && isAmountValid);
+        const isCategoryValid = !!selectedCategory;
+        setFormValid(isDescriptionValid && isAmountValid && isCategoryValid);
     }
 
     async function loadCategories() : Promise<void> {
-        categories = await fetchCategories();
-        console.log(categories);
+        const categoriesFromAPI = await fetchCategories();
+        setCategories(categoriesFromAPI);
     }
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCategory(e.target.value);
@@ -50,7 +50,7 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
             dateTransaction: new Date(),
             //Ajouter idCategory et idBudget
             idBudget: 1,
-            idCategory: 1,
+            idCategory: parseInt(selectedCategory),
             description: inputsDescription.description
         };
         onTransactionCreated(transaction);
