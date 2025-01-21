@@ -103,7 +103,7 @@ export function BudgetPageComponent() {
                     {/* Total budget and remaining budget */}
                     <Card className="budget-card">
                         <Card.Body>
-                            <Card.Title>Total Budget</Card.Title>
+                            <Card.Title>Budget Total</Card.Title>
                             <Card.Text>
                                 {budget ? `${budget.total} €` : "- €"}
                             </Card.Text>
@@ -123,7 +123,7 @@ export function BudgetPageComponent() {
                 <Col md={6} sm={12}>
                     <Card className="budget-card">
                         <Card.Body>
-                            <Card.Title>Remaining Budget</Card.Title>
+                            <Card.Title>Budget restant</Card.Title>
                             <Card.Text>
                                 {budget ? `${remainingBudget} €` : "Loading..."}
                             </Card.Text>
