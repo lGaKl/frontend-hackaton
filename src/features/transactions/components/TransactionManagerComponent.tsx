@@ -32,9 +32,9 @@ export default function TransactionManagerComponent() {
             }
         }
         sendDeleteTransaction(transactionDeleted);
-    }
+    }*/
 
-    const onTransactionUpdated: (transaction: Transaction) => void = transactionUpdated => {
+    /*  const onTransactionUpdated: (transaction: Transaction) => void = transactionUpdated => {
         const sendUpdateTransaction = async (transaction: Transaction) => {
             const response = await updateTransaction(transaction.idTransaction!!,{
                 amount: transaction.amount,
@@ -51,5 +51,6 @@ export default function TransactionManagerComponent() {
 
     return <>
         <TransactionFormComponent onTransactionCreated={onTransactionCreated}/>
+
     </>
 }

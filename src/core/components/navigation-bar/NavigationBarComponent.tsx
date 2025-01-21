@@ -18,7 +18,7 @@
                             className="vertical-dropdown"
                         >
                             <NavDropdown.Item as={NavLink} to="/transactions/transactionManager">Add transaction</NavDropdown.Item>
-                            <NavDropdown.Item as={NavLink} to="/transactions/modify">Update
+                            <NavDropdown.Item as={NavLink} to="/transactions/transactionList">Update
                                 transaction</NavDropdown.Item>
                             <NavDropdown.Item as={NavLink} to="/transactions/remove">Remove
                                 transaction</NavDropdown.Item>

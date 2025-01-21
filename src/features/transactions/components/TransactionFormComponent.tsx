@@ -1,5 +1,7 @@
 ﻿import {Transaction} from "../types/transaction.ts";
 import {FormEvent, useEffect, useState} from "react";
+import {Category} from "../../categories/types/category.ts";
+import {fetchCategories} from "../../categories/services/category-service.tsx";
 
 interface TransactionFormComponentProps {
     onTransactionCreated: (t: Transaction) => void;
@@ -7,8 +9,11 @@ interface TransactionFormComponentProps {
 
 export function TransactionFormComponent({onTransactionCreated}: TransactionFormComponentProps) {
     const [formValid, setFormValid] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [inputsDescription, setInputsDescription] = useState({ description: "" });
     const [inputsAmount, setInputsAmount] = useState({ amount: 0 });
+
+    let categories: Category[] = [];
 
     function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>) {
         setInputsDescription({ description: e.target.value });
@@ -20,7 +25,8 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
 
     useEffect(() => {
         checkFormValidity();
-    },[inputsDescription, inputsAmount]);
+        loadCategories();
+    },[inputsDescription, inputsAmount,selectedCategory]);
 
     function checkFormValidity() {
         const isDescriptionValid = !!inputsDescription.description;
@@ -28,6 +34,13 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
         setFormValid(isDescriptionValid && isAmountValid);
     }
 
+    async function loadCategories() : Promise<void> {
+        categories = await fetchCategories();
+        console.log(categories);
+    }
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCategory(e.target.value);
+    };
 
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -54,6 +67,15 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
                 <input type="text" name="Description" onChange={handleDescriptionChange}/><br/>
                 <label>Amount</label><br/>
                 <input type="number" name="Amount" onChange={handleAmountChange}/><br/>
+                <label htmlFor="options">Choose a category :</label>
+                <select id="options" value={selectedCategory} onChange={handleCategoryChange}>
+                    <option value="">--Categories--</option>
+                    {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                            {category.nameCategory}
+                        </option>
+                    ))}
+                </select><br/>
                 <input type="submit" disabled={!formValid}/>
             </div>
         </form>
