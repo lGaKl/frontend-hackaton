@@ -39,24 +39,6 @@ export function HomeComponent() {
             <div className="snowflake">
                 <div className="inner">❅</div>
             </div>
-            <div className="snowflake">
-                <div className="inner">❅</div>
-            </div>
-            <div className="snowflake">
-                <div className="inner">❅</div>
-            </div>
-            <div className="snowflake">
-                <div className="inner">❅</div>
-            </div>
-            <div className="snowflake">
-                <div className="inner">❅</div>
-            </div>
-            <div className="snowflake">
-                <div className="inner">❅</div>
-            </div>
-            <div className="snowflake">
-                <div className="inner">❅</div>
-            </div>
         </div>
     </>
 }
