@@ -3,9 +3,6 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-color: rgba(232, 44, 56, 0.78);
-    font-family: "Elephant", sans-serif;
-    margin-top: 5px;
-    padding: 0;
     /*filter: blur(2px);
     z-index: -1;*/
 }

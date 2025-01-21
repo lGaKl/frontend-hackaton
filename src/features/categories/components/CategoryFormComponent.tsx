@@ -34,17 +34,17 @@ export function CategoryFormComponent({onCategoryCreated}: CategoryFormComponent
         setFormValid(false);
     }
 
-    return <form onSubmit={handleSubmit}>
-        <div>
-            <h2>Ajouter une catégorie</h2>
-            <label>
-                Nom de la Catégorie <input type="text" name="nameCategory" onChange={handleChange}/>
+    return <form onSubmit={handleSubmit} className="form-category">
+        <div className="div-category">
+            <h2 className="h2-category">Ajouter une catégorie</h2>
+            <label className="label-category">
+                Nom de la Catégorie <input type="text" name="nameCategory" className="input-category" onChange={handleChange}/>
             </label>
             <br/>
-            <label>
-                Budget Maximum  <input type="number" name="maxBudget"  onChange={handleChange}/>
+            <label className="label-category">
+                Budget Maximum  <input type="number" name="maxBudget" className="input-category" onChange={handleChange}/>
             </label>
         </div>
-        <input type="submit" disabled={!formValid}/>
+        <input type="submit" className="submit-category" disabled={!formValid}/>
     </form>
 }
