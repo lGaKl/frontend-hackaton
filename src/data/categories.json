@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Sport",
+    "imgUrl": "\u200B\uD83C\uDFC5"
+  },
+  {
+    "id": 2,
+    "name": "Travel",
+    "imgUrl": "✈\uFE0F\u200B"
+  },
+  {
+    "id": 3,
+    "name": "Outdoor",
+    "imgUrl": "\uD83D\uDC65"
+  }
+]
