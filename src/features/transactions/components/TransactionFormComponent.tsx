@@ -67,7 +67,7 @@ export function TransactionFormComponent({onTransactionCreated}: TransactionForm
                 <input type="text" name="Description" onChange={handleDescriptionChange}/><br/>
                 <label>Amount</label><br/>
                 <input type="number" name="Amount" onChange={handleAmountChange}/><br/>
-                <label htmlFor="options">Choose a category :</label>
+                <label htmlFor="options">Select a category :</label>
                 <select id="options" value={selectedCategory} onChange={handleCategoryChange}>
                     <option value="">--Categories--</option>
                     {categories.map(category => (

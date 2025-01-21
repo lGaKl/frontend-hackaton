@@ -42,7 +42,7 @@ export function CategoryFormComponent({onCategoryCreated}: CategoryFormComponent
             </label>
             <br/>
             <label>
-                Budget Maximum  <input type="number" name="maxBudget" onChange={handleChange}/>
+                Budget Maximum  <input type="number" name="maxBudget"  onChange={handleChange}/>
             </label>
         </div>
         <input type="submit" disabled={!formValid}/>
