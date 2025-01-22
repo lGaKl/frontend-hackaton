@@ -75,7 +75,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                     <option value="">--Categories--</option>
                     {categories.map(category => (
                         <option key={category.id} value={category.id}>
-                            {category.nameCategory}
+                            {category.name}
                         </option>
                     ))}
                 </select><br/>

@@ -104,6 +104,7 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                     <span className="span">Description: {transaction.description}</span>
                                     <span className="span">Montant: {transaction.amount}</span>
                                     <span className="span">Date: {transaction.date_transaction}</span>
+                                    <span className="span">Catégorie: {transaction.categoryId}</span>
                                     <button onClick={() => handleEditClick(transaction)} className="button-category">Modifier</button>
                                 </>
                             )}
