@@ -5,24 +5,25 @@ body {
     font-family: "Elephant", sans-serif;
 }
 
-/* FORMULAIRE */
-h1 {
-    color: #9E8B75;
+.h1-category {
+    color: #d32f2f;
+    -webkit-text-stroke: 1px #cdb878;
     text-align: center;
     font-size: 3rem;
     margin: 1rem 0;
 }
 
 h3 {
-    color: #9E8B75;
+    color: #d32f2f;
+    -webkit-text-stroke: 1px #cdb878;
     text-align: center;
-    font-size: 2rem;
+    font-size: 3rem;
     margin: 1rem 0;
 }
 
 .form-category {
     background-color: #cdb878;
-    border: 2px solid #d32f2f;
+    border: 3px solid #d32f2f;
     border-radius: 20px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -33,13 +34,15 @@ h3 {
 
 .h2-category {
     text-align: center;
+    color: #9e4d0d;
+    font-size: 1.7rem;
 }
 
 .label-category {
     display: block;
     margin-bottom: 0.5rem;
-    color: white;
-    font-size: 1.2rem;
+    color: black;
+    font-size: 1.5rem;
 }
 
 .input-category {
@@ -71,8 +74,10 @@ h3 {
     background-color: #bfa331;
 }
 
-/* LISTE */
 .ul-category {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
     list-style: none;
     padding: 0;
     margin: 1rem auto;
@@ -81,120 +86,159 @@ h3 {
 }
 
 .li-category {
-    background-color: #cdb878; /* Couleur de Noël */
-    border: 1px solid #d32f2f; /* Rouge pour Noël */
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #cdb878;
+    border: 1px solid #095228;
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-between;
+    font-size: 0.8rem;
 }
 
 .span-category {
-    color: white;
+    color: black;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
     font-weight: bold;
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
 }
 
 .div-category {
     display: flex;
     flex-direction: column;
+    gap: 0.3rem;
     width: 100%;
 }
 
+.input-category {
+    font-size: 0.8rem;
+    padding: 0.3rem;
+    border-radius: 3px;
+}
+
 .button-category {
-    align-self: flex-end;
-    background-color: #d4af37;
-    color: #fff;
+    background-color: #d32f2f;
+    color: white;
     border: none;
     border-radius: 5px;
-    padding: 0.8rem 1rem;
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
     cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-category {
+    background-color: #cdb878;
+    border: 1px solid #095228;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 0.8rem;
     transition: background-color 0.3s;
-    display: block;
-    margin: 1rem auto;
-    width: 50%;
 }
 
-.button-category:hover {
-    background-color: #bfa331;
+.plus-icon {
+    font-size: 7rem;
+    font-weight: bold;
+    color: #095228;
+    text-align: center;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
+    .h1-category {
+        font-size: 3rem;
     }
 
-    form {
+    .h3-category {
+        font-size: 3rem;
+    }
+
+    .form-category {
         padding: 1rem;
     }
 
-    form label {
+    .label-category {
+        font-size: 1.2rem;
+    }
+
+    .input-category {
         font-size: 1rem;
     }
 
-    form input[type="text"],
-    form input[type="number"] {
-        font-size: 0.9rem;
-    }
-
-    form input[type="submit"] {
+    .submit-category {
         padding: 0.6rem 1rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
-    li {
+    .li-category {
         padding: 0.8rem;
     }
 
-    li span {
-        font-size: 1rem;
+    .span-category {
+        font-size: 1.2rem;
     }
 
-    li button {
+    .button-category {
         padding: 0.6rem 0.8rem;
         font-size: 0.8rem;
+    }
+
+    .plus-icon {
+        font-size: 8rem;
+        align-items: center;
     }
 }
 
 @media (max-width: 576px) {
-    h1 {
-        font-size: 2rem;
+    .h1-category {
+        font-size: 3rem;
     }
 
-    form {
+    .h3-category {
+        font-size: 3rem;
+    }
+
+    .form-category {
         padding: 0.8rem;
     }
 
-    form label {
-        font-size: 0.9rem;
+    .label-category {
+        font-size: 1.2rem;
     }
 
-    form input[type="text"],
-    form input[type="number"] {
-        font-size: 0.8rem;
+    .input-category {
+        font-size: 1rem;
     }
 
-    form input[type="submit"] {
+    .submit-category {
         padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
-    li {
+    .li-category {
         padding: 0.6rem;
     }
 
-    li span {
-        font-size: 0.9rem;
+    .span-category {
+        font-size: 1.2rem;
     }
 
-    li button {
+    .button-category {
         padding: 0.5rem 0.6rem;
         font-size: 0.7rem;
+    }
+
+    .plus-icon {
+        font-size: 8rem;
+        align-items: center;
     }
 }

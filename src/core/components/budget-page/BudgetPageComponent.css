@@ -1,0 +1,133 @@
+.title-h1, .title-h3 {
+    color: #d32f2f;
+    -webkit-text-stroke: 1px #cdb878;
+    font-family: "Elephant", sans-serif;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.title-h1 {
+    font-size: 2.5rem;
+}
+
+.title-h3 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+
+.budget-container {
+    font-family: "Elephant", sans-serif;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin-bottom: 2rem;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.budget-item {
+    font-family: "Elephant", sans-serif;
+    background-color: #cdb878;
+    border: 2px solid #d32f2f;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.budget-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #9e4d0d;
+}
+
+.budget-text {
+    font-size: 1.2rem;
+    color: black;
+}
+
+.ul-category {
+    font-family: "Elephant", sans-serif;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem auto;
+    max-width: 90%;
+    opacity: 90%;
+}
+
+.li-category {
+    background-color: #cdb878;
+    border: 1px solid #095228;
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.div-category {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+}
+
+.span-category-name {
+    font-size: 1.2rem;
+    color: #9e4d0d;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.span-category-budget,
+.span-category-budgetmax {
+    color: black;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .categories-container {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .li-category {
+        padding: 0.8rem;
+    }
+
+    .span-category-name {
+        font-size: 1rem;
+    }
+
+    .span-category-budget,
+    .span-category-budgetmax {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .categories-container {
+        grid-template-columns: 1fr;
+    }
+
+    .li-category {
+        padding: 0.8rem;
+    }
+
+    .span-category-name {
+        font-size: 1rem;
+    }
+}

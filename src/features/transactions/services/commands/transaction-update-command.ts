@@ -1,4 +1,4 @@
-﻿export interface TransactionUpdateCommand {
+export interface TransactionUpdateCommand {
     amount : number;
     date_transaction : string;
     description : string;

@@ -1,4 +1,4 @@
-﻿export interface TransactionCreateCommand {
+export interface TransactionCreateCommand {
     amount : number;
     date_transaction : string;
     budgetId : number;
