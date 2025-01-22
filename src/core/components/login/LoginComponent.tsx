@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import "./LoginComponent.css";
 import { useAuth } from "../../../features/auth/AuthContext.tsx";
-import {useNavigate} from "react-router";
-import {toast} from "react-toastify";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 export function LoginComponent() {
     const [email, setEmail] = useState("");
@@ -44,18 +44,14 @@ export function LoginComponent() {
 
             if (!response.ok) {
                 throw new Error("Échec de la connexion. Vérifiez vos informations.");
-                const token = await response.text();
-                console.log("Logging in with", email, password, "Token:", token);
-                toast.success("Connexion réussie !");
-                window.location.href = "/";
-            } catch (error) {
-                setError("Login failed. Please try again.");
             }
 
-            const token = await response.text(); // Récupère le jeton
-            console.log("JWT Token:", token);
+            const token = await response.text(); // Récupération du token
+            console.log("Logging in with", email, password, "Token:", token);
+
+            toast.success("Connexion réussie !");
             login(token); // Met à jour l'état global dans AuthContext
-            navigate("/home")
+            navigate("/home"); // Redirection vers la page d'accueil
         } catch (error) {
             console.error("Erreur lors de la connexion :", error);
             setError("Échec de la connexion. Veuillez réessayer.");
