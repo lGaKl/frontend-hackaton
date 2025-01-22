@@ -46,7 +46,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if(!formValid) return;
-        let transaction = {
+        const transaction = {
             amount: inputsAmount.amount,
             date_transaction: new Date().toISOString().split('T')[0],
             description: inputsDescription.description,

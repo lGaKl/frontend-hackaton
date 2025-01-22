@@ -1,8 +1,11 @@
 ﻿import { Transaction } from "../types/transaction.ts";
 import { useTransactionDispatch, useTransactions } from "../contexts/TransactionContext.tsx";
-import { ChangeEvent, useState } from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import { updateTransaction } from "../services/transaction-service.tsx";
 import "./TransactionComponent.css"
+import {fetchCategories} from "../../categories/services/category-service.tsx";
+import {Category} from "../../categories/types/category.ts";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transaction: Transaction) => void;
@@ -13,33 +16,59 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
     const transactions = useTransactions();
     const [editingTransactionId, setEditingTransactionId] = useState<number | null>(null);
     const [localEdits, setLocalEdits] = useState<Record<number, Transaction>>({});
+    //categories
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     const handleEditClick = (transaction: Transaction) => {
         setEditingTransactionId(transaction.id!);
         setLocalEdits((prev) => ({
             ...prev,
-            [transaction.id!]: { ...transaction }
+            [transaction.id!]: {
+                ...transaction },
+
         }));
     };
 
+    useEffect(() => {
+        loadCategories();
+    },[selectedCategory]);
+
+    async function loadCategories() : Promise<void> {
+        const categoriesFromAPI = await fetchCategories();
+        setCategories(categoriesFromAPI);
+    }
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCategory(e.target.value);
+    };
+
+    const getCategoryName = (id : number): string => {
+        const category = categories.find(category => category.id ===id );
+        return category ? category.name: "Catégorie pas trouvé";
+    };
+
+
+
     const handleSaveClick = async (transactionId: number) => {
+        console.log("Catégorie Sélectionnée:",selectedCategory);
         const updatedTransaction = localEdits[transactionId];
         if (!updatedTransaction) return;
 
         try {
+
             const response = await updateTransaction({
                 id: updatedTransaction.id,
                 description: updatedTransaction.description,
                 amount: updatedTransaction.amount,
                 date_transaction: updatedTransaction.date_transaction,
                 budgetId: updatedTransaction.budgetId,
-                categoryId: updatedTransaction.categoryId,
+                categoryId: parseInt(selectedCategory),
             });
 
             if (!response.ok) {
                 throw new Error("Erreur lors de la mise à jour de la transaction");
             }
-
+            console.log(updatedTransaction)
             dispatch({ type: "update", transaction: updatedTransaction });
             onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
 
@@ -56,11 +85,13 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>, transactionId: number) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
+
         setLocalEdits((prev) => ({
             ...prev,
             [transactionId]: {
                 ...prev[transactionId],
+                //categoryId : newCategoryId,
                 [name]: name === "amount" ? Number(value) : value
             }
         }));
@@ -97,14 +128,24 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
                                     />
+                                    <select id="options" name="categoryName" className="option-transaction" value={selectedCategory} onChange={handleCategoryChange}>
+                                        <option value={localEdits[transaction.id]?.categoryId||" "}>{getCategoryName(transaction.categoryId)}</option>
+                                        {categories
+                                            .filter (category => category.id !== transaction.categoryId)
+                                            .map(category => (
+                                            <option key={category.id} value={category.id} >
+                                                {category.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                     <button onClick={() => handleSaveClick(transaction.id!)} className="button-category">Confirmer</button>
                                 </>
                             ) : (
                                 <>
                                     <span className="span">Description: {transaction.description}</span>
-                                    <span className="span">Montant: {transaction.amount}</span>
+                                    <span className="span">Montant: {transaction.amount} €</span>
                                     <span className="span">Date: {transaction.date_transaction}</span>
-                                    <span className="span">Catégorie: {transaction.categoryId}</span>
+                                    <span className="span">Catégorie: {getCategoryName(transaction.categoryId)}</span>
                                     <button onClick={() => handleEditClick(transaction)} className="button-category">Modifier</button>
                                 </>
                             )}
