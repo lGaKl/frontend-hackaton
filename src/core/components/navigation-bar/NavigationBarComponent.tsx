@@ -9,7 +9,7 @@ export function NavigationBarComponent() {
                 <Nav className="justify-content-center w-100" style={{gap: 10}}>
 
                     <Nav.Link to="/" as={NavLink}>
-                        Home
+                        Accueil
                     </Nav.Link>
 
                         <NavDropdown
@@ -17,8 +17,8 @@ export function NavigationBarComponent() {
                             id="collapsible-nav-dropdown"
                             className="vertical-dropdown"
                         >
-                            <NavDropdown.Item as={NavLink} to="/transactions/transactionForm">Add transaction</NavDropdown.Item>
-                            <NavDropdown.Item as={NavLink} to="/transactions/transactionList">Update transaction</NavDropdown.Item>
+                            <NavDropdown.Item as={NavLink} to="/transactions/transactionForm">Ajout</NavDropdown.Item>
+                            <NavDropdown.Item as={NavLink} to="/transactions/transactionList">Mise à jours</NavDropdown.Item>
                         </NavDropdown>
 
                     <Nav.Link to="/budget" as={NavLink}>Budget</Nav.Link>

@@ -20,8 +20,10 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
     }
 
     function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setInputsAmount({ amount: parseFloat(e.target.value) });
+        const value = e.target.value.replace(",", ".");
+        setInputsAmount({ amount: parseFloat(value) });
     }
+
 
     useEffect(() => {
         checkFormValidity();
@@ -69,7 +71,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                 <label className="label-transaction">Description</label>
                 <input type="text" name="Description" className="input-transaction" onChange={handleDescriptionChange}/><br/>
                 <label className="label-transaction">Amount</label>
-                <input type="number" name="Amount" className="input-transaction" onChange={handleAmountChange}/><br/>
+                <input type="number" name="Amount" className="input-transaction" step="any" onChange={handleAmountChange}/><br/>
                 <label htmlFor="options" className="label-transaction">Select a category :</label>
                 <select id="options" className="option-transaction" value={selectedCategory} onChange={handleCategoryChange}>
                     <option value="">--Categories--</option>

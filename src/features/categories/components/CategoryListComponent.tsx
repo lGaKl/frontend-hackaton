@@ -10,7 +10,7 @@ interface CategoryListComponentProps {
 }
 
 export function CategoryListComponent({
-                                          onCategoryDeleted,
+                                          /*onCategoryDeleted,*/
                                           onCategoryUpdated,
                                       }: CategoryListComponentProps) {
     const navigate = useNavigate();
@@ -98,12 +98,6 @@ export function CategoryListComponent({
                                 </button>
                             </>
                         )}
-                        <button
-                            className="button-category delete-button"
-                            onClick={() => onCategoryDeleted(category)}
-                        >
-                            Supprimer
-                        </button>
                     </div>
                 </li>
             ))}
