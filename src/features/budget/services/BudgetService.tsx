@@ -26,7 +26,7 @@ export const deleteBudgets : (budgetId: number) => Promise<Response> = async (id
     });
 }
 
-export const UpdateBudgets : (id: number, budget: BudgetUpdateCommand) => Promise<Response> = async(id:number, budget: BudgetUpdateCommand )=>{
+export const updateBudgets : (id: number, budget: BudgetUpdateCommand) => Promise<Response> = async(id:number, budget: BudgetUpdateCommand )=>{
     return await fetch (`${BUDGET_API_URL}/${id}`,{
         method: "PATCH",
         headers:{
