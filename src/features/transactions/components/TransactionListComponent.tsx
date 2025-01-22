@@ -112,7 +112,7 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
             <ul className="ul-transactions">
                 {transactions.map((transaction, index) => (
                     <li key={transaction.id} className="li-transactions">
-                        <span className="span-transactions">Transaction #{index + 1}</span>
+                        <h1 className="span-transactions-header">Transaction #{index + 1}</h1>
                         <div className="div-transactions">
                             {editingTransactionId === transaction.id ? (
                                 <>
@@ -149,10 +149,10 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
                                                 </option>
                                             ))}
                                     </select>
-                                    <div>
+                                    <div className="button-container">
                                         <button
                                             onClick={()=> processTransactionDelete(transaction)}
-                                            className="button-transaction">Supprimer
+                                            className="button-delete-transaction">Supprimer
                                         </button>
                                         <button onClick={() => handleSaveClick(transaction.id!)}
                                                 className="button-transaction">Confirmer
@@ -162,10 +162,10 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
                                 </>
                             ) : (
                                 <>
-                                <span className="span-transactions">Description: {transaction.description}</span>
-                                    <span className="span-transactions">Montant: {transaction.amount} €</span>
-                                    <span className="span-transactions">Date: {transaction.date_transaction}</span>
-                                    <span className="span-transactions">Catégorie: {getCategoryName(transaction.categoryId)}</span>
+                                <span className="span-transactions">Description: <span className="span-transactions-data">{transaction.description}</span></span>
+                                    <span className="span-transactions">Montant: <span className="span-transactions-data">{transaction.amount} €</span></span>
+                                    <span className="span-transactions">Date: <span className="span-transactions-data">{transaction.date_transaction}</span></span>
+                                    <span className="span-transactions">Catégorie: <span className="span-transactions-data">{getCategoryName(transaction.categoryId)}</span></span>
                                     <button onClick={() => handleEditClick(transaction)}
                                             className="button-transaction">Modifier
                                     </button>

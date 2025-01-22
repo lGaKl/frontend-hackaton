@@ -188,6 +188,13 @@
     font-size: 1.3rem;
 }
 
+.span-transactions-header {
+    color: #9e4d0d;
+    margin-bottom: 0.5rem;
+    offset-position: center;
+    font-size: 1.3rem;
+}
+
 .span-transactions-data {
     color: black;
     margin-bottom: 0.5rem;
@@ -216,6 +223,31 @@
     outline: none;
 }
 
+.button-delete-transaction{
+    background-color: #b22222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 0.5rem;
+    align-self: flex-end;
+}
+
+.button-delete-transaction:hover {
+    background-color: #961d1d;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Aligne les boutons aux extrémités gauche et droite */
+    align-items: center; /* Centre verticalement les boutons */
+    width: 100%; /* Assure que le conteneur prend toute la largeur disponible */
+}
+
 .button-transaction {
     background-color: #d4af37;
     color: white;
@@ -228,6 +260,12 @@
     transition: background-color 0.3s, transform 0.2s;
     margin-top: 0.5rem;
     align-self: flex-end;
+
+}
+
+.button-container{
+    align-items: center;
+    justify-content: space-between;
 }
 
 .button-transaction:hover {
