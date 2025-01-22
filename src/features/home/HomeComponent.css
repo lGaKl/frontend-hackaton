@@ -14,7 +14,7 @@ body {
     margin: 1rem 0;
 }
 
-.navlink {
+.home-navlink {
     display: inline-block;
     margin: 1rem auto;
     padding: 1rem 2rem;
@@ -29,17 +29,82 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.navlink:hover {
+.home-navlink:hover {
     color: white;
     background-color: #d32f2f;
 }
 
-.nav-container {
+.home-nav-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 50vh;
+}
+
+.home-chart-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.home-chart-background {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    height: 320px;
+}
+
+.home-chart-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.radial-chart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* Assurez-vous qu'il est au-dessus de la CircularProgressbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-chart-title {
+    font-family: "Elephant", sans-serif;
+    color: #d32f2f;
+    -webkit-text-stroke: 1px #cdb878;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 1rem 0;
+}
+
+.home-radial-chart {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.home-animated-chart path {
+    transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+.home-animated-chart path:hover {
+    fill: #ff6347;
+}
+
+.home-animated-chart path.selected {
+    fill: #ff4500;
 }
 
 .snowflake {
@@ -118,4 +183,151 @@ body {
 .snowflake:nth-of-type(6) {
     left: 60%;
     animation-delay: 2s;
+}
+
+@media (max-width: 768px) {
+    .home-title {
+        font-size: 3rem;
+    }
+
+    .home-navlink {
+        font-size: 1.25rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .home-chart-title {
+        font-size: 2rem;
+    }
+
+    .home-radial-chart {
+        max-width: 300px;
+    }
+
+    .home-category-details h3 {
+        font-size: 1rem;
+    }
+
+    .home-category-details p {
+        font-size: 1rem;
+    }
+}
+
+/* Style des étiquettes dans le RadialChart */
+.home-radial-chart .rv-xy-plot__series--label {
+    font-family: "Elephant", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    fill: #9e4d0d;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.home-category-details {
+    position: absolute; /* Permet de fixer la div en-dessous du graphique */
+    top: calc(100% + 20px); /* Place la div juste en dessous du graphique avec un espace de 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    z-index: 5; /* S'assure que la div est au-dessus des autres éléments si nécessaire */
+}
+
+.home-category-details h3 {
+    font-size: 1.5rem;
+    color: #000;
+}
+
+.home-category-details p {
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.span-home {
+    font-size: 1rem;
+}
+
+/* Conteneur principal des détails de la catégorie */
+.home-category-details {
+    background-color: #cdb878;
+    border: 2px solid #d32f2f;
+    border-radius: 15px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    margin: 0.5rem auto;
+    opacity: 0.95;
+    font-family: "Elephant", sans-serif;
+}
+
+/* Titre de la catégorie */
+.home-title-category {
+    font-size: 1.8rem;
+    color: #9e4d0d;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Label des données */
+.category-home-label {
+    color: #9e4d0d;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+/* Données affichées */
+.category-data {
+    font-size: 1.3rem;
+    color: black;
+    margin-bottom: 1rem;
+}
+
+/* Adaptation pour petits écrans */
+@media (max-width: 768px) {
+    .div-category-details {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    .category-title {
+        font-size: 1.5rem;
+    }
+
+    .category-label {
+        font-size: 1.1rem;
+    }
+
+    .category-data {
+        font-size: 1.2rem;
+    }
+    .span-home {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .div-category-details {
+        padding: 0.8rem;
+        border-radius: 8px;
+    }
+
+    .category-title {
+        font-size: 1.3rem;
+    }
+
+    .category-label {
+        font-size: 1rem;
+    }
+
+    .category-data {
+        font-size: 1.1rem;
+    }
+    .span-home {
+        font-size: 1rem;
+    }
 }
