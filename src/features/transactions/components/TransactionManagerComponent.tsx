@@ -6,13 +6,14 @@ import {useLocation} from "react-router-dom";
 import {ApiError} from "../../../shared/exceptions/ApiError.ts";
 import {debounce} from "../../../shared/utils/Utils.ts";
 import TransactionListComponent from "./TransactionListComponent.tsx";
+import {TransactionCreateCommand} from "../services/commands/transaction-create-command.ts";
 
 export default function TransactionManagerComponent() {
     const dispatch = useTransactionDispatch();
     const location = useLocation();
 
-    const onTransactionCreated: (transaction: Transaction) => void = transaction => {
-        const sendTransaction = async (transaction: Transaction) => {
+    const onTransactionCreated: (transaction: TransactionCreateCommand) => void = transaction => {
+        const sendTransaction = async (transaction: TransactionCreateCommand) => {
             const transactionCreated = await postTransaction({
                 amount: transaction.amount,
                 date_transaction: transaction.date_transaction,
