@@ -29,7 +29,7 @@ const RadialChart: React.FC<RadialChartProps> = ({
             width={width}
             height={height}
             onValueClick={onValueClick}
-            className={`${className} animated-chart`}
+            className={`${className} home-animated-chart`}
             showLabels
             labelsRadiusMultiplier={0.9}
             labelsStyle={{ fontSize: width / 20, fill: '#222', fontWeight: 'bold', textAnchor: 'middle' }}
