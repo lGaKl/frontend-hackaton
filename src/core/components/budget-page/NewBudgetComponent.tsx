@@ -14,7 +14,7 @@ export function NewBudgetComponent() {
         try {
             const newBudget: BudgetCreateCommand = {
                 total: inputBudget.total,
-                date_budget: new Date(inputBudget.date + "-01")
+                date_budget: new Date().toISOString().split('T')[0]
             };
             console.log("Budget to be submitted:", newBudget);
 
