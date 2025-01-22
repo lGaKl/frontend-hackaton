@@ -5,8 +5,9 @@ export default function TransactionsComponent() {
     const transactions = useTransactions();
 
     return (
-        <div>
+        <div className="div-liste">
             <h1 className="h1-transactions">Liste des transactions</h1>
+            <button type="submit" className="button-transaction-liste">Exporter les transactions</button>
             <ul className="ul-transactions">
                 {transactions.map((transaction, index) => (
                     <li key={transaction.id} className="li-transactions">
