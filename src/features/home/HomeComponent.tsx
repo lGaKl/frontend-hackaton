@@ -13,7 +13,7 @@ import { RadialChartPoint } from "react-vis";
 
 export function HomeComponent() {
     const snowflakes = Array.from({ length: 6 }, (_, index) => (
-        <div key={index} className="snowflake">
+        <div key={index} className="home-snowflake">
             <div className="inner">❅</div>
         </div>
     ));
@@ -130,32 +130,34 @@ export function HomeComponent() {
     return (
         <>
             <h1 className="home-title">Bienvenue</h1>
-            <div className="nav-container">
-                <Nav.Link to="/login" as={NavLink} > <span className="navlink">Se connecter</span> </Nav.Link><br/>
-                <Nav.Link to="/register" as={NavLink} > <span className="navlink">S'enregistrer</span> </Nav.Link>
+            <div className="home-nav-container">
+                <Nav.Link to="/login" as={NavLink} > <span className="home-navlink">Se connecter</span> </Nav.Link><br/>
+                <Nav.Link to="/register" as={NavLink} > <span className="home-navlink">S'enregistrer</span> </Nav.Link>
             </div>
-            <div className="snowflakes" aria-hidden="true">
+            <div className="home-snowflakes" aria-hidden="true">
                 {snowflakes}
             </div>
-            <div className="chart-container">
-                <h2 className="chart-title">Répartition du Budget</h2>
-                <RadialChart
-                    data={data}
-                    width={500}
-                    height={500}
-                    onValueClick={handleValueClick}
-                    className="radial-chart"
-                />
-                {selectedCategory && (
-                    <div className="category-details">
-                        <h3>Catégorie: {selectedCategory.name}</h3>
-                        <p>Max Budget: {selectedCategory.maxBudget} €</p>
-                        {budget && budget.total >= totalMaxBudget && (
-                            <p>Pourcentage du Budget Total: {selectedCategory.percentage.toFixed(2)}%</p>
-                        )}
-                    </div>
-                )}
-                <div className="total-budget">
+            <div className="home-chart-container">
+                <h2 className="home-chart-title">Répartition du Budget</h2>
+                <div className="home-chart-and-details">
+                    <RadialChart
+                        data={data}
+                        width={500}
+                        height={500}
+                        onValueClick={handleValueClick}
+                        className="home-radial-chart"
+                    />
+                    {selectedCategory && (
+                        <div className="home-category-details">
+                            <h3>Catégorie: {selectedCategory.name}</h3>
+                            <p>Max Budget: {selectedCategory.maxBudget} €</p>
+                            {budget && budget.total >= totalMaxBudget && (
+                                <p>Pourcentage du budget total: {selectedCategory.percentage.toFixed(2)}%</p>
+                            )}
+                        </div>
+                    )}
+                </div>
+                <div className="home-total-budget">
                     <h2>Budget Total: {remainingBudget} €</h2>
                 </div>
             </div>

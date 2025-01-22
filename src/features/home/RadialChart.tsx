@@ -14,17 +14,30 @@ const RadialChart: React.FC<RadialChartProps> = ({
                                                      width = 300,
                                                      height = 300,
                                                      onValueClick,
-                                                     className
+                                                     className = ""
                                                  }) => {
-    return (
+    const originalWarn = console.warn;
+    console.warn = (message: string) => {
+        if (!message.includes("Support for defaultProps will be removed from function components")) {
+            originalWarn(message);
+        }
+    };
+
+    const chart = (
         <RVRadialChart
             data={data}
             width={width}
             height={height}
             onValueClick={onValueClick}
             className={`${className} animated-chart`}
+            showLabels
+            labelsRadiusMultiplier={0.9}
+            labelsStyle={{ fontSize: width / 20, fill: '#222', fontWeight: 'bold', textAnchor: 'middle' }}
         />
     );
+
+    console.warn = originalWarn;
+    return chart;
 };
 
 export default RadialChart;
