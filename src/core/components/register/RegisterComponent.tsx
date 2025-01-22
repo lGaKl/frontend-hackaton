@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import "./RegisterComponent.css";
+import {toast} from "react-toastify";
 
 export function RegisterComponent() {
     const [firstName, setFirstName] = useState("");
@@ -55,6 +56,7 @@ export function RegisterComponent() {
                 }
 
                 console.log("Registration successful");
+                toast.success("Enregistrement réussi !");
                 window.location.href = "/login";
             } catch (error) {
                 setError("Registration failed. Please try again.");

@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import "./LoginComponent.css";
+import {toast} from "react-toastify";
 
 export function LoginComponent() {
     const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ export function LoginComponent() {
 
                 const token = await response.text();
                 console.log("Logging in with", email, password, "Token:", token);
+                toast.success("Connexion réussie !");
                 window.location.href = "/";
             } catch (error) {
                 setError("Login failed. Please try again.");

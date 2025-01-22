@@ -3,6 +3,7 @@ import { useTransactionDispatch, useTransactions } from "../contexts/Transaction
 import { ChangeEvent, useState } from "react";
 import { updateTransaction } from "../services/transaction-service.tsx";
 import "./TransactionComponent.css"
+import {toast} from "react-toastify";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transaction: Transaction) => void;
@@ -41,7 +42,9 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
             }
 
             dispatch({ type: "update", transaction: updatedTransaction });
-            onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
+            onTransactionUpdated(updatedTransaction);
+            toast.success("Transaction modifiée avec succès !");
+
 
             // Réinitialisez l'état d'édition
             setEditingTransactionId(null);
