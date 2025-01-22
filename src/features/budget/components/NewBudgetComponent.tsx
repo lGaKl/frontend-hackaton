@@ -1,29 +1,26 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import "./NewBudgetComponent.css";
-import {BudgetCreateCommand} from "../../../features/budget/services/commands/BudgetCreateCommand.ts";
-import {postBudget} from "../../../features/budget/services/BudgetService.tsx";
+import { BudgetCreateCommand } from "../services/commands/BudgetCreateCommand.ts";
 
-export function NewBudgetComponent() {
+interface NewBudgetComponentProps {
+    onBudgetCreated: (b: BudgetCreateCommand) => void;
+}
+
+export function NewBudgetComponent({ onBudgetCreated }: NewBudgetComponentProps) {
     const navigate = useNavigate();
     const [inputBudget, setInputBudget] = useState({ total: 0, date: '' });
-    const [error, setError] = useState('');
 
-    const handleSubmit = async (e: FormEvent<HTMLElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        try {
-            const newBudget: BudgetCreateCommand = {
-                total: inputBudget.total,
-                date_budget: new Date(inputBudget.date + "-01").toISOString().split('T')[0]
-            };
-            console.log("Budget to be submitted:", newBudget);
 
-            await postBudget(newBudget);
-            navigate("/budget");
-        } catch (error) {
-            console.error("Error submitting budget:", error);
-            setError('Failed to submit budget. Please try again.');
-        }
+        const newBudget = {
+            total: inputBudget.total,
+            date_budget: new Date(inputBudget.date + "-01").toISOString().split('T')[0]
+        };
+        console.log("Budget to be submitted:", newBudget);
+        onBudgetCreated(newBudget);
+        navigate("/budget");
 
         const form = e.target as HTMLFormElement;
         form.reset();
@@ -57,7 +54,6 @@ export function NewBudgetComponent() {
                         required
                     />
                 </div>
-                {error && <p className="error-message">{error}</p>}
                 <button type="submit">Save Budget</button>
                 <button type="button" onClick={handleBackClick} className="back-button">Back</button>
             </form>
