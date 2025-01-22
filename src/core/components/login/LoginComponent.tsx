@@ -33,7 +33,23 @@ export function LoginComponent() {
                 }
 
                 const token = await response.text();
-                console.log("Logging in with", email, password, "Token:", token);
+                document.cookie = `token=${token}; path=/`;
+
+                // Fetch user info by email
+                const userResponse = await fetch(`http://localhost:8080/api/v1/users/email/${encodeURIComponent(email)}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                if (!userResponse.ok) {
+                    throw new Error("Failed to fetch user info");
+                }
+
+                const user = await userResponse.json();
+                localStorage.setItem("userId", user.id);
+
                 window.location.href = "/";
             } catch (error) {
                 setError("Login failed. Please try again.");
