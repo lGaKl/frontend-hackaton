@@ -57,7 +57,6 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
 
             updatedTransaction.categoryId = parseInt(selectedCategory);
 
-            console.log(updatedTransaction);
             const selectedCategoryId = parseInt(selectedCategory);
             const response = await updateTransaction({
                 id: updatedTransaction.id,
@@ -127,7 +126,7 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
                                     <input
                                         type="date"
                                         value={localEdits[transaction.id]?.date_transaction || ""}
-                                        name="dateTransaction"
+                                        name="date_transaction"
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
                                     />
