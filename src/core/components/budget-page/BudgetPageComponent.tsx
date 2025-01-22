@@ -100,7 +100,14 @@ export function BudgetPageComponent() {
             <div className="grid-item">
                 <div className="div-category">
                     <div className="li-category">
-                        <h2 className="title-name">Budget Total</h2>
+                        <h2 className="title-name">Budget restant</h2>
+                        <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
+                    </div>
+                </div>
+                <br/>
+                <div className="div-category">
+                    <div className="li-category">
+                        <h2 className="title-name">Budget total</h2>
                         <p className="p-budget">{budget ? `${budget.total} €` : "- €"}</p>
                         {!budget && (
                             <button
@@ -118,28 +125,21 @@ export function BudgetPageComponent() {
                         )}
                     </div>
                 </div>
-                <br/>
-                <div className="div-category">
-                    <div className="li-category">
-                        <h2 className="title-name">Budget restant</h2>
-                        <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
-                    </div>
-                </div>
             </div>
 
             <div>
-                <h3 className="title-h3">Vos catégories</h3>
+            <h3 className="title-h3">Vos catégories</h3>
                 <ul className="ul-category">
                     {categoriesWithRemainingBudget.length > 0 ? (
                         categoriesWithRemainingBudget.map((category) => (
                             <li key={category.id} className="li-category">
                                 <span className="span-category-name">{category.name}</span>
-                                <span className="span-category-budget">
-                                Budget: {category.maxBudget} €
-                            </span>
                                 <span className="span-category-budgetmax">
-                                Restant: {category.remainingBudget} €
-                            </span>
+                                    Budget restant : {category.remainingBudget} €
+                                </span>
+                                <span className="span-category-budget">
+                                    Budget initial : {category.maxBudget} €
+                                </span>
                             </li>
                         ))
                     ) : (
