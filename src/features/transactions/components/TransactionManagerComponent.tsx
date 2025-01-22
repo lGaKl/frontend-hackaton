@@ -5,6 +5,7 @@ import TransactionFormComponent from "./TransactionFormComponent.tsx";
 import {useLocation} from "react-router-dom";
 import {ApiError} from "../../../shared/exceptions/ApiError.ts";
 import {debounce} from "../../../shared/utils/Utils.ts";
+import TransactionListComponent from "./TransactionListComponent.tsx";
 
 export default function TransactionManagerComponent() {
     const dispatch = useTransactionDispatch();
@@ -22,7 +23,7 @@ export default function TransactionManagerComponent() {
             dispatch({type: "add", transaction: transactionCreated});
         }
         sendTransaction(transaction);
-    }
+    };
 
     const onTransactionUpdated: (transaction: Transaction) => void = debounce((transactionUpdated: Transaction) => {
         const sendUpdateTransaction = async (transaction: Transaction) => {
