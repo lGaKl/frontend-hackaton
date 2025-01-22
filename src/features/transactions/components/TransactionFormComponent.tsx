@@ -1,10 +1,10 @@
-﻿import {Transaction} from "../types/transaction.ts";
-import {FormEvent, useEffect, useState} from "react";
+﻿import {FormEvent, useEffect, useState} from "react";
 import {Category} from "../../categories/types/category.ts";
 import {fetchCategories} from "../../categories/services/category-service.tsx";
 import "./TransactionComponent.css"
+import {TransactionCreateCommand} from "../services/commands/transaction-create-command.ts";
 interface TransactionFormComponentProps {
-    onTransactionCreated: (t: Transaction) => void;
+    onTransactionCreated: (t: TransactionCreateCommand) => void;
 
 }
 
@@ -46,7 +46,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if(!formValid) return;
-        let transaction = {
+        const transaction = {
             amount: inputsAmount.amount,
             date_transaction: new Date().toISOString().split('T')[0],
             description: inputsDescription.description,
