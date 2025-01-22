@@ -4,6 +4,7 @@ body {
     padding: 0;
     font-family: "Elephant", sans-serif;
 }
+
 .home-title {
     font-family: "Elephant", sans-serif;
     color: #d32f2f;
@@ -41,33 +42,40 @@ body {
     height: 50vh;
 }
 
-.home-snowflake {
-    color: #fff;
-    font-size: 1em;
-    font-family: Arial, sans-serif;
-    text-shadow: 0 0 5px #000;
-    opacity: 0.6;
-}
-
 .home-chart-container {
     position: relative;
-    width: 100%;
-    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 100%;
     padding: 1rem;
 }
 
-.home-radial-chart {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
+.home-chart-background {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    height: 320px;
 }
 
-.home-radial-chart.zoomed {
-    transform: scale(1.1);
+.home-chart-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.radial-chart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* Assurez-vous qu'il est au-dessus de la CircularProgressbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .home-chart-title {
@@ -79,49 +87,12 @@ body {
     margin: 1rem 0;
 }
 
-.home-chart-and-details {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.home-category-details {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-}
-
-.home-category-details h3 {
-    font-size: 1.5rem;
-    color: #000;
-}
-
-.home-category-details p {
-    font-size: 1.25rem;
-    color: #000;
-}
-
-.home-radial-chart path {
-    transition: transform 0.3s ease;
-}
-
-.home-radial-chart path:hover {
-    transform: scale(1.1);
-}
-
-.home-radial-chart path.selected {
-    transform: scale(1.0);
-}
-
-.home-radial-chart text {
-    font-size: 12px;
-    fill: #222;
-    pointer-events: none;
+.home-radial-chart {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .home-animated-chart path {
@@ -136,12 +107,17 @@ body {
     fill: #ff4500;
 }
 
-.home-snowflake, .home-snowflake .inner {
-    animation-iteration-count: infinite;
-    animation-play-state: running;
+.snowflake {
+    color: #fff;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-shadow: 0 0 5px #000;
+    opacity: 0.6;
 }
 
-@keyframes home-snowflakes-fall {
+.snowflake,.snowflake .inner{animation-iteration-count:infinite;animation-play-state:running}@keyframes snowflakes-fall{0%{transform:translateY(0)}100%{transform:translateY(110vh)}}@keyframes snowflakes-shake{0%,100%{transform:translateX(0)}50%{transform:translateX(80px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;user-select:none;cursor:default;pointer-events:none;animation-name:snowflakes-shake;animation-duration:3s;animation-timing-function:ease-in-out}.snowflake .inner{animation-duration:10s;animation-name:snowflakes-fall;animation-timing-function:linear}.snowflake:nth-of-type(0){left:1%;animation-delay:0s}.snowflake:nth-of-type(0) .inner{animation-delay:0s}.snowflake:first-of-type{left:10%;animation-delay:1s}.snowflake:first-of-type .inner,.snowflake:nth-of-type(8) .inner{animation-delay:1s}.snowflake:nth-of-type(2){left:20%;animation-delay:.5s}.snowflake:nth-of-type(2) .inner,.snowflake:nth-of-type(6) .inner{animation-delay:6s}.snowflake:nth-of-type(3){left:30%;animation-delay:2s}.snowflake:nth-of-type(11) .inner,.snowflake:nth-of-type(3) .inner{animation-delay:4s}.snowflake:nth-of-type(4){left:40%;animation-delay:2s}.snowflake:nth-of-type(10) .inner,.snowflake:nth-of-type(4) .inner{animation-delay:2s}.snowflake:nth-of-type(5){left:50%;animation-delay:3s}.snowflake:nth-of-type(5) .inner{animation-delay:8s}.snowflake:nth-of-type(6){left:60%;animation-delay:2s}.snowflake:nth-of-type(7){left:70%;animation-delay:1s}.snowflake:nth-of-type(7) .inner{animation-delay:2.5s}.snowflake:nth-of-type(8){left:80%;animation-delay:0s}.snowflake:nth-of-type(9){left:90%;animation-delay:1.5s}.snowflake:nth-of-type(9) .inner{animation-delay:3s}.snowflake:nth-of-type(10){left:25%;animation-delay:0s}.snowflake:nth-of-type(11){left:65%;animation-delay:2.5s}
+
+@keyframes snowflakes-fall {
     0% {
         transform: translateY(0);
     }
@@ -150,8 +126,9 @@ body {
     }
 }
 
-@keyframes home-snowflakes-shake {
-    0%, 100% {
+@keyframes snowflakes-shake {
+    0%,
+    100% {
         transform: translateX(0);
     }
     50% {
@@ -159,7 +136,7 @@ body {
     }
 }
 
-.home-snowflake {
+.snowflake {
     position: fixed;
     top: -10%;
     z-index: -1;
@@ -167,43 +144,43 @@ body {
     user-select: none;
     cursor: default;
     pointer-events: none;
-    animation-name: home-snowflakes-shake;
+    animation-name: snowflakes-shake;
     animation-duration: 3s;
     animation-timing-function: ease-in-out;
 }
 
-.home-snowflake .inner {
+.snowflake .inner {
     animation-duration: 10s;
-    animation-name: home-snowflakes-fall;
+    animation-name: snowflakes-fall;
     animation-timing-function: linear;
 }
 
-.home-snowflake:nth-of-type(1) {
+.snowflake:nth-of-type(1) {
     left: 1%;
     animation-delay: 0s;
 }
 
-.home-snowflake:nth-of-type(2) {
+.snowflake:nth-of-type(2) {
     left: 20%;
     animation-delay: 0.5s;
 }
 
-.home-snowflake:nth-of-type(3) {
+.snowflake:nth-of-type(3) {
     left: 30%;
     animation-delay: 2s;
 }
 
-.home-snowflake:nth-of-type(4) {
+.snowflake:nth-of-type(4) {
     left: 40%;
     animation-delay: 2s;
 }
 
-.home-snowflake:nth-of-type(5) {
+.snowflake:nth-of-type(5) {
     left: 50%;
     animation-delay: 3s;
 }
 
-.home-snowflake:nth-of-type(6) {
+.snowflake:nth-of-type(6) {
     left: 60%;
     animation-delay: 2s;
 }
@@ -223,13 +200,134 @@ body {
     }
 
     .home-radial-chart {
-        max-width: 300px; /* Adjust the max-width for smaller screens */
+        max-width: 300px;
     }
+
     .home-category-details h3 {
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
 
     .home-category-details p {
+        font-size: 1rem;
+    }
+}
+
+/* Style des étiquettes dans le RadialChart */
+.home-radial-chart .rv-xy-plot__series--label {
+    font-family: "Elephant", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    fill: #9e4d0d;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.home-category-details {
+    position: absolute; /* Permet de fixer la div en-dessous du graphique */
+    top: calc(100% + 20px); /* Place la div juste en dessous du graphique avec un espace de 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    z-index: 5; /* S'assure que la div est au-dessus des autres éléments si nécessaire */
+}
+
+.home-category-details h3 {
+    font-size: 1.5rem;
+    color: #000;
+}
+
+.home-category-details p {
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.span-home {
+    font-size: 1rem;
+}
+
+/* Conteneur principal des détails de la catégorie */
+.home-category-details {
+    background-color: #cdb878;
+    border: 2px solid #d32f2f;
+    border-radius: 15px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    margin: 0.5rem auto;
+    opacity: 0.95;
+    font-family: "Elephant", sans-serif;
+}
+
+/* Titre de la catégorie */
+.home-title-category {
+    font-size: 1.8rem;
+    color: #9e4d0d;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Label des données */
+.category-home-label {
+    color: #9e4d0d;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+/* Données affichées */
+.category-data {
+    font-size: 1.3rem;
+    color: black;
+    margin-bottom: 1rem;
+}
+
+/* Adaptation pour petits écrans */
+@media (max-width: 768px) {
+    .div-category-details {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    .category-title {
+        font-size: 1.5rem;
+    }
+
+    .category-label {
+        font-size: 1.1rem;
+    }
+
+    .category-data {
+        font-size: 1.2rem;
+    }
+    .span-home {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .div-category-details {
+        padding: 0.8rem;
+        border-radius: 8px;
+    }
+
+    .category-title {
+        font-size: 1.3rem;
+    }
+
+    .category-label {
+        font-size: 1rem;
+    }
+
+    .category-data {
+        font-size: 1.1rem;
+    }
+    .span-home {
         font-size: 1rem;
     }
 }

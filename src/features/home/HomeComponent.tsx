@@ -12,10 +12,14 @@ import RadialChart from "./RadialChart.tsx";
 import { RadialChartPoint } from "react-vis";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import {useAuth} from "../auth/AuthContext.tsx";
 
 export function HomeComponent() {
+
+    const { isAuthenticated } = useAuth();
+
     const snowflakes = Array.from({ length: 6 }, (_, index) => (
-        <div key={index} className="home-snowflake">
+        <div key={index} className="snowflake">
             <div className="inner">❅</div>
         </div>
     ));
@@ -142,49 +146,58 @@ export function HomeComponent() {
     const percentage = (remainingBudget / (budget?.total || 1)) * 100;
     return (
         <>
-            <h1 className="home-title">Bienvenue</h1>
-            <div className="home-nav-container">
-                <Nav.Link to="/login" as={NavLink}> <span className="home-navlink">Se connecter</span> </Nav.Link><br/>
-                <Nav.Link to="/register" as={NavLink}> <span className="home-navlink">S'enregistrer</span> </Nav.Link>
-            </div>
-            <div className="home-snowflakes" aria-hidden="true">
-                {snowflakes}
-            </div>
-            <div className="home-chart-container">
-                <h2 className="home-chart-title">Répartition du Budget</h2>
-                <div className="home-chart-and-details">
-                    <RadialChart
-                        data={data}
-                        width={500}
-                        height={500}
-                        onValueClick={handleValueClick}
-                        className="home-radial-chart"
-                    />
-                    {selectedCategory && (
-                        <div className="home-category-details">
-                            <h3>Catégorie: {selectedCategory.name}</h3>
-                            <p>Budget maximum : {selectedCategory.maxBudget} €</p>
-                            <p>Pourcentage du budget total: {selectedCategory.percentageOfTotal.toFixed(2)}%</p>
-                            <p>Pourcentage des dépenses de la catégorie: {selectedCategory.percentageOfCategory.toFixed(2)}%</p>
-                        </div>
-                    )}
+            {!isAuthenticated && (
+                <div className="home-nav-container">
+                    <h1 className="home-title">Bienvenue</h1>
+                    <Nav.Link to="/login" as={NavLink}> <span className="home-navlink">Se connecter</span>
+                    </Nav.Link><br/>
+                    <Nav.Link to="/register" as={NavLink}> <span className="home-navlink">S'enregistrer</span>
+                    </Nav.Link>
                 </div>
-                <div className="home-total-budget">
-                    <h2>Budget Total</h2>
-                    <div style={{width: 300, height: 300}}>
-                        <CircularProgressbar
-                            value={percentage}
-                            text={`${remainingBudget} € restants sur ${budget?.total} €`}
-                            styles={buildStyles({
-                                textSize: '12px',
-                                pathColor: `rgba(62, 152, 199, ${percentage / 100})`,
-                                textColor: '#f88',
-                                trailColor: '#d6d6d6',
-                                backgroundColor: '#3e98c7',
-                            })}
-                        />
+            )}
+            {isAuthenticated && (
+                <div className="home-chart-container">
+                    <h2 className="home-chart-title">Répartition du Budget</h2>
+                    <div className="home-chart-background">
+                        <div className="home-chart-overlay">
+                            <CircularProgressbar
+                                value={percentage}
+                                styles={buildStyles({
+                                    textSize: '7px',
+                                    pathColor: `#146B3A`,
+                                    trailColor: 'rgba(205, 184, 120, 0.5)',
+                                    pathTransitionDuration: 5
+                                })}
+                            />
+                            <div className="radial-chart-container">
+                                <div className="home-chart-and-details">
+                                    <RadialChart
+                                        data={data}
+                                        onValueClick={handleValueClick}
+                                        className="home-radial-chart"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        {selectedCategory && (
+                            <div className="home-category-details">
+                                <h3 className="home-title-category">{selectedCategory.name}</h3>
+                                <p className="category-data">
+                                    <span className="category-home-label">Budget maximum :</span> <span className="span-home">{selectedCategory.maxBudget} €</span>
+                                </p>
+                                <p className="category-data">
+                                    <span className="category-home-label">Pourcentage du budget total :</span> <span className="span-home">{selectedCategory.percentageOfTotal.toFixed(2)}%</span>
+                                </p>
+                                <p className="category-data">
+                                    <span className="category-home-label">Pourcentage des dépenses de la catégorie :</span> <span className="span-home">{selectedCategory.percentageOfCategory.toFixed(2)}%</span>
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
+            )}
+            <div className="home-snowflakes" aria-hidden="true">
+                {snowflakes}
             </div>
         </>
     );
