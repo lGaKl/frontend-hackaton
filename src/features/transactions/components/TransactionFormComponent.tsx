@@ -1,10 +1,11 @@
-﻿import {Transaction} from "../types/transaction.ts";
-import {FormEvent, useEffect, useState} from "react";
+﻿import {FormEvent, useEffect, useState} from "react";
 import {Category} from "../../categories/types/category.ts";
 import {fetchCategories} from "../../categories/services/category-service.tsx";
 import "./TransactionComponent.css"
+import {TransactionCreateCommand} from "../services/commands/transaction-create-command.ts";
+
 interface TransactionFormComponentProps {
-    onTransactionCreated: (t: Transaction) => void;
+    onTransactionCreated: (t: TransactionCreateCommand) => void;
 
 }
 
@@ -20,8 +21,10 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
     }
 
     function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setInputsAmount({ amount: parseFloat(e.target.value) });
+        const value = e.target.value.replace(",", ".");
+        setInputsAmount({ amount: parseFloat(value) });
     }
+
 
     useEffect(() => {
         checkFormValidity();
@@ -65,13 +68,29 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
     return (
         <form onSubmit={handleSubmit} className="form-transaction">
             <div className="div-transaction">
-                <h1 className="h2-category">Add a Transaction</h1>
+                <h1 className="h2-transaction">Nouvelle transaction</h1>
                 <label className="label-transaction">Description</label>
-                <input type="text" name="Description" className="input-transaction" onChange={handleDescriptionChange}/><br/>
+                <input
+                    type="text"
+                    name="Description"
+                    className="input-transaction"
+                    onChange={handleDescriptionChange}
+                /><br/>
                 <label className="label-transaction">Amount</label>
-                <input type="number" name="Amount" className="input-transaction" onChange={handleAmountChange}/><br/>
+                <input
+                    type="number"
+                    name="Amount"
+                    className="input-transaction"
+                    step="any"
+                    onChange={handleAmountChange}
+                /><br/>
                 <label htmlFor="options" className="label-transaction">Select a category :</label>
-                <select id="options" className="option-transaction" value={selectedCategory} onChange={handleCategoryChange}>
+                <select
+                    id="options"
+                    className="option-transaction"
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                >
                     <option value="">--Categories--</option>
                     {categories.map(category => (
                         <option key={category.id} value={category.id}>
@@ -79,7 +98,11 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                         </option>
                     ))}
                 </select><br/>
-                <input type="submit" className="submit-transaction" disabled={!formValid}/>
+                <input
+                    type="submit"
+                    className="submit-transaction"
+                    disabled={!formValid}
+                />
             </div>
         </form>
     );

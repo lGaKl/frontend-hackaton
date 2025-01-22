@@ -13,8 +13,8 @@ export function HomeComponent() {
         <>
             <h1 className="home-title">Bienvenue</h1>
             <div className="nav-container">
-                <Nav.Link to="/login" as={NavLink} > <span className="navlink">Login</span> </Nav.Link><br/>
-                <Nav.Link to="/register" as={NavLink} > <span className="navlink">Register</span> </Nav.Link>
+                <Nav.Link to="/login" as={NavLink} > <span className="navlink">Se connecter</span> </Nav.Link><br/>
+                <Nav.Link to="/register" as={NavLink} > <span className="navlink">S'enregistrer</span> </Nav.Link>
             </div>
             <div className="snowflakes" aria-hidden="true">
                 {snowflakes}
