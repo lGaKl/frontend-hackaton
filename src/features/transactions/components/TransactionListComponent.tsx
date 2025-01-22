@@ -19,20 +19,23 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
         setLocalEdits((prev) => ({
             ...prev,
             [transaction.id]: { ...transaction }
+
         }));
+        console.log("transaction :",transaction);
     };
 
     const handleSaveClick = async (transactionId: number) => {
         const updatedTransaction = localEdits[transactionId];
+        console.log("Mise à jour de la transaction :", updatedTransaction);
         if (!updatedTransaction) return;
 
         try {
-            console.log("Mise à jour de la transaction :", updatedTransaction);
+
 
             const response = await updateTransaction(transactionId, {
-                description: updatedTransaction.description,
                 amount: updatedTransaction.amount,
                 date_transaction: updatedTransaction.date_transaction,
+                description: updatedTransaction.description,
                 budgetId: updatedTransaction.budgetId,
                 categoryId: updatedTransaction.categoryId
             });
@@ -94,7 +97,7 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                     <input
                                         type="date"
                                         value={localEdits[transaction.id]?.date_transaction || ""}
-                                        name="dateTransaction"
+                                        name="date_transaction"
                                         onChange={(e) => handleChange(e, transaction.id)}
                                         className="input-transaction"
                                     />

@@ -27,6 +27,7 @@ export const deleteTransaction = async (id: number): Promise<Response> => {
 };
 
 export const updateTransaction = async (id: number, transaction: TransactionUpdateCommand): Promise<Response> => {
+    console.log("updateTransaction",transaction)
     return fetch(`${TRANSACTION_API_URL}/${id}`, {
         method: "PATCH",
         headers: {

@@ -26,12 +26,13 @@ export default function TransactionManagerComponent() {
 
     const onTransactionUpdated: (transaction: Transaction) => void = transactionUpdated => {
         const sendUpdateTransaction = async (transaction: Transaction) => {
-            const response = await updateTransaction(transaction.idTransaction!!,{
+            const response = await updateTransaction(transaction.id!,{
                 amount: transaction.amount,
-                dateTransaction: transaction.dateTransaction,
-                idBudget: transaction.idBudget,
-                idCategory: transaction.idCategory,
-                description: transaction.description
+                date_transaction: transaction.date_transaction,
+                description: transaction.description,
+                budgetId: transaction.budgetId,
+                categoryId: transaction.categoryId,
+
             });
             if (!response.ok)
                 throw new ApiError(await response.json())
