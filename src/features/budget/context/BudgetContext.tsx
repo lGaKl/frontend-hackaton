@@ -1,6 +1,6 @@
 import {createContext, ReactNode, useContext, useEffect, useReducer} from "react";
-import {Budget} from "./types/Budget.ts";
-import {fetchBudgets} from "./services/BudgetService.tsx";
+import {Budget} from "../types/Budget.ts";
+import {fetchBudgets} from "../services/BudgetService.tsx";
 
 interface Action {
     type: "set" | "add" | "update" | "delete";

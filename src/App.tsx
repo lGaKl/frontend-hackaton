@@ -4,7 +4,6 @@ import {Route, Routes} from "react-router";
 import transactionRoutes from "./features/transaction-routes.tsx";
 import {Container} from "react-bootstrap"
 import {HomeComponent} from "./features/home/HomeComponent.tsx";
-import {BudgetPageComponent} from "./features/budget/components/BudgetPageComponent.tsx";
 import categoriesRoutes from "./features/categories/categories-routes.tsx";
 import {LoginComponent} from "./core/components/login/LoginComponent.tsx";
 import {RegisterComponent} from "./core/components/register/RegisterComponent.tsx";
@@ -18,7 +17,6 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomeComponent/>} />
                 {categoriesRoutes}
-                <Route path="/budget" element={<BudgetPageComponent/>} />
                 <Route index element={<HomeComponent/>}></Route>
                 {budgetRoutes}
                 {transactionRoutes}

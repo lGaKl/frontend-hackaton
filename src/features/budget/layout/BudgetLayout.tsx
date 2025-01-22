@@ -1,4 +1,4 @@
-import {BudgetProvider} from "../BudgetContext.tsx";
+import {BudgetProvider} from "../context/BudgetContext.tsx";
 import {Outlet} from "react-router";
 
 export function BudgetLayout(){

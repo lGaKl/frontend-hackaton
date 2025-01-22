@@ -1,8 +1,8 @@
-import { useBudgetDispatch } from "../BudgetContext.tsx";
-import { Budget } from "../types/Budget.ts";
-import { postBudget, updateBudget } from "../services/BudgetService.tsx";
+import { useBudgetDispatch } from "../context/BudgetContext.tsx";
+//import { Budget } from "../types/Budget.ts";
+import { postBudget/*, updateBudget*/ } from "../services/BudgetService.tsx";
 import { BudgetCreateCommand } from "../services/commands/BudgetCreateCommand.ts";
-import { debounce } from "../../../shared/utils/Utils.ts";
+//import { debounce } from "../../../shared/utils/Utils.ts";
 import { useLocation } from "react-router-dom";
 import { BudgetPageComponent } from "./BudgetPageComponent.tsx";
 import { NewBudgetComponent } from "./NewBudgetComponent.tsx";
@@ -22,7 +22,7 @@ export default function BudgetManagerComponent() {
         sendBudget(budget);
     };
 
-    const onBudgetUpdated = debounce((budget: Budget) => {
+    /*const onBudgetUpdated = debounce((budget: Budget) => {
         const sendUpdateBudget = async (budget: Budget) => {
             const response = await updateBudget({
                 id: budget.id,
@@ -32,14 +32,14 @@ export default function BudgetManagerComponent() {
             if (!response.ok) throw new Error(await response.json());
         };
         sendUpdateBudget(budget);
-    }, 500);
+    }, 500);*/
 
     let content;
     switch (location.pathname) {
         case "/budget":
             content = <BudgetPageComponent />;
             break;
-        case "/budget/newBudget":
+        case "/newBudget":
             content = <NewBudgetComponent onBudgetCreated={onBudgetCreated} />;
             break;
         default:
@@ -47,4 +47,7 @@ export default function BudgetManagerComponent() {
     }
 
     return <div>{content}</div>;
+    /*return <>
+        <NewBudgetComponent onBudgetCreated={onBudgetCreated} />
+    </>*/
 }
