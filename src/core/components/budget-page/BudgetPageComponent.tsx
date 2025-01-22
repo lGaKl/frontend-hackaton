@@ -86,7 +86,12 @@ export function BudgetPageComponent() {
     }, [categories, transactions]);
 
     /* show form for new budget */
-    const handleShowForm = () => setShowForm(true);
+    const handleShowForm = () => {
+        console.log("Add Budget button clicked");
+        setShowForm(true);
+        console.log("Show form state:", true);
+    };
+
     const handleCloseForm = () => setShowForm(false);
 
     const handleSubmit = (event: React.FormEvent) => {

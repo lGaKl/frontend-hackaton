@@ -79,6 +79,7 @@
     gap: 0.3rem;
     width: 100%;
     opacity: 90%;
+    overflow: visible;
 }
 
 .title-name {
@@ -97,6 +98,12 @@
     text-align: center;
     width: 100%;
 }
+
+.button-add {
+    position: relative;
+    z-index: 10;
+}
+
 
 .p-budget {
     font-family: "Elephant", sans-serif;
