@@ -8,9 +8,10 @@ import {Category} from "../../categories/types/category.ts";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transaction: Transaction) => void;
+    onTransactionDeleted: (transactionDeleted: Transaction) => void
 }
 
-export default function TransactionListComponent({onTransactionUpdated}: TransactionListComponentProps) {
+export default function TransactionListComponent({onTransactionUpdated,onTransactionDeleted}: TransactionListComponentProps) {
     const dispatch = useTransactionDispatch();
     const transactions = useTransactions();
     const [editingTransactionId, setEditingTransactionId] = useState<number | null>(null);
@@ -48,6 +49,12 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
         const category = categories.find(category => category.id === id);
         return category ? category.name : "Catégorie pas trouvé";
     };
+
+    function processTransactionDelete (transaction: Transaction) {
+        if (!confirm("Are you sure you want to delete?")) return;
+        onTransactionDeleted(transaction);
+    }
+
 
 
     const handleSaveClick = async (transactionId: number) => {
@@ -142,13 +149,20 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
                                                 </option>
                                             ))}
                                     </select>
-                                    <button onClick={() => handleSaveClick(transaction.id!)}
-                                            className="button-transaction">Confirmer
-                                    </button>
+                                    <div>
+                                        <button
+                                            onClick={()=> processTransactionDelete(transaction)}
+                                            className="button-transaction">Supprimer
+                                        </button>
+                                        <button onClick={() => handleSaveClick(transaction.id!)}
+                                                className="button-transaction">Confirmer
+                                        </button>
+
+                                    </div>
                                 </>
                             ) : (
                                 <>
-                                    <span className="span-transactions">Description: {transaction.description}</span>
+                                <span className="span-transactions">Description: {transaction.description}</span>
                                     <span className="span-transactions">Montant: {transaction.amount} €</span>
                                     <span className="span-transactions">Date: {transaction.date_transaction}</span>
                                     <span className="span-transactions">Catégorie: {getCategoryName(transaction.categoryId)}</span>
