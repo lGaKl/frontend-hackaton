@@ -10,5 +10,8 @@ export default [
         <Route path="transactionList" element={
             <SuspenseWrapper key="transaction-list" importFn={() => import("./transactions/components/TransactionManagerComponent.tsx")}/>
         }/>
+        <Route path="transactions" element={
+            <SuspenseWrapper key="transactions" importFn={() => import("./transactions/components/TransactionsComponents.tsx")}/>
+        }/>
     </Route>
 ];

@@ -9,6 +9,7 @@ import categoriesRoutes from "./features/categories/categories-routes.tsx";
 import {LoginComponent} from "./core/components/login/LoginComponent.tsx";
 import {RegisterComponent} from "./core/components/register/RegisterComponent.tsx";
 import {AuthProvider} from "./features/auth/AuthContext.tsx";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return <>

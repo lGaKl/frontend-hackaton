@@ -3,6 +3,7 @@ import { useCategories, useCategoryDispatch } from "../context/CategoriesContext
 import { ChangeEvent, useState } from "react";
 import "./CategoryComponent.css";
 import { useNavigate } from "react-router";
+import {toast} from "react-toastify";
 
 interface CategoryListComponentProps {
     onCategoryDeleted: (categoryDeleted: Category) => void;
@@ -10,7 +11,7 @@ interface CategoryListComponentProps {
 }
 
 export function CategoryListComponent({
-                                          onCategoryDeleted,
+                                          /*onCategoryDeleted,*/
                                           onCategoryUpdated,
                                       }: CategoryListComponentProps) {
     const navigate = useNavigate();
@@ -34,6 +35,8 @@ export function CategoryListComponent({
         onCategoryUpdated(updatedCategory);
         dispatch({ type: "update", category: updatedCategory });
         setEditingCategoryId(null);
+        toast.success("Catégorie modifiée avec succès !");
+
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>, categoryId: number) => {
@@ -98,12 +101,6 @@ export function CategoryListComponent({
                                 </button>
                             </>
                         )}
-                        <button
-                            className="button-category delete-button"
-                            onClick={() => onCategoryDeleted(category)}
-                        >
-                            Supprimer
-                        </button>
                     </div>
                 </li>
             ))}

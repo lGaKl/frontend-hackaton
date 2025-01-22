@@ -1,6 +1,6 @@
 ﻿import {useTransactionDispatch} from "../contexts/TransactionContext.tsx";
 import {Transaction} from "../types/transaction.ts";
-import {postTransaction, updateTransaction} from "../services/transaction-service.tsx";
+import {deleteTransaction, postTransaction, updateTransaction} from "../services/transaction-service.tsx";
 import TransactionFormComponent from "./TransactionFormComponent.tsx";
 import {useLocation} from "react-router-dom";
 import {ApiError} from "../../../shared/exceptions/ApiError.ts";
@@ -42,13 +42,27 @@ export default function TransactionManagerComponent() {
         sendUpdateTransaction(transactionUpdated);
     },500);
 
+    const onTransactionDeleted: (transactionDeleted: Transaction)=> void = transactionDeleted =>{
+        if(!transactionDeleted.id)
+            return;
+        const sendDeleteTransaction = async (transaction: Transaction) => {
+            const response = await deleteTransaction(transaction.id!);
+            if(response.ok)
+                dispatch({type: "delete", transaction: transactionDeleted});
+            else
+                throw ApiError.fromResponseJson(await response.json());
+        }
+        sendDeleteTransaction(transactionDeleted);
+    }
+
+
     let content;
     switch (location.pathname) {
         case "/transactions/transactionForm":
             content = <TransactionFormComponent onTransactionCreated={onTransactionCreated}/>;
             break;
         case "/transactions/transactionList":
-            content = <TransactionListComponent onTransactionUpdated={debounce(onTransactionUpdated, 500)} />;
+            content = <TransactionListComponent onTransactionUpdated={debounce(onTransactionUpdated, 500)} onTransactionDeleted={onTransactionDeleted} />;
             break;
         default:
             content = <div>Page not found</div>;

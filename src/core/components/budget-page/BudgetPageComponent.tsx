@@ -58,7 +58,8 @@ export function BudgetPageComponent() {
         const totalSpent = transactions.reduce(
             (amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
 
-        return budget.total - totalSpent;
+        const remaining = budget.total - totalSpent;
+        return parseFloat(remaining.toFixed(2));
     };
 
     const remainingBudget = useMemo(calculateRemainingBudget, [budget, transactions]);
@@ -78,14 +79,21 @@ export function BudgetPageComponent() {
     };
 
     const categoriesWithRemainingBudget = useMemo(() => {
-        return categories.map((category) => ({
-            ...category,
-            remainingBudget: calculateRemainingBudgetByCategory(category.id),
-        }));
+        return categories
+            .filter(category => category.maxBudget > 0) // Exclut les catégories avec un budget de 0
+            .map((category) => ({
+                ...category,
+                remainingBudget: calculateRemainingBudgetByCategory(category.id),
+            }));
     }, [categories, transactions]);
 
     /* show form for new budget */
-    const handleShowForm = () => setShowForm(true);
+    const handleShowForm = () => {
+        console.log("Add Budget button clicked");
+        setShowForm(true);
+        console.log("Show form state:", true);
+    };
+
     const handleCloseForm = () => setShowForm(false);
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -135,11 +143,11 @@ export function BudgetPageComponent() {
                             <li key={category.id} className="li-category">
                                 <span className="span-category-name">{category.name}</span>
                                 <span className="span-category-budget">
-                                Budget: {category.maxBudget} €
-                            </span>
+                        Budget: {category.maxBudget} €
+                    </span>
                                 <span className="span-category-budgetmax">
-                                Restant: {category.remainingBudget} €
-                            </span>
+                        Restant: {category.remainingBudget} €
+                    </span>
                             </li>
                         ))
                     ) : (
@@ -165,10 +173,10 @@ export function BudgetPageComponent() {
                                         id="formBudgetTotal"
                                         type="number"
                                         placeholder="Enter total budget"
-                                        style={{ fontFamily: "Elephant, sans-serif" }}
+                                        style={{fontFamily: "Elephant, sans-serif"}}
                                         value={newBudget.total}
                                         onChange={(e) =>
-                                            setNewBudget({ ...newBudget, total: e.target.value })
+                                            setNewBudget({...newBudget, total: e.target.value})
                                         }
                                         required
                                     />
@@ -179,9 +187,9 @@ export function BudgetPageComponent() {
                                         id="formBudgetDate"
                                         type="date"
                                         value={newBudget.date}
-                                        style={{ fontFamily: "Elephant, sans-serif" }}
+                                        style={{fontFamily: "Elephant, sans-serif"}}
                                         onChange={(e) =>
-                                            setNewBudget({ ...newBudget, date: e.target.value })
+                                            setNewBudget({...newBudget, date: e.target.value})
                                         }
                                         required
                                     />
