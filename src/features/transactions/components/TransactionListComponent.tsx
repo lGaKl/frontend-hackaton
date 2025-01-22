@@ -68,20 +68,20 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
 
     return (
         <div>
-            <h1 className="h1">Liste des transactions</h1>
-            <ul className="ul">
+            <h1 className="h1-transactions">Liste des transactions</h1>
+            <ul className="ul-transactions">
                 {transactions.map((transaction, index) => (
-                    <li key={transaction.id} className="li">
-                        <span className="span">Transaction #{index + 1}</span>
-                        <div className="div">
+                    <li key={transaction.id} className="li-transactions">
+                        <h2 className="span-transactions-title">Transaction #{index + 1}</h2>
+                        <div className="div-transactions">
                             {editingTransactionId === transaction.id ? (
                                 <>
                                     <input
                                         type="text"
                                         value={localEdits[transaction.id]?.description || ""}
                                         name="description"
-                                            onChange={(e) => handleChange(e, transaction.id!)}
-                                            className="input-transaction"
+                                        onChange={(e) => handleChange(e, transaction.id!)}
+                                        className="input-transaction"
                                     />
                                     <input
                                         type="number"
@@ -97,15 +97,25 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
                                     />
-                                    <button onClick={() => handleSaveClick(transaction.id!)} className="button-category">Confirmer</button>
+                                    <button
+                                        onClick={() => handleSaveClick(transaction.id!)}
+                                        className="button-transaction"
+                                    >
+                                        Confirmer
+                                    </button>
                                 </>
                             ) : (
                                 <>
-                                    <span className="span">Description: {transaction.description}</span>
-                                    <span className="span">Montant: {transaction.amount}</span>
-                                    <span className="span">Date: {transaction.date_transaction}</span>
-                                    <span className="span">Catégorie: {transaction.categoryId}</span>
-                                    <button onClick={() => handleEditClick(transaction)} className="button-category">Modifier</button>
+                                    <span className="span-transactions">Description: <span className="span-transactions-data">{transaction.description}</span></span>
+                                    <span className="span-transactions">Montant: <span className="span-transactions-data">{transaction.amount} €</span></span>
+                                    <span className="span-transactions">Date: <span className="span-transactions-data">{transaction.date_transaction}</span></span>
+                                    <span className="span-transactions">Catégorie: <span className="span-transactions-data">{transaction.categoryId}</span></span>
+                                    <button
+                                        onClick={() => handleEditClick(transaction)}
+                                        className="button-transaction"
+                                    >
+                                        Modifier
+                                    </button>
                                 </>
                             )}
                         </div>

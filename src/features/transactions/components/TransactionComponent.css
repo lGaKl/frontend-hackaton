@@ -5,9 +5,9 @@
     font-family: "Elephant", sans-serif;
 }
 
-/* FORMULAIRE */
-h1 {
-    color: #9E8B75;
+.h1-transactions {
+    color: #d32f2f;
+    -webkit-text-stroke: 1px #cdb878;
     text-align: center;
     font-size: 3rem;
     margin: 1rem 0;
@@ -32,7 +32,10 @@ h3 {
 }
 
 .h2-transaction {
+    color: #9e4d0d;
     text-align: center;
+    font-size: 3rem;
+    margin: 1rem 0;
 }
 
 .label-transaction {
@@ -64,7 +67,6 @@ h3 {
     color: white;
 }
 
-/* Liste déroulante des options */
 .option-transaction option {
     padding: 10px;
     background-color: #c4a55c;
@@ -73,7 +75,6 @@ h3 {
     cursor: pointer;
 }
 
-/* Option survolée */
 .option-transaction option:hover {
     background-color: white;
     color: #000;
@@ -98,82 +99,67 @@ h3 {
 }
 
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        margin: 0.8rem 0;
     }
 
-    form {
+    .form-transaction {
         padding: 1rem;
+        border-radius: 15px;
     }
 
-    form label {
+    .input-transaction,
+    .option-transaction {
         font-size: 1rem;
+        padding: 0.6rem;
     }
 
-    form input[type="text"],
-    form input[type="number"] {
-        font-size: 0.9rem;
-    }
-
-    form input[type="submit"] {
+    .submit-transaction {
         padding: 0.6rem 1rem;
         font-size: 0.9rem;
+        width: 70%;
     }
 
-    li {
-        padding: 0.8rem;
-    }
-
-    li span {
-        font-size: 1rem;
-    }
-
-    li button {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.8rem;
-    }
 }
 
 @media (max-width: 576px) {
     h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin: 0.6rem 0;
     }
 
-    form {
+    h3 {
+        font-size: 1.5rem;
+        margin: 0.6rem 0;
+    }
+
+    .form-transaction {
         padding: 0.8rem;
+        border-radius: 10px;
     }
 
-    form label {
-        font-size: 0.9rem;
+    .input-transaction,
+    .option-transaction {
+        font-size: 1rem;
+        padding: 0.5rem;
     }
 
-    form input[type="text"],
-    form input[type="number"] {
-        font-size: 0.8rem;
-    }
-
-    form input[type="submit"] {
+    .submit-transaction {
         padding: 0.5rem 0.8rem;
         font-size: 0.8rem;
+        width: 90%;
     }
 
-    li {
-        padding: 0.6rem;
+    .grid-item {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
-    li span {
-        font-size: 0.9rem;
-    }
-
-    li button {
-        padding: 0.5rem 0.6rem;
-        font-size: 0.7rem;
-    }
 }
-/* LISTE DES TRANSACTIONS */
-ul {
+
+.ul-transactions {
     list-style: none;
     padding: 0;
     margin: 1rem auto;
@@ -181,9 +167,9 @@ ul {
     opacity: 90%;
 }
 
-li {
-    background-color: #cdb878; /* Couleur de Noël */
-    border: 1px solid #d32f2f; /* Rouge pour Noël */
+.li-transactions {
+    background-color: #cdb878;
+    border: 2px solid #d32f2f;
     border-radius: 10px;
     margin-bottom: 1rem;
     padding: 1rem;
@@ -191,60 +177,130 @@ li {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-li span {
-    color: white;
-    font-weight: bold;
+.li-transactions:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.span-transactions-title {
+    text-align: center;
+    color: #9e4d0d;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+
+.span-transactions {
+    color: #9e4d0d;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.span-transactions-data {
+    color: black;
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
 }
 
-li div {
+.div-transactions {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-li input[type="text"],
-li input[type="number"],
-li input[type="date"] {
-    margin: 0.2rem 0;
-    padding: 0.5rem;
+.input-transaction {
+    margin: 0.5rem 0;
+    padding: 0.8rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px;
     font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 100%;
 }
 
-li input[type="text"]:focus,
-li input[type="number"]:focus,
-li input[type="date"]:focus {
+.input-transaction:focus {
     border-color: #d4af37;
     outline: none;
 }
 
-h1 {
-    color: #9E8B75;
-    text-align: center;
-    font-size: 2.5rem;
-    margin: 1rem 0;
-}
-
-.button-category {
-    align-self: flex-end;
+.button-transaction {
     background-color: #d4af37;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 5px;
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: background-color 0.3s;
-    display: block;
-    margin: 1rem auto;
-    width: 50%;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 0.5rem;
+    align-self: flex-end;
 }
 
-.button-category:hover {
+.button-transaction:hover {
     background-color: #bfa331;
+}
+
+@media (max-width: 768px) {
+    .ul-transactions {
+        max-width: 95%;
+    }
+
+    .li-transactions {
+        padding: 0.8rem;
+    }
+
+    .span-transactions {
+        font-size: 1.1rem;
+    }
+
+    .span-transactions-data {
+        font-size: 1rem;
+    }
+
+    .span-transactions-title {
+        font-size: 1.3rem;
+    }
+
+    .button-transaction {
+        padding: 0.6rem 1rem;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .ul-transactions {
+        max-width: 100%;
+    }
+
+    .li-transactions {
+        padding: 0.6rem;
+    }
+
+    .span-transactions {
+        font-size: 1.1rem;
+    }
+
+    .span-transactions-data {
+        font-size: 1rem;
+    }
+
+    .span-transactions-title {
+        font-size: 1.3rem;
+    }
+
+    .button-transaction {
+        padding: 0.5rem 0.8rem;
+        font-size: 1.2rem;
+    }
+
+    .input-transaction {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
 }
