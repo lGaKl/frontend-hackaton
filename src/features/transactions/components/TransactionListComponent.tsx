@@ -5,7 +5,6 @@ import { updateTransaction } from "../services/transaction-service.tsx";
 import "./TransactionComponent.css"
 import {fetchCategories} from "../../categories/services/category-service.tsx";
 import {Category} from "../../categories/types/category.ts";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transaction: Transaction) => void;
@@ -51,7 +50,7 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
 
     const handleSaveClick = async (transactionId: number) => {
         console.log("Catégorie Sélectionnée:",selectedCategory);
-        const updatedTransaction = localEdits[transactionId];
+        const updatedTransaction = { ...localEdits[transactionId] };
         if (!updatedTransaction) return;
 
         try {
@@ -68,7 +67,17 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
             if (!response.ok) {
                 throw new Error("Erreur lors de la mise à jour de la transaction");
             }
-            console.log(updatedTransaction)
+            console.log("Données envoyées à l'API :", {
+                id: updatedTransaction.id,
+                description: updatedTransaction.description,
+                amount: updatedTransaction.amount,
+                date_transaction: updatedTransaction.date_transaction,
+                budgetId: updatedTransaction.budgetId,
+                categoryId: parseInt(selectedCategory),
+            })
+
+            console.log("updateTrans :",updatedTransaction)
+
             dispatch({ type: "update", transaction: updatedTransaction });
             onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
 
