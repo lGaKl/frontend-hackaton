@@ -3,6 +3,7 @@ import {Category} from "../../categories/types/category.ts";
 import {fetchCategories} from "../../categories/services/category-service.tsx";
 import "./TransactionComponent.css"
 import {TransactionCreateCommand} from "../services/commands/transaction-create-command.ts";
+import {toast} from "react-toastify";
 
 interface TransactionFormComponentProps {
     onTransactionCreated: (t: TransactionCreateCommand) => void;
@@ -60,6 +61,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
         };
         console.log(transaction);
         onTransactionCreated(transaction);
+        toast.success("Transaction créée avec succès !");
         const form = e.target as HTMLFormElement;
         form.reset();
         setFormValid(false);

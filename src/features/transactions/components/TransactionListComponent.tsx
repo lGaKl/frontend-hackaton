@@ -5,6 +5,7 @@ import {updateTransaction} from "../services/transaction-service.tsx";
 import "./TransactionComponent.css"
 import {fetchCategories} from "../../categories/services/category-service.tsx";
 import {Category} from "../../categories/types/category.ts";
+import {toast} from "react-toastify";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transaction: Transaction) => void;
@@ -80,6 +81,8 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
 
             dispatch({type: "update", transaction: updatedTransaction});
             onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
+            toast.success("Transaction modifiée avec succès !");
+
 
             // Réinitialisez l'état d'édition
             setEditingTransactionId(null);

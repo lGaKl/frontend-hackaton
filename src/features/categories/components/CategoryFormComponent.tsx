@@ -2,6 +2,7 @@ import {Category} from "../types/category.ts";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import "./CategoryComponent.css";
 import {useNavigate} from "react-router";
+import {toast} from "react-toastify";
 
 interface CategoryFormComponentProps {
     onCategoryCreated?: (c: Category) => void
@@ -37,6 +38,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
             onCategoryCreated(category);
         }
         const form = e.target as HTMLFormElement;
+        toast.success("Catégorie ajoutée avec succès !");
         form.reset();
         setFormValid(false);
         navigate("/categories/manager");
