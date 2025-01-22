@@ -18,10 +18,7 @@ export function NavigationBarComponent() {
                             className="vertical-dropdown"
                         >
                             <NavDropdown.Item as={NavLink} to="/transactions/transactionForm">Add transaction</NavDropdown.Item>
-                            <NavDropdown.Item as={NavLink} to="/transactions/transactionList">Update
-                                transaction</NavDropdown.Item>
-                            <NavDropdown.Item as={NavLink} to="/transactions/remove">Remove
-                                transaction</NavDropdown.Item>
+                            <NavDropdown.Item as={NavLink} to="/transactions/transactionList">Update transaction</NavDropdown.Item>
                         </NavDropdown>
 
                     <Nav.Link to="/budget" as={NavLink}>Budget</Nav.Link>
