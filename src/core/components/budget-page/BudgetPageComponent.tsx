@@ -58,7 +58,8 @@ export function BudgetPageComponent() {
         const totalSpent = transactions.reduce(
             (amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
 
-        return budget.total - totalSpent;
+        const remaining = budget.total - totalSpent;
+        return parseFloat(remaining.toFixed(2));
     };
 
     const remainingBudget = useMemo(calculateRemainingBudget, [budget, transactions]);
