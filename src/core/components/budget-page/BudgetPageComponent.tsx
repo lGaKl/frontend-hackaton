@@ -1,4 +1,3 @@
-import { Col, Row, Card, Button, Form, Modal } from "react-bootstrap";
 import "./BudgetPageComponent.css";
 import React, { useEffect, useState, useMemo } from "react";
 import { Category } from "../../../features/categories/types/category.ts";
@@ -98,98 +97,112 @@ export function BudgetPageComponent() {
         <>
             <h1 className="title-h1">Budget</h1>
 
-            <Row className="g-3 mb-5">
-                <Col md={6} sm={12}>
-                    {/* Total budget and remaining budget */}
-                    <Card className="budget-card">
-                        <Card.Body>
-                            <Card.Title>Budget Total</Card.Title>
-                            <Card.Text>
-                                {budget ? `${budget.total} €` : "- €"}
-                            </Card.Text>
-                            {!budget && (
-                                <Button
-                                    className="button-add"
-                                    style={{
-                                        backgroundColor:"#91a767",
-                                        borderColor:"#91a767"}}
-                                    onClick={handleShowForm}>
-                                    Add Budget
-                                </Button>
-                            )}
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col md={6} sm={12}>
-                    <Card className="budget-card">
-                        <Card.Body>
-                            <Card.Title>Budget restant</Card.Title>
-                            <Card.Text>
-                                {budget ? `${remainingBudget} €` : "Loading..."}
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-
-            {/* Display categories */}
-            <Row className="g-3">
-                <Col xs={12}>
-                    <h3 className="title-h3">Your categories</h3>
-                    <ul className="ul-category">
-                        {categoriesWithRemainingBudget.length > 0 ? (
-                            categoriesWithRemainingBudget.map((category) => (
-                                <li key={category.id} className="li-category">
-                                    <span className="span-category">{category.name}</span>
-                                    <span className="span-category">
-                                        Budget max: {category.maxBudget} €
-                                    </span>
-                                    <span className="span-category">
-                                        Remaining budget: {category.remainingBudget} €
-                                    </span>
-                                </li>
-                            ))
-                        ) : (
-                            <p className="p-no-found">No categories found :(</p>
+            <div className="grid-item">
+                <div className="div-category">
+                    <div className="li-category">
+                        <h2 className="title-name">Budget Total</h2>
+                        <p className="p-budget">{budget ? `${budget.total} €` : "- €"}</p>
+                        {!budget && (
+                            <button
+                                className="button-add"
+                                style={{
+                                    backgroundColor: "#91a767",
+                                    border: "1px solid #91a767",
+                                    padding: "0.5rem 1rem",
+                                    cursor: "pointer",
+                                }}
+                                onClick={handleShowForm}
+                            >
+                                Add Budget
+                            </button>
                         )}
-                    </ul>
-                </Col>
-            </Row>
+                    </div>
+                </div>
+                <br/>
+                <div className="div-category">
+                    <div className="li-category">
+                        <h2 className="title-name">Budget restant</h2>
+                        <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
+                    </div>
+                </div>
+            </div>
 
-            {/* Display form for new budget */}
-            <Modal show={showForm} onHide={handleCloseForm}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add new budget</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="formBudgetTotal">
-                            <Form.Label style={{color:"black", fontSize:"2.rem", borderColor:"#91a767", marginTop:12, marginLeft:5}}>Total Budget</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="Enter total budget"
-                                style={{fontFamily:"Elephant, sans serif"}}
-                                value={newBudget.total}
-                                onChange={(e) => setNewBudget({ ...newBudget, total: e.target.value })}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formBudgetDate">
-                            <Form.Label style={{color:"black", fontSize:"2.rem", borderColor:"#91a767", marginTop:12, marginLeft:5}}>Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                value={newBudget.date}
-                                style={{fontFamily:"Elephant, sans serif"}}
-                                onChange={(e) => setNewBudget({ ...newBudget, date: e.target.value })}
-                                required
-                            />
-                        </Form.Group>
-                        <Button type="submit" className="mt-3" style={{backgroundColor:"#91a767", borderColor:"#91a767"}}>
-                            Save new budget
-                        </Button>
-                    </Form>
-                </Modal.Body>
-            </Modal>
+            <div>
+                <h3 className="title-h3">Vos catégories</h3>
+                <ul className="ul-category">
+                    {categoriesWithRemainingBudget.length > 0 ? (
+                        categoriesWithRemainingBudget.map((category) => (
+                            <li key={category.id} className="li-category">
+                                <span className="span-category-name">{category.name}</span>
+                                <span className="span-category-budget">
+                                Budget: {category.maxBudget} €
+                            </span>
+                                <span className="span-category-budgetmax">
+                                Restant: {category.remainingBudget} €
+                            </span>
+                            </li>
+                        ))
+                    ) : (
+                        <p className="p-no-found">No categories found :(</p>
+                    )}
+                </ul>
+            </div>
+
+            {showForm && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h2>Add new budget</h2>
+                            <button onClick={handleCloseForm} className="close-button">
+                                &times;
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <form onSubmit={handleSubmit}>
+                                <div className="form-group">
+                                    <label htmlFor="formBudgetTotal">Total Budget</label>
+                                    <input
+                                        id="formBudgetTotal"
+                                        type="number"
+                                        placeholder="Enter total budget"
+                                        style={{ fontFamily: "Elephant, sans-serif" }}
+                                        value={newBudget.total}
+                                        onChange={(e) =>
+                                            setNewBudget({ ...newBudget, total: e.target.value })
+                                        }
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="formBudgetDate">Date</label>
+                                    <input
+                                        id="formBudgetDate"
+                                        type="date"
+                                        value={newBudget.date}
+                                        style={{ fontFamily: "Elephant, sans-serif" }}
+                                        onChange={(e) =>
+                                            setNewBudget({ ...newBudget, date: e.target.value })
+                                        }
+                                        required
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    style={{
+                                        backgroundColor: "#91a767",
+                                        border: "1px solid #91a767",
+                                        padding: "0.5rem 1rem",
+                                        marginTop: "1rem",
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Save new budget
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

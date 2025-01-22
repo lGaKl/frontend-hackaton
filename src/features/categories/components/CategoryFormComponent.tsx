@@ -19,6 +19,9 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const nom = e.target.name;
         const value = e.target.value;
+        if(nom === "name" && value.length > 12)
+            value = value.slice(0,12);
+
         setInputs(values => ({...values, [nom]: value}));
     }
 
@@ -45,8 +48,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
                 <div className="div-category">
                     <h2 className="h2-category">Ajouter une catégorie</h2>
                     <label className="label-category">
-                        Nom de la Catégorie <input type="text" name="name" className="input-category"
-                                                   onChange={handleChange}/>
+                        Nom de la Catégorie <input type="text" name="name" className="input-category" maxLength={12} onChange={handleChange}/>
                     </label>
                     <br/>
                     <label className="label-category">

@@ -78,13 +78,31 @@
     flex-direction: column;
     gap: 0.3rem;
     width: 100%;
+    opacity: 90%;
+}
+
+.title-name {
+    font-family: "Elephant", sans-serif;
+    font-size: 2rem;
+    color: #9e4d0d;
+    margin-bottom: 0.3rem;
+    text-align: center;
+    width: 100%;
 }
 
 .span-category-name {
     font-size: 1.2rem;
     color: #9e4d0d;
     margin-bottom: 0.3rem;
-    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.p-budget {
+    font-family: "Elephant", sans-serif;
+    color: black;
+    margin-bottom: 0.3rem;
+    font-size: 1.5rem;
     text-align: center;
     width: 100%;
 }
@@ -93,8 +111,7 @@
 .span-category-budgetmax {
     color: black;
     margin-bottom: 0.3rem;
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-size: 0.8rem;
     text-align: left;
     width: 100%;
 }
@@ -109,12 +126,12 @@
     }
 
     .span-category-name {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     .span-category-budget,
     .span-category-budgetmax {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 }
 
@@ -128,6 +145,6 @@
     }
 
     .span-category-name {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 }
