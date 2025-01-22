@@ -18,7 +18,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         const nom = e.target.name;
-        const value = e.target.value;
+        let value = e.target.value;
         if(nom === "name" && value.length > 12)
             value = value.slice(0,12);
 
