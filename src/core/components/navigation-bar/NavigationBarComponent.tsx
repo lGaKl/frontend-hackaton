@@ -17,7 +17,7 @@
                             id="collapsible-nav-dropdown"
                             className="vertical-dropdown"
                         >
-                            <NavDropdown.Item as={NavLink} to="/transactions/transactionManager">Add transaction</NavDropdown.Item>
+                            <NavDropdown.Item as={NavLink} to="/transactions/transactionForm">Add transaction</NavDropdown.Item>
                             <NavDropdown.Item as={NavLink} to="/transactions/transactionList">Update
                                 transaction</NavDropdown.Item>
                             <NavDropdown.Item as={NavLink} to="/transactions/remove">Remove

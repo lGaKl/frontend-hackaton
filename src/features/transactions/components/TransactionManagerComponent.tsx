@@ -1,10 +1,14 @@
 ﻿import {useTransactionDispatch} from "../contexts/TransactionContext.tsx";
 import {Transaction} from "../types/transaction.ts";
-import {postTransaction} from "../services/transaction-service.tsx";
-import {TransactionFormComponent} from "./TransactionFormComponent.tsx";
+import {postTransaction, updateTransaction} from "../services/transaction-service.tsx";
+import TransactionFormComponent from "./TransactionFormComponent.tsx";
+import {useLocation} from "react-router-dom";
+import {ApiError} from "../../../shared/exceptions/ApiError.ts";
+import {debounce} from "../../../shared/utils/Utils.ts";
 
 export default function TransactionManagerComponent() {
     const dispatch = useTransactionDispatch();
+    const location = useLocation();
 
     const onTransactionCreated: (transaction: Transaction) => void = transaction => {
         const sendTransaction = async (transaction: Transaction) => {
@@ -15,43 +19,40 @@ export default function TransactionManagerComponent() {
                 budgetId: transaction.budgetId,
                 categoryId: transaction.categoryId
             });
-            console.log("transaction réer",transactionCreated);
             dispatch({type: "add", transaction: transactionCreated});
         }
         sendTransaction(transaction);
     }
 
-    /*const onTransactionDeleted:  (transaction: Transaction) => void = transactionDeleted => {
-        if(!transactionDeleted) return;
-
-        const sendDeleteTransaction = async (transaction: Transaction) => {
-            const response = await deleteTransaction(transaction.idBudget);
-            if(response.ok) {
-                dispatch({type: "delete", transaction: transaction});
-            }else{
-                throw ApiError.fromResponseJson(await response.json());
-            }
-        }
-        sendDeleteTransaction(transactionDeleted);
-    }*/
-
-    /*  const onTransactionUpdated: (transaction: Transaction) => void = transactionUpdated => {
+    const onTransactionUpdated: (transaction: Transaction) => void = debounce((transactionUpdated: Transaction) => {
         const sendUpdateTransaction = async (transaction: Transaction) => {
-            const response = await updateTransaction(transaction.idTransaction!!,{
+            const response = await updateTransaction({
+                id: transaction.id,
                 amount: transaction.amount,
-                dateTransaction: transaction.dateTransaction,
-                idBudget: transaction.idBudget,
-                idCategory: transaction.idCategory,
+                date_transaction: transaction.date_transaction,
+                budgetId: transaction.budgetId,
+                categoryId: transaction.categoryId,
                 description: transaction.description
             });
             if (!response.ok)
-                throw new ApiError(await response.json())
-        }
+                throw new ApiError(await response.json());
+        };
         sendUpdateTransaction(transactionUpdated);
-    }*/
+    },500);
+
+    let content;
+    switch (location.pathname) {
+        case "/transactions/transactionForm":
+            content = <TransactionFormComponent onTransactionCreated={onTransactionCreated}/>;
+            break;
+        case "/transactions/transactionList":
+            content = <TransactionListComponent onTransactionUpdated={debounce(onTransactionUpdated, 500)} />;
+            break;
+        default:
+            content = <div>Page not found</div>;
+    }
 
     return <>
-        <TransactionFormComponent onTransactionCreated={onTransactionCreated}/>
-
+        {content}
     </>
 }

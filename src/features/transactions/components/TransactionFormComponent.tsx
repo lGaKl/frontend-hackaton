@@ -8,7 +8,7 @@ interface TransactionFormComponentProps {
 
 }
 
-export function TransactionFormComponent({onTransactionCreated}: TransactionFormComponentProps) {
+export default function TransactionFormComponent({onTransactionCreated}: TransactionFormComponentProps) {
     const [formValid, setFormValid] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [inputsDescription, setInputsDescription] = useState({ description: "" });

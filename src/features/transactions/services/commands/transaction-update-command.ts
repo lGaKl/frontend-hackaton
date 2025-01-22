@@ -4,5 +4,4 @@
     description : string;
     budgetId : number;
     categoryId : number;
-
 }
