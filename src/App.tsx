@@ -8,6 +8,8 @@ import {BudgetPageComponent} from "./core/components/budget-page/BudgetPageCompo
 import categoriesRoutes from "./features/categories/categories-routes.tsx";
 import {LoginComponent} from "./core/components/login/LoginComponent.tsx";
 import {RegisterComponent} from "./core/components/register/RegisterComponent.tsx";
+import {NewBudgetComponent} from "./core/components/budget-page/NewBudgetComponent.tsx";
+
 
 function App() {
     return <>
@@ -18,6 +20,7 @@ function App() {
                 {categoriesRoutes}
                 <Route path="/budget" element={<BudgetPageComponent/>} />
                 <Route index element={<HomeComponent/>}></Route>
+                <Route path="/budget/newBudget"  element={<NewBudgetComponent/>} />
                 {transactionRoutes}
                 <Route path="/login" element={<LoginComponent/>} />
                 <Route path="/register" element={<RegisterComponent/>} />

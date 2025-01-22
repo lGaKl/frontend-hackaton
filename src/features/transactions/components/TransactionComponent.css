@@ -234,24 +234,6 @@
     background-color: #bfa331;
 }
 
-.modal {
-    display: block;
-    border: 2px solid red;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-
-.button-add {
-    z-index: 10;
-    position: relative;
-}
-
-
 @media (max-width: 768px) {
     .ul-transactions {
         max-width: 95%;

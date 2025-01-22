@@ -1,18 +1,18 @@
 import "./BudgetPageComponent.css";
-import React, { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Category } from "../../../features/categories/types/category.ts";
 import { fetchCategories } from "../../../features/categories/services/category-service.tsx";
 import { Budget } from "../../../features/budget/types/Budget.ts";
 import { fetchBudgets } from "../../../features/budget/services/BudgetService.tsx";
 import { Transaction } from "../../../features/transactions/types/transaction.ts";
 import { fetchTransactions } from "../../../features/transactions/services/transaction-service.tsx";
+import { useNavigate } from "react-router";
 
 export function BudgetPageComponent() {
+    const navigate = useNavigate();
     const [categories, setCategories] = useState<Category[]>([]);
     const [budget, setBudget] = useState<Budget | null>(null);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const [showForm, setShowForm] = useState(false);
-    const [newBudget, setNewBudget] = useState({ total: '', date: '' });
 
     useEffect(() => {
         loadBudget();
@@ -87,16 +87,7 @@ export function BudgetPageComponent() {
 
     /* show form for new budget */
     const handleShowForm = () => {
-        console.log("Add Budget button clicked");
-        setShowForm(true);
-        console.log("Show form state:", true);
-    };
-
-    const handleCloseForm = () => setShowForm(false);
-
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        handleCloseForm();
+        navigate("/budget/newBudget");
     };
 
     return (
@@ -105,6 +96,13 @@ export function BudgetPageComponent() {
 
             <div className="grid-item">
                 <div className="div-category">
+                    <div className="div-category">
+                        <div className="li-category">
+                            <h2 className="title-name">Budget restant</h2>
+                            <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
+                        </div>
+                    </div>
+                    <br/>
                     <div className="li-category">
                         <h2 className="title-name">Budget Total</h2>
                         <p className="p-budget">{budget ? `${budget.total} €` : "- €"}</p>
@@ -124,13 +122,6 @@ export function BudgetPageComponent() {
                         )}
                     </div>
                 </div>
-                <br/>
-                <div className="div-category">
-                    <div className="li-category">
-                        <h2 className="title-name">Budget restant</h2>
-                        <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
-                    </div>
-                </div>
             </div>
 
             <div>
@@ -140,12 +131,12 @@ export function BudgetPageComponent() {
                         categoriesWithRemainingBudget.map((category) => (
                             <li key={category.id} className="li-category">
                                 <span className="span-category-name">{category.name}</span>
-                                <span className="span-category-budget">
-                                Budget: {category.maxBudget} €
-                            </span>
                                 <span className="span-category-budgetmax">
-                                Restant: {category.remainingBudget} €
-                            </span>
+                                    Budget restant : {category.remainingBudget} €
+                                </span>
+                                <span className="span-category-budget">
+                                    Budget initial : {category.maxBudget} €
+                                </span>
                             </li>
                         ))
                     ) : (
@@ -154,61 +145,6 @@ export function BudgetPageComponent() {
                 </ul>
             </div>
 
-            {showForm && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h2>Add new budget</h2>
-                            <button onClick={handleCloseForm} className="close-button">
-                                &times;
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label htmlFor="formBudgetTotal">Total Budget</label>
-                                    <input
-                                        id="formBudgetTotal"
-                                        type="number"
-                                        placeholder="Enter total budget"
-                                        style={{ fontFamily: "Elephant, sans-serif" }}
-                                        value={newBudget.total}
-                                        onChange={(e) =>
-                                            setNewBudget({ ...newBudget, total: e.target.value })
-                                        }
-                                        required
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="formBudgetDate">Date</label>
-                                    <input
-                                        id="formBudgetDate"
-                                        type="date"
-                                        value={newBudget.date}
-                                        style={{ fontFamily: "Elephant, sans-serif" }}
-                                        onChange={(e) =>
-                                            setNewBudget({ ...newBudget, date: e.target.value })
-                                        }
-                                        required
-                                    />
-                                </div>
-                                <button
-                                    type="submit"
-                                    style={{
-                                        backgroundColor: "#91a767",
-                                        border: "1px solid #91a767",
-                                        padding: "0.5rem 1rem",
-                                        marginTop: "1rem",
-                                        cursor: "pointer",
-                                    }}
-                                >
-                                    Save new budget
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            )}
         </>
     );
 }
