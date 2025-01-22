@@ -38,8 +38,9 @@ export function BudgetProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const getData = async () => {
             try {
+
                 const budgets = await fetchBudgets();
-                console.log("Budgets récupérées :", budgets);
+                console.log("budget",budgets);
                 dispatch({ type: "set", budgets });
             } catch (error) {
                 console.error("Erreur lors de la récupération des budgets :", error);
