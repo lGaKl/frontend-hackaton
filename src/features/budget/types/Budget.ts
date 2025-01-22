@@ -1,5 +1,5 @@
 export interface Budget {
-    id?: number;
+    id: number;
     total : number;
-    date_budget : Date;
+    date_budget : string;
 }
