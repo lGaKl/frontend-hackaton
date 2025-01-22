@@ -1,7 +1,7 @@
-﻿import { Transaction } from "../types/transaction.ts";
-import { useTransactionDispatch, useTransactions } from "../contexts/TransactionContext.tsx";
+﻿import {Transaction} from "../types/transaction.ts";
+import {useTransactionDispatch, useTransactions} from "../contexts/TransactionContext.tsx";
 import {ChangeEvent, useEffect, useState} from "react";
-import { updateTransaction } from "../services/transaction-service.tsx";
+import {updateTransaction} from "../services/transaction-service.tsx";
 import "./TransactionComponent.css"
 import {fetchCategories} from "../../categories/services/category-service.tsx";
 import {Category} from "../../categories/types/category.ts";
@@ -10,7 +10,7 @@ interface TransactionListComponentProps {
     onTransactionUpdated: (transaction: Transaction) => void;
 }
 
-export default function TransactionListComponent({ onTransactionUpdated }: TransactionListComponentProps) {
+export default function TransactionListComponent({onTransactionUpdated}: TransactionListComponentProps) {
     const dispatch = useTransactionDispatch();
     const transactions = useTransactions();
     const [editingTransactionId, setEditingTransactionId] = useState<number | null>(null);
@@ -24,67 +24,71 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
         setLocalEdits((prev) => ({
             ...prev,
             [transaction.id!]: {
-                ...transaction },
+                ...transaction
+            },
 
         }));
     };
 
     useEffect(() => {
         loadCategories();
-    },[selectedCategory]);
+    }, [selectedCategory]);
 
-    async function loadCategories() : Promise<void> {
+    async function loadCategories(): Promise<void> {
         const categoriesFromAPI = await fetchCategories();
         setCategories(categoriesFromAPI);
     }
+
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCategory(e.target.value);
     };
 
-    const getCategoryName = (id : number): string => {
-        const category = categories.find(category => category.id ===id );
-        return category ? category.name: "Catégorie pas trouvé";
+    const getCategoryName = (id: number): string => {
+        const category = categories.find(category => category.id === id);
+        return category ? category.name : "Catégorie pas trouvé";
     };
 
 
-
     const handleSaveClick = async (transactionId: number) => {
-        console.log("Catégorie Sélectionnée:",selectedCategory);
-        const updatedTransaction = { ...localEdits[transactionId] };
+        console.log("Catégorie Sélectionnée:", selectedCategory);
+        const updatedTransaction = {...localEdits[transactionId]};
         if (!updatedTransaction) return;
-
         try {
+            updatedTransaction.categoryId = parseInt(selectedCategory);
 
+            const selectedCategoryId = parseInt(selectedCategory);
             const response = await updateTransaction({
                 id: updatedTransaction.id,
                 description: updatedTransaction.description,
                 amount: updatedTransaction.amount,
                 date_transaction: updatedTransaction.date_transaction,
                 budgetId: updatedTransaction.budgetId,
-                categoryId: parseInt(selectedCategory),
+                categoryId: selectedCategoryId
             });
 
             if (!response.ok) {
                 throw new Error("Erreur lors de la mise à jour de la transaction");
             }
+            console.log(parseInt(selectedCategory));
             console.log("Données envoyées à l'API :", {
                 id: updatedTransaction.id,
                 description: updatedTransaction.description,
                 amount: updatedTransaction.amount,
                 date_transaction: updatedTransaction.date_transaction,
                 budgetId: updatedTransaction.budgetId,
-                categoryId: parseInt(selectedCategory),
+                categoryId: selectedCategoryId,
+                test: "hello"
             })
 
-            console.log("updateTrans :",updatedTransaction)
+            console.log("updateTrans :", updatedTransaction)
 
-            dispatch({ type: "update", transaction: updatedTransaction });
+            dispatch({type: "update", transaction: updatedTransaction});
             onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
 
             // Réinitialisez l'état d'édition
             setEditingTransactionId(null);
             setLocalEdits((prev) => {
-                const newEdits = { ...prev };
+                const newEdits = {...prev};
                 delete newEdits[transactionId];
                 return newEdits;
             });
@@ -120,8 +124,8 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                         type="text"
                                         value={localEdits[transaction.id]?.description || ""}
                                         name="description"
-                                            onChange={(e) => handleChange(e, transaction.id!)}
-                                            className="input-transaction"
+                                        onChange={(e) => handleChange(e, transaction.id!)}
+                                        className="input-transaction"
                                     />
                                     <input
                                         type="number"
@@ -137,17 +141,21 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
                                     />
-                                    <select id="options" name="categoryName" className="option-transaction" value={selectedCategory} onChange={handleCategoryChange}>
-                                        <option value={localEdits[transaction.id]?.categoryId||" "}>{getCategoryName(transaction.categoryId)}</option>
+                                    <select id="options" name="categoryName" className="option-transaction"
+                                            value={selectedCategory} onChange={handleCategoryChange}>
+                                        <option
+                                            value={localEdits[transaction.id]?.categoryId || " "}>{getCategoryName(transaction.categoryId)}</option>
                                         {categories
-                                            .filter (category => category.id !== transaction.categoryId)
+                                            .filter(category => category.id !== transaction.categoryId)
                                             .map(category => (
-                                            <option key={category.id} value={category.id} >
-                                                {category.name}
-                                            </option>
-                                        ))}
+                                                <option key={category.id} value={category.id}>
+                                                    {category.name}
+                                                </option>
+                                            ))}
                                     </select>
-                                    <button onClick={() => handleSaveClick(transaction.id!)} className="button-category">Confirmer</button>
+                                    <button onClick={() => handleSaveClick(transaction.id!)}
+                                            className="button-category">Confirmer
+                                    </button>
                                 </>
                             ) : (
                                 <>
@@ -155,7 +163,9 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                     <span className="span">Montant: {transaction.amount} €</span>
                                     <span className="span">Date: {transaction.date_transaction}</span>
                                     <span className="span">Catégorie: {getCategoryName(transaction.categoryId)}</span>
-                                    <button onClick={() => handleEditClick(transaction)} className="button-category">Modifier</button>
+                                    <button onClick={() => handleEditClick(transaction)}
+                                            className="button-category">Modifier
+                                    </button>
                                 </>
                             )}
                         </div>
