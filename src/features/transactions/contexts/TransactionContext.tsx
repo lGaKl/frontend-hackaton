@@ -39,7 +39,7 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
         const getData = async () => {
             try {
                 const transactions = await fetchTransactions();
-                console.log("Transactions récupérées :", transactions); // ✅ Log des données récupérées
+
                 dispatch({ type: "set", transactions });
             } catch (error) {
                 console.error("Erreur lors de la récupération des transactions :", error);

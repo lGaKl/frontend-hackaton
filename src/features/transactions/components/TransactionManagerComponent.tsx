@@ -35,7 +35,6 @@ export default function TransactionManagerComponent() {
                 categoryId: transaction.categoryId,
                 description: transaction.description
             });
-            console.log("On transaction updated",transaction);
             if (!response.ok)
                 throw new ApiError(await response.json());
         };

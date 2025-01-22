@@ -50,7 +50,6 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
 
 
     const handleSaveClick = async (transactionId: number) => {
-        console.log("Catégorie Sélectionnée:", selectedCategory);
         const updatedTransaction = {...localEdits[transactionId]};
         if (!updatedTransaction) return;
         try {
@@ -69,18 +68,6 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
             if (!response.ok) {
                 throw new Error("Erreur lors de la mise à jour de la transaction");
             }
-            console.log(parseInt(selectedCategory));
-            console.log("Données envoyées à l'API :", {
-                id: updatedTransaction.id,
-                description: updatedTransaction.description,
-                amount: updatedTransaction.amount,
-                date_transaction: updatedTransaction.date_transaction,
-                budgetId: updatedTransaction.budgetId,
-                categoryId: selectedCategoryId,
-                test: "hello"
-            })
-
-            console.log("updateTrans :", updatedTransaction)
 
             dispatch({type: "update", transaction: updatedTransaction});
             onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
