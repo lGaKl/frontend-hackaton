@@ -26,9 +26,9 @@ export const deleteTransaction = async (id: number): Promise<Response> => {
     });
 };
 
-export const updateTransaction = async (id: number, transaction: TransactionUpdateCommand): Promise<Response> => {
-    return fetch(`${TRANSACTION_API_URL}/${id}`, {
-        method: "PATCH",
+export const updateTransaction: (transaction: TransactionUpdateCommand) => Promise<Response> = async (transaction) => {
+    return await fetch(TRANSACTION_API_URL, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },

@@ -15,10 +15,10 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
     const [localEdits, setLocalEdits] = useState<Record<number, Transaction>>({});
 
     const handleEditClick = (transaction: Transaction) => {
-        setEditingTransactionId(transaction.id);
+        setEditingTransactionId(transaction.id!);
         setLocalEdits((prev) => ({
             ...prev,
-            [transaction.id]: { ...transaction }
+            [transaction.id!]: { ...transaction }
         }));
     };
 
@@ -27,14 +27,13 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
         if (!updatedTransaction) return;
 
         try {
-            console.log("Mise à jour de la transaction :", updatedTransaction);
-
-            const response = await updateTransaction(transactionId, {
+            const response = await updateTransaction({
+                id: updatedTransaction.id,
                 description: updatedTransaction.description,
                 amount: updatedTransaction.amount,
                 date_transaction: updatedTransaction.date_transaction,
                 budgetId: updatedTransaction.budgetId,
-                categoryId: updatedTransaction.categoryId
+                categoryId: updatedTransaction.categoryId,
             });
 
             if (!response.ok) {
@@ -42,8 +41,9 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
             }
 
             dispatch({ type: "update", transaction: updatedTransaction });
-            onTransactionUpdated(updatedTransaction);
+            onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
 
+            // Réinitialisez l'état d'édition
             setEditingTransactionId(null);
             setLocalEdits((prev) => {
                 const newEdits = { ...prev };
@@ -52,7 +52,6 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
             });
         } catch (error) {
             console.error("Erreur lors de la mise à jour :", error);
-            alert("Échec de la mise à jour de la transaction. Veuillez réessayer.");
         }
     };
 
@@ -81,24 +80,24 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
                                         type="text"
                                         value={localEdits[transaction.id]?.description || ""}
                                         name="description"
-                                        onChange={(e) => handleChange(e, transaction.id)}
-                                        className="input-transaction"
+                                            onChange={(e) => handleChange(e, transaction.id!)}
+                                            className="input-transaction"
                                     />
                                     <input
                                         type="number"
                                         value={localEdits[transaction.id]?.amount || 0}
                                         name="amount"
-                                        onChange={(e) => handleChange(e, transaction.id)}
+                                        onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
                                     />
                                     <input
                                         type="date"
                                         value={localEdits[transaction.id]?.date_transaction || ""}
                                         name="dateTransaction"
-                                        onChange={(e) => handleChange(e, transaction.id)}
+                                        onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
                                     />
-                                    <button onClick={() => handleSaveClick(transaction.id)} className="button-category">Confirmer</button>
+                                    <button onClick={() => handleSaveClick(transaction.id!)} className="button-category">Confirmer</button>
                                 </>
                             ) : (
                                 <>
