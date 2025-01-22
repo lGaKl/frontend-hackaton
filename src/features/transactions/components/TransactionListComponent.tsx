@@ -153,7 +153,7 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
                                     <span className="span-transactions">Date: {transaction.date_transaction}</span>
                                     <span className="span-transactions">Catégorie: {getCategoryName(transaction.categoryId)}</span>
                                     <button onClick={() => handleEditClick(transaction)}
-                                            className="button-category">Modifier
+                                            className="button-transaction">Modifier
                                     </button>
                                 </>
                             )}
