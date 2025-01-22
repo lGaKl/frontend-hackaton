@@ -21,6 +21,7 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
 
     const handleEditClick = (transaction: Transaction) => {
         setEditingTransactionId(transaction.id!);
+        setSelectedCategory(String(transaction.categoryId));
         setLocalEdits((prev) => ({
             ...prev,
             [transaction.id!]: {
@@ -53,8 +54,10 @@ export default function TransactionListComponent({onTransactionUpdated}: Transac
         const updatedTransaction = {...localEdits[transactionId]};
         if (!updatedTransaction) return;
         try {
+
             updatedTransaction.categoryId = parseInt(selectedCategory);
 
+            console.log(updatedTransaction);
             const selectedCategoryId = parseInt(selectedCategory);
             const response = await updateTransaction({
                 id: updatedTransaction.id,
