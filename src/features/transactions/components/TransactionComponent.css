@@ -234,6 +234,33 @@
     background-color: #bfa331;
 }
 
+.div-liste {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.button-transaction-liste {
+    background-color: #d4af37;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 1rem 0; /* Espacement vertical */
+}
+
+.button-transaction-liste:hover {
+    background-color: #bfa331;
+}
+
+
 .modal {
     display: block;
     border: 2px solid red;
