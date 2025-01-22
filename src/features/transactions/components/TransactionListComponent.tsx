@@ -68,7 +68,7 @@ export default function TransactionListComponent({ onTransactionUpdated }: Trans
 
     return (
         <div>
-            <h1 className="h1-transactions">Liste des transactions</h1>
+            <h1 className="h1-transactions">Mise à jours</h1>
             <ul className="ul-transactions">
                 {transactions.map((transaction, index) => (
                     <li key={transaction.id} className="li-transactions">

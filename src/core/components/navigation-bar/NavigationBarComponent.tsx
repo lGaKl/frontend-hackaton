@@ -19,6 +19,7 @@ export function NavigationBarComponent() {
                         >
                             <NavDropdown.Item as={NavLink} to="/transactions/transactionForm">Ajout</NavDropdown.Item>
                             <NavDropdown.Item as={NavLink} to="/transactions/transactionList">Mise à jours</NavDropdown.Item>
+                            <NavDropdown.Item href="/transactions/transactions">Transactions</NavDropdown.Item>
                         </NavDropdown>
 
                     <Nav.Link to="/budget" as={NavLink}>Budget</Nav.Link>
