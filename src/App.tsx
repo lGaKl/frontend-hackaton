@@ -8,22 +8,26 @@ import {BudgetPageComponent} from "./core/components/budget-page/BudgetPageCompo
 import categoriesRoutes from "./features/categories/categories-routes.tsx";
 import {LoginComponent} from "./core/components/login/LoginComponent.tsx";
 import {RegisterComponent} from "./core/components/register/RegisterComponent.tsx";
+import {AuthProvider} from "./features/auth/AuthContext.tsx";
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return <>
-        <NavigationBarComponent/>
-        <Container className="mb-4">
-            <Routes>
-                <Route path="/" element={<HomeComponent/>} />
-                {categoriesRoutes}
-                <Route path="/budget" element={<BudgetPageComponent/>} />
-                <Route index element={<HomeComponent/>}></Route>
-                {transactionRoutes}
-                <Route path="/login" element={<LoginComponent/>} />
-                <Route path="/register" element={<RegisterComponent/>} />
-            </Routes>
-        </Container>
+        <AuthProvider>
+            <NavigationBarComponent/>
+            <Container className="mb-4">
+                <Routes>
+                    <Route path="/" element={<HomeComponent/>} />
+                    {categoriesRoutes}
+                    <Route path="/budget" element={<BudgetPageComponent/>} />
+                    <Route index element={<HomeComponent/>}></Route>
+                    {transactionRoutes}
+                    <Route path="/login" element={<LoginComponent/>} />
+                    <Route path="/register" element={<RegisterComponent/>} />
+                </Routes>
+            </Container>
+        </AuthProvider>
+
     </>
 }
 
