@@ -1,15 +1,14 @@
-﻿import { Transaction } from "../types/transaction.ts";
-import { useTransactions, useTransactionDispatch } from "../context/TransactionsContext.tsx";
+﻿import { Transaction } from "../types/transaction";
 import { ChangeEvent, useState, useEffect } from "react";
 import "./TransactionComponent.css";
 import { useNavigate } from "react-router";
+import {useTransactionDispatch, useTransactions} from "../contexts/TransactionContext.tsx";
 
 interface TransactionListComponentProps {
-    onTransactionDeleted: (transactionDeleted: Transaction) => void;
     onTransactionUpdated: (transactionUpdated: Transaction) => void;
 }
 
-export function TransactionListComponent({
+export default function TransactionListComponent({
     onTransactionUpdated,
 }: TransactionListComponentProps) {
     const navigate = useNavigate();

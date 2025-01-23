@@ -48,7 +48,7 @@ export default function TransactionManagerComponent() {
             content = <TransactionFormComponent onTransactionCreated={onTransactionCreated}/>;
             break;
         case "/transactions/transactionList":
-            content = <TransactionListComponent onTransactionUpdated={debounce(onTransactionUpdated, 500)} />;
+            content = <TransactionListComponent onTransactionUpdated={debounce(onTransactionUpdated, 500)}/>;
             break;
         default:
             content = <div>Page not found</div>;
