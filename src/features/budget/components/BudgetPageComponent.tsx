@@ -78,18 +78,24 @@ export default function BudgetPageComponent() {
         navigate("/budget/newBudget");
     };
 
+    const getMonthAndYear = () => {
+        const date = new Date();
+        return date.toLocaleString('default', { month: 'short', year: 'numeric' });
+    };
+
     return (
         <>
             <h1 className="title-h1">Budget</h1>
             <div className="grid-item">
                 <div className="div-category">
                     <div className="li-category-budget">
+                        <h2 className="month">{getMonthAndYear()}</h2>
                         <h2 className="title-name">Budget restant</h2>
                         <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
                     </div>
-                    <br />
+                    <br/>
                     <div className="li-category-budget">
-                        <h2 className="title-name">Budget Total</h2>
+                        <h2 className="title-name">Budget total</h2>
                         <p className="p-budget">{budget ? `${budget.total} €` : "- €"}</p>
                         {!budget && (
                             <button

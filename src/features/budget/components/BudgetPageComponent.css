@@ -56,6 +56,7 @@
     list-style: none;
     padding: 0;
     margin: 1rem auto;
+    align-items: center;
     max-width: 90%;
     opacity: 90%;
 }
@@ -68,7 +69,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     font-size: 0.8rem;
 }
@@ -112,6 +113,32 @@
     font-size: 1.5rem;
     text-align: center;
     width: 100%;
+}
+
+.month {
+    font-size: 1.2rem;
+    margin-left: 10px;
+    font-family: "Elephant", sans-serif;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    align-items: center;
+    color: black;
+}
+
+.edit-btn {
+    background-color: #91a767;
+    border: 1px solid #91a767;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.edit-btn.disabled {
+    background-color: #ccc;
+    border: 1px solid #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .span-category-budget,
