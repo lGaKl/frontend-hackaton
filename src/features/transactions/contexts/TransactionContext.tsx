@@ -49,11 +49,12 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
                 const filteredTransactions = await Promise.all(
                     transactions.map(async (transaction) => {
                         const budget = await fetchBudgetById(transaction.budgetId);
-                        if (budget && budget.id === userId) {
+                        if (budget && budget.userId === userId) {
                             return transaction;
                         }
                         return null;
                     })
+
                 );
 
                 const validTransactions = filteredTransactions.filter(
