@@ -13,11 +13,13 @@ import { RadialChartPoint } from "react-vis";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {useAuth} from "../auth/AuthContext.tsx";
+import Tutorial from "../tutorial/Tutorial.tsx";
 
 export function HomeComponent() {
 
     const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
+    const [runTutorial, setRunTutorial] = useState(false);
 
     const snowflakes = Array.from({ length: 6 }, (_, index) => (
         <div key={index} className="snowflake">
@@ -221,7 +223,11 @@ export function HomeComponent() {
                             </div>
                         )}
                     </div>
+
+
                     <div className="logout-button-container">
+                        <button className="btn-logout" onClick={() => setRunTutorial(true)}>Tutoriel</button>
+                        <Tutorial run={runTutorial} onFinish={() => setRunTutorial(false)} />
                         <button className="btn-logout" onClick={handleLogout}>
                             Déconnexion
                         </button>
