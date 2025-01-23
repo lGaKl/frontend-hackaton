@@ -132,6 +132,7 @@ export default function TransactionListComponent({
                                         name="amount"
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
+                                        min="1"
                                     />
                                     <input
                                         type="date"

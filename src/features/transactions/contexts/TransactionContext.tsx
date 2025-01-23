@@ -39,12 +39,12 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const getData = async () => {
             try {
-                console.log("Fetching transactions...");
+
                 const transactions = await fetchTransactions();
-                console.log("Fetched transactions:", transactions);
+
 
                 const userId = Number(localStorage.getItem("userId"));
-                console.log("User ID:", userId);
+
 
                 const filteredTransactions = await Promise.all(
                     transactions.map(async (transaction) => {
@@ -61,7 +61,7 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
                     (transaction): transaction is Transaction => transaction !== null
                 );
 
-                console.log("Filtered transactions:", validTransactions);
+
                 dispatch({ type: "set", transactions: validTransactions });
             } catch (error) {
                 console.error("Error fetching transactions:", error);

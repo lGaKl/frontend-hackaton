@@ -54,7 +54,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
                     </label>
                     <br/>
                     <label className="label-category">
-                        Budget Maximum <input type="number" step="any" name="maxBudget" className="input-category"
+                        Budget Maximum <input type="number" step="any" name="maxBudget" className="input-category" min="1"
                                               onChange={handleChange}/>
                     </label>
                 </div>

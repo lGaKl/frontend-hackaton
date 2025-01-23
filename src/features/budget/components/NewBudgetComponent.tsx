@@ -42,6 +42,7 @@ export default function NewBudgetComponent({ onBudgetCreated }: NewBudgetCompone
                     <input
                         id="total"
                         type="number"
+                        min="1"
                         value={inputTotal.total}
                         onChange={(e) => setInputTotal({ ...inputTotal, total: parseFloat(e.target.value) })}
                         required

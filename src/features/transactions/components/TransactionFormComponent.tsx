@@ -82,6 +82,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                     name="Description"
                     className="input-transaction"
                     onChange={handleDescriptionChange}
+                    required
                 /><br/>
                 <label className="label-transaction">Amount</label>
                 <input
@@ -90,6 +91,8 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                     className="input-transaction"
                     step="any"
                     onChange={handleAmountChange}
+                    min="1"
+                    required
                 /><br/>
                 <label htmlFor="options" className="label-transaction">Select a category :</label>
                 <select
@@ -97,6 +100,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                     className="option-transaction"
                     value={selectedCategory}
                     onChange={handleCategoryChange}
+                    required
                 >
                     <option value="">--Categories--</option>
                     {categories.map(category => (
