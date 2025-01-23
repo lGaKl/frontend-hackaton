@@ -7,7 +7,7 @@ interface NewBudgetComponentProps {
     onBudgetCreated: (b: BudgetCreateCommand) => void;
 }
 
-export function NewBudgetComponent({ onBudgetCreated }: NewBudgetComponentProps) {
+export default function NewBudgetComponent({ onBudgetCreated }: NewBudgetComponentProps) {
     const navigate = useNavigate();
     const [inputBudget, setInputBudget] = useState({ total: 0, date: '' });
 
@@ -20,14 +20,14 @@ export function NewBudgetComponent({ onBudgetCreated }: NewBudgetComponentProps)
         };
         console.log("Budget to be submitted:", newBudget);
         onBudgetCreated(newBudget);
-        navigate("/budget");
+        navigate("/budget/manager");
 
         const form = e.target as HTMLFormElement;
         form.reset();
     };
 
     const handleBackClick = () => {
-        navigate("/budget");
+        navigate("/budget/manager");
     };
 
     return (

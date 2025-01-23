@@ -38,7 +38,6 @@ export function BudgetProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const getData = async () => {
             try {
-
                 const budgets = await fetchBudgets();
                 console.log("budget",budgets);
                 dispatch({ type: "set", budgets });

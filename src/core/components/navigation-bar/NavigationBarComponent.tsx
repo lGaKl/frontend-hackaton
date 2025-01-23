@@ -22,7 +22,7 @@ export function NavigationBarComponent() {
                             <NavDropdown.Item href="/transactions/transactions">Transactions</NavDropdown.Item>
                         </NavDropdown>
 
-                    <Nav.Link to="/budget" as={NavLink}>Budget</Nav.Link>
+                    <Nav.Link to="/budget/manager" as={NavLink}>Budget</Nav.Link>
                     <Nav.Link to="/categories/manager" as={NavLink} className="nav-link-custom"> Categories </Nav.Link>
                 </Nav>
             </Container>

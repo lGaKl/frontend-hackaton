@@ -1,23 +1,30 @@
 import { useBudgetDispatch } from "../context/BudgetContext.tsx";
 //import { Budget } from "../types/Budget.ts";
 import { postBudget/*, updateBudget*/ } from "../services/BudgetService.tsx";
-import { BudgetCreateCommand } from "../services/commands/BudgetCreateCommand.ts";
 //import { debounce } from "../../../shared/utils/Utils.ts";
-import { useLocation } from "react-router-dom";
-import { BudgetPageComponent } from "./BudgetPageComponent.tsx";
-import { NewBudgetComponent } from "./NewBudgetComponent.tsx";
+//import { useLocation } from "react-router-dom";
+//import { BudgetPageComponent } from "./BudgetPageComponent.tsx";
+import {BudgetCreateCommand} from "../services/commands/BudgetCreateCommand.ts";
+import NewBudgetComponent from "./NewBudgetComponent.tsx";
 
 export default function BudgetManagerComponent() {
     const dispatch = useBudgetDispatch();
-    const location = useLocation();
+    //const location = useLocation();
 
-    const onBudgetCreated = (budget: BudgetCreateCommand) => {
+    const onBudgetCreated: (budget: BudgetCreateCommand) => void = budget => {
         const sendBudget = async (budget: BudgetCreateCommand) => {
-            const budgetCreated = await postBudget({
-                total: budget.total,
-                date_budget: new Date(budget.date_budget).toISOString().split('T')[0]
-            });
-            dispatch({ type: "add", budget: budgetCreated });
+            try {
+                console.log("",budget.total);
+                console.log("",budget.date_budget);
+                const budgetCreated = await postBudget({
+                    total: budget.total,
+                    date_budget: budget.date_budget
+                });
+                console.log(budgetCreated);
+                dispatch({ type: "add", budget: budgetCreated });
+            } catch (error) {
+                console.error("Error creating budget:", error);
+            }
         };
         sendBudget(budget);
     };
@@ -34,7 +41,7 @@ export default function BudgetManagerComponent() {
         sendUpdateBudget(budget);
     }, 500);*/
 
-    let content;
+    /*let content;
     switch (location.pathname) {
         case "/budget":
             content = <BudgetPageComponent />;
@@ -44,10 +51,10 @@ export default function BudgetManagerComponent() {
             break;
         default:
             content = <div>Page not found</div>;
-    }
+    }*/
 
-    return <div>{content}</div>;
-    /*return <>
+    //return <div>{content}</div>;
+    return <>
         <NewBudgetComponent onBudgetCreated={onBudgetCreated} />
-    </>*/
+    </>
 }
