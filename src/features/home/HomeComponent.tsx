@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import "./HomeComponent.css";
-import { NavLink } from "react-router";
+import {NavLink, useNavigate} from "react-router";
 import { Nav } from "react-bootstrap";
 import { Budget } from "../budget/types/Budget.ts";
 import { Category } from "../categories/types/category.ts";
@@ -16,7 +16,8 @@ import {useAuth} from "../auth/AuthContext.tsx";
 
 export function HomeComponent() {
 
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
 
     const snowflakes = Array.from({ length: 6 }, (_, index) => (
         <div key={index} className="snowflake">
@@ -76,6 +77,11 @@ export function HomeComponent() {
 
     const remainingBudget = useMemo(calculateRemainingBudget, [budget, transactions]);
 
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
+
     const calculateRemainingBudgetByCategory = (categoryId: number | undefined) => {
         if (!categoryId) return { remainingBudget: 0, percentageOfCategory: 0 };
 
@@ -108,9 +114,15 @@ export function HomeComponent() {
     useEffect(() => {
         if (!budget) return;
 
-        const chartData = categoriesWithRemainingBudget.map((category) => ({
+        const colors = [
+            "red", "green", "gold", "darkred", "darkgreen",
+            "blue", "silver", "darkblue", "lightblue", "pink"
+        ];
+
+        const chartData = categoriesWithRemainingBudget.map((category, index) => ({
             angle: category.remainingBudget,
-            label: category.name
+            label: category.name,
+            className: `radial-segment-${colors[index % colors.length]}`
         }));
 
         const totalCategoryBudget = chartData.reduce((sum, category) => sum + category.angle, 0);
@@ -119,12 +131,14 @@ export function HomeComponent() {
         if (remainingBudgetOutsideCategories > 0) {
             chartData.push({
                 angle: remainingBudgetOutsideCategories,
-                label: "reste"
+                label: "reste",
+                className: "radial-segment-white"
             });
         }
 
         setData(chartData);
     }, [categoriesWithRemainingBudget, remainingBudget, budget]);
+
 
     const handleValueClick = (datapoint: RadialChartPoint) => {
         const category = categoriesWithRemainingBudget.find((cat) => cat.name === datapoint.label);
@@ -137,11 +151,14 @@ export function HomeComponent() {
             });
             setData((prevData) =>
                 prevData.map((d) =>
-                    d.label === datapoint.label ? { ...d, radius: 1.1, className: 'selected' } : { ...d, radius: 1, className: '' }
+                    d.label === datapoint.label
+                        ? { ...d, radius: 1.1 }
+                        : { ...d, radius: 1 }
                 )
             );
         }
     };
+
 
     const percentage = (remainingBudget / (budget?.total || 1)) * 100;
     return (
@@ -183,17 +200,25 @@ export function HomeComponent() {
                             <div className="home-category-details">
                                 <h3 className="home-title-category">{selectedCategory.name}</h3>
                                 <p className="category-data">
-                                    <span className="category-home-label">Budget maximum :</span> <span className="span-home">{selectedCategory.maxBudget} €</span>
+                                    <span className="category-home-label">Budget maximum :</span> <span
+                                    className="span-home">{selectedCategory.maxBudget} €</span>
                                 </p>
                                 <p className="category-data">
-                                    <span className="category-home-label">Pourcentage du budget total :</span> <span className="span-home">{selectedCategory.percentageOfTotal.toFixed(2)}%</span>
+                                    <span className="category-home-label">Pourcentage du budget total :</span> <span
+                                    className="span-home">{selectedCategory.percentageOfTotal.toFixed(2)}%</span>
                                 </p>
                                 <p className="category-data">
-                                    <span className="category-home-label">Pourcentage des dépenses de la catégorie :</span> <span className="span-home">{selectedCategory.percentageOfCategory.toFixed(2)}%</span>
+                                    <span
+                                        className="category-home-label">Pourcentage des dépenses de la catégorie :</span>
+                                    <span
+                                        className="span-home">{selectedCategory.percentageOfCategory.toFixed(2)}%</span>
                                 </p>
                             </div>
                         )}
                     </div>
+                    <button className="btn-logout" onClick={handleLogout}>
+                        Déconnexion
+                    </button>
                 </div>
             )}
             <div className="home-snowflakes" aria-hidden="true">

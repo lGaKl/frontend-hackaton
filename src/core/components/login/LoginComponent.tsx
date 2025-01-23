@@ -13,16 +13,16 @@ export function LoginComponent() {
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
-        setError(""); // Réinitialise l'erreur si l'utilisateur commence à taper
+        setError("");
     };
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
-        setError(""); // Réinitialise l'erreur si l'utilisateur commence à taper
+        setError("");
     };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); // Empêche le rechargement de la page
+        e.preventDefault();
         console.log("Form submitted with:", { email, password });
 
         if (!email || !password) {
@@ -31,7 +31,6 @@ export function LoginComponent() {
         }
 
         try {
-            // Envoi des données à l'API
             const response = await fetch("http://localhost:8080/api/auth/login", {
                 method: "POST",
                 headers: {
@@ -46,12 +45,12 @@ export function LoginComponent() {
                 throw new Error("Échec de la connexion. Vérifiez vos informations.");
             }
 
-            const token = await response.text(); // Récupération du token
+            const token = await response.text();
             console.log("Logging in with", email, password, "Token:", token);
 
             toast.success("Connexion réussie !");
-            login(token); // Met à jour l'état global dans AuthContext
-            navigate("/home"); // Redirection vers la page d'accueil
+            login(token);
+            navigate("/");
         } catch (error) {
             console.error("Erreur lors de la connexion :", error);
             setError("Échec de la connexion. Veuillez réessayer.");

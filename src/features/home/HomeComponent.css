@@ -331,3 +331,71 @@ body {
         font-size: 1rem;
     }
 }
+
+/* Couleurs supplémentaires pour les segments du RadialChart */
+.radial-segment-red {
+    fill: #b22222 !important;
+    stroke: #7f1c1c !important;
+}
+
+.radial-segment-green {
+    fill: #006400 !important;
+    stroke: #004c00 !important;
+}
+
+.radial-segment-gold {
+    fill: #b8860b !important;
+    stroke: #8b5a00 !important;
+}
+
+.radial-segment-darkred {
+    fill: #8b0000 !important;
+    stroke: #600000 !important;
+}
+
+.radial-segment-darkgreen {
+    fill: #0c4d31 !important;
+    stroke: #084827 !important;
+}
+
+.radial-segment-blue {
+    fill: #4682b4 !important;
+    stroke: #2c5a7b !important;
+}
+
+.radial-segment-silver {
+    fill: #c0c0c0 !important;
+    stroke: #a9a9a9 !important;
+}
+
+.radial-segment-darkblue {
+    fill: #00008b !important;
+    stroke: #00005c !important;
+}
+
+.radial-segment-lightblue {
+    fill: #87cefa !important;
+    stroke: #5e9cb5 !important;
+}
+
+.radial-segment-pink {
+    fill: #ff69b4 !important;
+    stroke: #c05088 !important;
+}
+
+.btn-logout {
+    margin: 1rem auto;
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #d32f2f;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #b22222;
+}
