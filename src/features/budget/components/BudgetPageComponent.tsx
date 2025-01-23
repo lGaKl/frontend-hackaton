@@ -83,11 +83,9 @@ export default function BudgetPageComponent() {
             <h1 className="title-h1">Budget</h1>
             <div className="grid-item">
                 <div className="div-category">
-                    <div className="div-category">
-                        <div className="li-category">
-                            <h2 className="title-name">Budget restant</h2>
-                            <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
-                        </div>
+                    <div className="li-category-budget">
+                        <h2 className="title-name">Budget restant</h2>
+                        <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
                     </div>
                     <br />
                     <div className="li-category-budget">
@@ -115,7 +113,7 @@ export default function BudgetPageComponent() {
                 <ul className="ul-category">
                     {categoriesWithRemainingBudget.length > 0 ? (
                         categoriesWithRemainingBudget.map((category) => (
-                            <li key={category.id} className="li-category">
+                            <li key={category.id} className="li-category-budget">
                                 <span className="span-category-name">{category.name}</span>
                                 <span className="span-category-budgetmax">Budget restant : {category.remainingBudget} €</span>
                                 <span className="span-category-budget">Budget initial : {category.maxBudget} €</span>
