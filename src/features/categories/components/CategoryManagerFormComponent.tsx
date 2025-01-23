@@ -6,7 +6,6 @@ import CategoryFormComponent from "./CategoryFormComponent.tsx";
 export default function CategoryManagerFormComponent() {
     const dispatch = useCategoryDispatch();
 
-
     const onCategoryCreated: (category: Category) => void = async (category) => {
         const existingCategories = await fetchCategories();
         const categoryExists = existingCategories.some(c => c.name === category.name && c.userId === category.userId);
