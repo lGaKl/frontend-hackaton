@@ -14,6 +14,8 @@ export function BudgetPageComponent() {
     const [showForm, setShowForm] = useState(false);
     const [newBudget, setNewBudget] = useState({ total: '', date: '' });
 
+    const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+
     useEffect(() => {
         loadBudget();
         loadCategories();
@@ -24,8 +26,20 @@ export function BudgetPageComponent() {
     async function loadBudget(): Promise<void> {
         try {
             const budgetFromAPI = await fetchBudgets();
-            if (budgetFromAPI.length > 0) {
-                setBudget(budgetFromAPI[0]);
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
+
+            const filteredBudget = budgetFromAPI.find(budget => {
+                const budgetDate = new Date(budget.date);
+                return !isNaN(budgetDate.getTime()) &&
+                    budgetDate.getFullYear() === currentYear &&
+                    budgetDate.getMonth() + 1 === currentMonth &&
+                    budget.userId === userId;
+            });
+
+            if (filteredBudget) {
+                setBudget(filteredBudget);
             }
         } catch (error) {
             console.error("Error fetching budget:", error);
@@ -35,7 +49,8 @@ export function BudgetPageComponent() {
     async function loadCategories(): Promise<void> {
         try {
             const categoriesFromAPI = await fetchCategories();
-            setCategories(categoriesFromAPI);
+            const filteredCategories = categoriesFromAPI.filter(category => category.userId === userId);
+            setCategories(filteredCategories);
         } catch (error) {
             console.error("Error fetching categories:", error);
         }
@@ -53,14 +68,27 @@ export function BudgetPageComponent() {
     /* ---------------------------------------------------------------------------------------------------- */
 
     const calculateRemainingBudget = () => {
-        if (!budget) return 0;
+    if (!budget) {
+        return 0;
+    }
 
-        const totalSpent = transactions.reduce(
-            (amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
+    const budgetDate = new Date(budget.date);
+    const budgetMonth = budgetDate.getMonth();
+    const budgetYear = budgetDate.getFullYear();
 
-        const remaining = budget.total - totalSpent;
-        return parseFloat(remaining.toFixed(2));
-    };
+    const filteredTransactions = transactions.filter(transaction => {
+        const transactionDate = new Date(transaction.date_transaction);
+        return transaction.budgetId === budget.id &&
+            transactionDate.getMonth() === budgetMonth &&
+            transactionDate.getFullYear() === budgetYear;
+    });
+
+    const totalSpent = filteredTransactions.reduce(
+        (amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
+
+    const remaining = budget.total - totalSpent;
+    return parseFloat(remaining.toFixed(2));
+};
 
     const remainingBudget = useMemo(calculateRemainingBudget, [budget, transactions]);
 

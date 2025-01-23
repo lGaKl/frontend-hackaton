@@ -1,5 +1,6 @@
 export interface Budget {
-    budgetid?: number;
+    budgetId: number;
     total : number;
     date_budget : Date;
+    userId: number;
 }

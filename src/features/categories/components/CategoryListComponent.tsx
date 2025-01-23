@@ -1,6 +1,6 @@
 import { Category } from "../types/category.ts";
 import { useCategories, useCategoryDispatch } from "../context/CategoriesContext.tsx";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import "./CategoryComponent.css";
 import { useNavigate } from "react-router";
 
@@ -10,14 +10,20 @@ interface CategoryListComponentProps {
 }
 
 export function CategoryListComponent({
-                                          /*onCategoryDeleted,*/
-                                          onCategoryUpdated,
-                                      }: CategoryListComponentProps) {
+    onCategoryUpdated,
+}: CategoryListComponentProps) {
     const navigate = useNavigate();
     const dispatch = useCategoryDispatch();
     const categories = useCategories();
+    const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
     const [editingCategoryId, setEditingCategoryId] = useState<number | null>(null);
     const [localEdits, setLocalEdits] = useState<Record<number, Category>>({});
+
+    useEffect(() => {
+        const userId = Number(localStorage.getItem("userId"));
+        const userCategories = categories.filter(category => category.userId === userId);
+        setFilteredCategories(userCategories);
+    }, [categories]);
 
     const handleEditClick = (category: Category) => {
         setEditingCategoryId(category.id!);
@@ -55,7 +61,7 @@ export function CategoryListComponent({
             >
                 <span className="plus-icon">+</span>
             </li>
-            {categories.map((category) => (
+            {filteredCategories.map((category) => (
                 <li key={category.id} className="li-category">
                     <div className="div-category">
                         {editingCategoryId === category.id ? (

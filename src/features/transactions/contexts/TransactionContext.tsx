@@ -16,7 +16,7 @@ const TransactionDispatchContext = createContext<(action: Action) => void>(() =>
 function reducer(transactions: Transaction[], action: Action) {
     switch (action.type) {
         case "set":
-            return action.transactions ?? []; // Assure que ce soit un tableau valide
+            return action.transactions ?? [];
         case "add":
             return action.transaction ? [...transactions, action.transaction] : transactions;
         case "update":
@@ -39,10 +39,15 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
         const getData = async () => {
             try {
                 const transactions = await fetchTransactions();
-                console.log("Transactions récupérées :", transactions); // ✅ Log des données récupérées
-                dispatch({ type: "set", transactions });
+                const userId = Number(localStorage.getItem("userId"));
+                const filteredTransactions = transactions.filter(transaction => {
+                    const budgetId = transaction.budgetId;
+                    const budget = getBudgetById(budgetId);
+                    return budget && budget.id_user_budget === userId;
+                });
+                dispatch({ type: "set", transactions: filteredTransactions });
             } catch (error) {
-                console.error("Erreur lors de la récupération des transactions :", error);
+                console.error("Error fetching transactions:", error);
             }
         };
         getData();
@@ -59,3 +64,10 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
 
 export const useTransactions = () => useContext(TransactionContext);
 export const useTransactionDispatch = () => useContext(TransactionDispatchContext);
+
+// Implement this function to get budget by ID
+function getBudgetById(budgetId: number) {
+    // Fetch or retrieve the budget by its ID
+    // This is a placeholder implementation
+    return { id_user_budget: 1 }; // Replace with actual logic
+}

@@ -1,4 +1,5 @@
 export interface BudgetUpdateCommand {
     total : number;
-    date_budget : Date;
+    date_budget : String;
+    userId: number;
 }
