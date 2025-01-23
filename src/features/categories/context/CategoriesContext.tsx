@@ -11,6 +11,7 @@ export interface Action {
 const CategoryContext = createContext<Category[]>([]);
 const CategoryDispatchContext = createContext<(action: Action) => void>(null!!);
 
+
 function reducer(categories: Category[], action: Action) {
     switch (action.type) {
         case "add":
