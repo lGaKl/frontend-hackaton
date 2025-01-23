@@ -386,9 +386,9 @@ body {
 }
 
 .btn-logout {
+    font-family: "Elephant", sans-serif;
     padding: 0.8rem 2rem;
     font-size: 1rem;
-    font-weight: bold;
     color: white;
     background-color: #d32f2f;
     border: none;
@@ -406,13 +406,14 @@ body {
 
 @media (max-width: 1024px) {
     .btn-logout {
-        font-size: 0.9rem;
+        font-size: 1rem;
         padding: 0.7rem 1.8rem;
     }
 }
 
 @media (max-width: 768px) {
     .btn-logout {
+        font-size: 0.9rem;
         padding: 0.6rem 1.5rem;
     }
 }

@@ -10,6 +10,7 @@ import { RegisterComponent } from "./core/components/register/RegisterComponent.
 import { AuthProvider } from "./features/auth/AuthContext.tsx";
 import 'react-toastify/dist/ReactToastify.css';
 import budgetRoutes from "./features/budget/budget-routes.tsx";
+import {ToastContainer} from "react-toastify";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/register" element={<RegisterComponent />} />
                 </Routes>
             </Container>
+            <ToastContainer />
         </AuthProvider>
     );
 }

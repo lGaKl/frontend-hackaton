@@ -5,6 +5,7 @@ import {useTransactionDispatch, useTransactions} from "../contexts/TransactionCo
 import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
 import {Category} from "../../categories/types/category.ts";
 import {fetchCategories} from "../../categories/services/category-service.tsx";
+import {toast} from "react-toastify";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transactionUpdated: Transaction) => void;
@@ -45,7 +46,6 @@ export default function TransactionListComponent({
             console.log("Filtered Transactions:", filtered);
             setFilteredTransactions(filtered);
             console.log("Filtered Transactions State Updated:", filtered);
-
 
         };
 
@@ -88,6 +88,7 @@ export default function TransactionListComponent({
 
         onTransactionUpdated(updatedTransaction);
         dispatch({type: "update", transaction: updatedTransaction});
+        toast.success("Transaction modifiée");
         setEditingTransactionId(null);
     };
 
@@ -106,6 +107,7 @@ export default function TransactionListComponent({
 
     function processTransactionDelete (transaction: Transaction) {
         if (!confirm("Voulez vous supprimer la transaction?")) return;
+        toast.success("Transaction supprimée");
         onTransactionDeleted(transaction);
     }
 

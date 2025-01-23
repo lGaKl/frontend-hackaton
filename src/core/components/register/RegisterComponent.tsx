@@ -41,53 +41,53 @@ export function RegisterComponent() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newErrors: { email: string; password: string; confirmPassword: string } = {
+        const newErrors = {
             email: "",
             password: "",
             confirmPassword: "",
         };
-        //mail bien écrit
-        const mailRegex =/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Vérification du format de l'email
+        const mailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!mailRegex.test(email)) {
             newErrors.email = "Mauvais format du mail.";
-            console.log(newErrors.email);
         }
-        //mdp bien sécurisé
+
+        // Vérification de la complexité du mot de passe
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
         if (!passwordRegex.test(password) || password.length < 12) {
-            newErrors.password = "Le mot de passe doit contenir une majuscule, un chiffre, un caractère spécial et 12caratéres.";
-            console.log(newErrors.password);
+            newErrors.password = "Le mot de passe doit faire 12 caractères et contenir une majuscule, un chiffre, et un caractère spécial.";
         }
-        //mdp le même
+
+        // Vérification de la correspondance des mots de passe
         if (password !== confirmPassword) {
             newErrors.confirmPassword = "Les mots de passes ne correspondent pas.";
         }
-        if (Object.keys(newErrors).length>0) {
+
+        // Mise à jour des erreurs
+        if (newErrors.email || newErrors.password || newErrors.confirmPassword) {
             setError(newErrors);
-            return;
         }
 
-
+        // Appel API pour l'enregistrement
         try {
-                const response = await fetch("http://localhost:8080/api/v1/users", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ firstName, lastName, email, password, role: "USER" })
-                });
+            console.log("Registering...");
+            const response = await fetch("http://localhost:8080/api/v1/users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firstName, lastName, email, password, role: "USER" }),
+            });
 
-                if (!response.ok) {
-                    throw new Error("Registration failed");
-                }
-
-                console.log("Registration successful");
-                toast.success("Enregistrement réussi !");
-                window.location.href = "/login";
-            } catch (error) {
-                toast.error("Une erreur est survenue lors de l'inscription.");
+            if (!response.ok) {
+                throw new Error("Registration failed");
             }
 
+            console.log("Registration successful");
+            window.location.href = "/login";
+            toast.success("Enregistrement réussi !");
+        } catch (error) {
+            toast.error("Une erreur est survenue lors de l'inscription.");
+        }
     };
 
     return (

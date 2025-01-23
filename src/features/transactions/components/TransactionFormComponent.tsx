@@ -4,6 +4,7 @@ import {fetchCategories} from "../../categories/services/category-service.tsx";
 import "./TransactionComponent.css"
 import {TransactionCreateCommand} from "../services/commands/transaction-create-command.ts";
 import {fetchBudgets} from "../../budget/services/BudgetService.tsx";
+import {useNavigate} from "react-router";
 
 interface TransactionFormComponentProps {
     onTransactionCreated: (t: TransactionCreateCommand) => void;
@@ -16,6 +17,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
     const [inputsDescription, setInputsDescription] = useState({ description: "" });
     const [inputsAmount, setInputsAmount] = useState({ amount: 0 });
     const [categories, setCategories] = useState<Category[]>([]);
+    const navigate = useNavigate();
 
     function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>) {
         setInputsDescription({ description: e.target.value });
@@ -70,6 +72,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
         } catch (error) {
             console.error('Error getting budget ID:', error);
         }
+        navigate("/transactions/transactions");
     }
 
     return (

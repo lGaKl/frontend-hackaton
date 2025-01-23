@@ -14,6 +14,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {useAuth} from "../auth/AuthContext.tsx";
 import Tutorial from "../tutorial/Tutorial.tsx";
+import {toast} from "react-toastify";
 
 export function HomeComponent() {
 
@@ -75,18 +76,37 @@ export function HomeComponent() {
     const calculateRemainingBudget = () => {
         if (!budget) return 0;
 
-        const totalSpent = transactions.reduce(
-            (amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
+        // Récupérer l'userId connecté
+        const userId = Number(localStorage.getItem("userId"));
 
+        // Filtrer les transactions pour inclure uniquement celles de l'utilisateur connecté
+        const userTransactions = transactions.filter(
+            (transaction) => transaction.budgetId === budget.id && budget.userId === userId
+        );
+
+        // Calculer le total dépensé pour l'utilisateur
+        const totalSpent = userTransactions.reduce(
+            (amount, transaction) => amount + parseFloat(transaction.amount.toString()),
+            0
+        );
+
+        // Retourner le budget restant
         return budget.total - totalSpent;
     };
+
 
     const remainingBudget = useMemo(calculateRemainingBudget, [budget, transactions]);
 
     const handleLogout = () => {
-        logout();
-        navigate("/");
+        toast.success("Déconnexion réussie !"); // Affiche le toast
+
+        // Ajout d'un délai pour permettre au toast de s'afficher
+        setTimeout(() => {
+            logout();
+            navigate("/");
+        }, 1000); // Délai d'une seconde
     };
+
 
     const calculateRemainingBudgetByCategory = (categoryId: number | undefined) => {
         if (!categoryId) return { remainingBudget: 0, percentageOfCategory: 0 };
@@ -129,16 +149,16 @@ export function HomeComponent() {
         const chartData = categories.map((category, index) => {
             return {
                 angle: category.maxBudget,
-                label: category.name, // Conservez uniquement le nom
+                label: category.name,
                 id: category.id, // Ajoutez un ID unique
                 className: `radial-segment-${colors[index % colors.length]}`
             };
         });
 
         setData(chartData);
+        console.log("Categories:", categories);
+        console.log("Chart Data:", chartData);
     }, [categories, transactions, budget]);
-
-
 
     const handleValueClick = (datapoint: RadialChartPoint) => {
         setData((prevData) =>

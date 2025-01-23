@@ -92,12 +92,20 @@ export default function BudgetPageComponent() {
         return category.maxBudget - totalSpent;
     };
 
+    // Met à jour le contexte des catégories lorsqu'elles changent
+    useEffect(() => {
+        dipatchCategories = ({ type: "set", categories });
+    }, [categories, dipatchCategories]);
+
     const categoriesWithRemainingBudget = useMemo(() => {
-        return categories.map((category) => ({
-            ...category,
-            remainingBudget: calculateRemainingBudgetByCategory(category.id),
-        }));
+        return categories
+            .filter((category) => category.maxBudget > 0)
+            .map((category) => ({
+                ...category,
+                remainingBudget: calculateRemainingBudgetByCategory(category.id),
+            }));
     }, [categories, transactions]);
+
 
     const handleShowForm = () => {
         navigate("/budget/newBudget");
