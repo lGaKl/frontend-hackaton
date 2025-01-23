@@ -60,7 +60,7 @@
     opacity: 90%;
 }
 
-.li-category {
+.li-category-budget {
     background-color: #cdb878;
     border: 1px solid #095228;
     border-radius: 5px;
@@ -92,7 +92,7 @@
 }
 
 .span-category-name {
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     color: #9e4d0d;
     margin-bottom: 0.3rem;
     text-align: center;
@@ -133,7 +133,7 @@
     }
 
     .span-category-name {
-        font-size: 1.2rem;
+        font-size: 1.0rem;
     }
 
     .span-category-budget,
@@ -152,7 +152,7 @@
     }
 
     .span-category-name {
-        font-size: 1.2rem;
+        font-size: 1.0rem;
     }
 }
 

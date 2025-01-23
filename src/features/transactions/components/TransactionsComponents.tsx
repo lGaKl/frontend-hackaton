@@ -1,8 +1,26 @@
 import { useTransactions } from "../contexts/TransactionContext.tsx";
 import "./TransactionComponent.css";
+import {useEffect, useState} from "react";
+import {Category} from "../../categories/types/category.ts";
+import {fetchCategories} from "../../categories/services/category-service.tsx";
 
 export default function TransactionsComponent() {
     const transactions = useTransactions();
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
+
+    async function loadCategories(): Promise<void> {
+        const categoriesFromAPI = await fetchCategories();
+        setCategories(categoriesFromAPI);
+    }
+
+    const getCategoryName = (id: number): string => {
+        const category = categories.find(category => category.id === id);
+        return category ? category.name : "Catégorie pas trouvée";
+    };
 
     const getMonthName = (monthIndex: number) => {
         const months = [
@@ -21,9 +39,9 @@ export default function TransactionsComponent() {
         const now = new Date();
         const monthName = getMonthName(now.getMonth());
 
-        const csvHeader = "Description,Montant,Date,Categorie\n";
+        const csvHeader = "Description,MontantEuro,Date,Categorie\n";
         const csvRows = transactions.map(transaction =>
-            `"${transaction.description}","${transaction.amount}","${transaction.date_transaction}","${transaction.categoryId}"`
+            `"${transaction.description}","${transaction.amount}","${transaction.date_transaction}","${getCategoryName(transaction.categoryId)}"`
         );
         const csvContent = csvHeader + csvRows.join("\n");
 
@@ -60,7 +78,7 @@ export default function TransactionsComponent() {
                                     Date: <span className="span-transactions-data">{transaction.date_transaction}</span>
                                 </span>
                                 <span className="span-transactions">
-                                    Catégorie: <span className="span-transactions-data">{transaction.categoryId}</span>
+                                    Catégorie: <span className="span-transactions-data">{getCategoryName(transaction.categoryId)}</span>
                                 </span>
                             </>
                         </div>

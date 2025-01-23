@@ -1,6 +1,7 @@
 ﻿import { Transaction } from "../types/transaction.ts";
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
 import { fetchTransactions } from "../services/transaction-service.tsx";
+import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
 
 interface Action {
     type: "set" | "add" | "update" | "delete";
@@ -16,7 +17,7 @@ const TransactionDispatchContext = createContext<(action: Action) => void>(() =>
 function reducer(transactions: Transaction[], action: Action) {
     switch (action.type) {
         case "set":
-            return action.transactions ?? []; // Assure que ce soit un tableau valide
+            return action.transactions ?? [];
         case "add":
             return action.transaction ? [...transactions, action.transaction] : transactions;
         case "update":
@@ -38,11 +39,31 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const getData = async () => {
             try {
+                console.log("Fetching transactions...");
                 const transactions = await fetchTransactions();
+                console.log("Fetched transactions:", transactions);
 
-                dispatch({ type: "set", transactions });
+                const userId = Number(localStorage.getItem("userId"));
+                console.log("User ID:", userId);
+
+                const filteredTransactions = await Promise.all(
+                    transactions.map(async (transaction) => {
+                        const budget = await fetchBudgetById(transaction.budgetId);
+                        if (budget && budget.id === userId) {
+                            return transaction;
+                        }
+                        return null;
+                    })
+                );
+
+                const validTransactions = filteredTransactions.filter(
+                    (transaction): transaction is Transaction => transaction !== null
+                );
+
+                console.log("Filtered transactions:", validTransactions);
+                dispatch({ type: "set", transactions: validTransactions });
             } catch (error) {
-                console.error("Erreur lors de la récupération des transactions :", error);
+                console.error("Error fetching transactions:", error);
             }
         };
         getData();

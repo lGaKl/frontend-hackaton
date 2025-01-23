@@ -32,11 +32,14 @@ export const deleteCategory: (categoryId: number) => Promise<Response> = async (
 }
 
 export const updateCategory: (category: CategoryUpdateCommand) => Promise<Response> = async (category) => {
+    const userId = parseInt(localStorage.getItem("userId") || "0", 10);
+    const updatedCategory = { ...category, userId };
+
     return await fetch(CATEGORY_API_URL, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(category),
+        body: JSON.stringify(updatedCategory),
     });
 };
