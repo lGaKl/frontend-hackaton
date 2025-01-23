@@ -15,12 +15,12 @@ export default function BudgetManagerComponent() {
         const sendBudget = async (budget: BudgetCreateCommand) => {
             try {
                 console.log("",budget.total);
-                console.log("",budget.date_budget);
+                console.log("",budget.dateBudget);
                 const budgetCreated = await postBudget({
                     total: budget.total,
-                    date_budget: budget.date_budget
+                    dateBudget: budget.dateBudget
                 });
-                console.log(budgetCreated);
+                console.log("ici : ",budgetCreated);
                 dispatch({ type: "add", budget: budgetCreated });
             } catch (error) {
                 console.error("Error creating budget:", error);

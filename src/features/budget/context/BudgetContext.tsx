@@ -4,7 +4,7 @@ import {fetchBudgets} from "../services/BudgetService.tsx";
 
 interface Action {
     type: "set" | "add" | "update" | "delete";
-    budget?: Budget;
+    budget: Budget;
     budgets?: Budget[];
 }
 
@@ -18,7 +18,10 @@ function reducer(budgets: Budget[], action: Action) {
         case "set":
             return action.budgets ?? [];
         case "add":
-            return action.budget ? [...budgets, action.budget] : budgets;
+            if (budgets.some(bud => bud.id === action.budget?.id)) {
+                return budgets;
+            }
+            return [...budgets, action.budget];
         case "update":
             return action.budget
                 ? budgets.map(b => (b.id === action.budget!.id ? action.budget! : b))
@@ -36,16 +39,21 @@ export function BudgetProvider({ children }: { children: ReactNode }) {
     const [budgets, dispatch] = useReducer(reducer, []);
 
     useEffect(() => {
+        let isMounted = true;
         const getData = async () => {
-            try {
-                const budgets = await fetchBudgets();
-                console.log("budget",budgets);
-                dispatch({ type: "set", budgets });
-            } catch (error) {
-                console.error("Erreur lors de la récupération des budgets :", error);
+            const fetchedBudgets = await fetchBudgets();
+            if (isMounted) {
+                fetchedBudgets.forEach(budget => {
+                    if (!budgets.some(bud => bud.id === budget.id)) {
+                        dispatch({ type: "add", budget: budget });
+                    }
+                });
             }
         };
         getData();
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
     return (

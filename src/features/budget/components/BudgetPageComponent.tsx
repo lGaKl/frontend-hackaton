@@ -8,7 +8,7 @@ import { Transaction } from "../../transactions/types/transaction.ts";
 import { fetchTransactions } from "../../transactions/services/transaction-service.tsx";
 import { useNavigate } from "react-router";
 
-export function BudgetPageComponent() {
+export default function BudgetPageComponent() {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<Category[]>([]);
     const [budget, setBudget] = useState<Budget | null>(null);

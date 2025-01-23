@@ -9,14 +9,16 @@ interface NewBudgetComponentProps {
 
 export default function NewBudgetComponent({ onBudgetCreated }: NewBudgetComponentProps) {
     const navigate = useNavigate();
-    const [inputBudget, setInputBudget] = useState({ total: 0, date: '' });
+    //const [inputBudget, setInputBudget] = useState({ total: 0, date: '' });
+    const [inputTotal, setInputTotal] = useState({total: 0});
+    const [inputDate, setInputDate] = useState({date: ''});
 
-    const handleSubmit = (e: FormEvent<HTMLElement>) => {
+    function handleSubmit (e: FormEvent<HTMLElement>) {
         e.preventDefault();
 
         const newBudget = {
-            total: inputBudget.total,
-            date_budget: new Date(inputBudget.date + "-01").toISOString().split('T')[0]
+            total: inputTotal.total,
+            dateBudget: new Date(inputDate.date + "-01").toISOString().split('T')[0]
         };
         console.log("Budget to be submitted:", newBudget);
         onBudgetCreated(newBudget);
@@ -24,7 +26,7 @@ export default function NewBudgetComponent({ onBudgetCreated }: NewBudgetCompone
 
         const form = e.target as HTMLFormElement;
         form.reset();
-    };
+    }
 
     const handleBackClick = () => {
         navigate("/budget/manager");
@@ -39,18 +41,16 @@ export default function NewBudgetComponent({ onBudgetCreated }: NewBudgetCompone
                     <input
                         id="total"
                         type="number"
-                        value={inputBudget.total}
-                        onChange={(e) => setInputBudget({ ...inputBudget, total: parseFloat(e.target.value) })}
+                        value={inputTotal.total}
+                        onChange={(e) => setInputTotal({ ...inputTotal, total: parseFloat(e.target.value) })}
                         required
                     />
-                </div>
-                <div className="form-group">
                     <label htmlFor="date">Date</label>
                     <input
                         id="date"
                         type="month"
-                        value={inputBudget.date}
-                        onChange={(e) => setInputBudget({ ...inputBudget, date: e.target.value })}
+                        value={inputDate.date}
+                        onChange={(e) => setInputDate({ ...inputDate, date: e.target.value })}
                         required
                     />
                 </div>
