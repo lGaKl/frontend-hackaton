@@ -14,7 +14,6 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
     const [formValid, setFormValid] = useState(false);
 
     useEffect(() => {
-        checkFormValidity();
     }, [inputs]);
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -26,9 +25,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
         setInputs(values => ({...values, [nom]: value}));
     }
 
-    function checkFormValidity(){
-        setFormValid(!!inputs.name);
-    }
+
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -50,15 +47,14 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
                 <div className="div-category">
                     <h2 className="h2-category">Ajouter une catégorie</h2>
                     <label className="label-category">
-                        Nom de la Catégorie <input type="text" name="name" className="input-category" maxLength={12} onChange={handleChange}/>
+                        Nom de la Catégorie <input type="text" name="name" className="input-category" maxLength={12} onChange={handleChange} required/>
                     </label>
                     <br/>
                     <label className="label-category">
-                        Budget Maximum <input type="number" step="any" name="maxBudget" className="input-category"
-                                              onChange={handleChange}/>
+                        Budget Maximum <input type="number" step="any" name="maxBudget" className="input-category" onChange={handleChange} required min={1}/>
                     </label>
                 </div>
-                <input type="submit" className="submit-category" disabled={!formValid}/>
+                <input type="submit" className="submit-category"/>
             </form>
             <button onClick={() => navigate("/categories/manager")} className="submit-category">Retour</button>
         </div>
