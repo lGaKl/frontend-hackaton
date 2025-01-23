@@ -71,35 +71,37 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
         <form onSubmit={handleSubmit} className="form-transaction">
             <div className="div-transaction">
                 <h1 className="h2-transaction">Nouvelle transaction</h1>
-                <label className="label-transaction">Description</label>
+                <label className="label-transaction">Description :</label>
                 <input
                     type="text"
                     name="Description"
                     className="input-transaction"
                     onChange={handleDescriptionChange}
                 /><br/>
-                <label className="label-transaction">Amount</label>
+                <label className="label-transaction">Montant :</label>
                 <input
                     type="number"
                     name="Amount"
+                    min="1"
                     className="input-transaction"
                     step="any"
                     onChange={handleAmountChange}
                 /><br/>
-                <label htmlFor="options" className="label-transaction">Select a category :</label>
+                <label htmlFor="options" className="label-transaction">Séléction de la catégorie  :</label>
                 <select
                     id="options"
                     className="option-transaction"
                     value={selectedCategory}
                     onChange={handleCategoryChange}
                 >
-                    <option value="">--Categories--</option>
+                    <option value="">--Catégories--</option>
                     {categories.map(category => (
                         <option key={category.id} value={category.id}>
                             {category.name}
                         </option>
                     ))}
                 </select><br/>
+                <label></label>
                 <input
                     type="submit"
                     className="submit-transaction"
