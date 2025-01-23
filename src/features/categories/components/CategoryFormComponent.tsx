@@ -3,7 +3,6 @@ import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import "./CategoryComponent.css";
 import {useNavigate} from "react-router";
 import {toast} from "react-toastify";
-import {useCategoryDispatch} from "../context/CategoriesContext.tsx";
 
 interface CategoryFormComponentProps {
     onCategoryCreated?: (c: Category) => void
@@ -11,10 +10,9 @@ interface CategoryFormComponentProps {
 
 export default function CategoryFormComponent({onCategoryCreated}: CategoryFormComponentProps) {
     const navigate = useNavigate(); //hook de navigation askip
-    const dispatch = useCategoryDispatch();
     const [inputs, setInputs] = useState({name: "", maxBudget:""});
     const [formValid, setFormValid] = useState(false);
-    const userId = 1;
+    const userId = Number(localStorage.getItem("userId"));
     useEffect(() => {
         checkFormValidity();
     }, [inputs]);
@@ -39,7 +37,6 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
         if(onCategoryCreated){
             onCategoryCreated(category);
         }
-        dispatch({type: "add", category});
         const form = e.target as HTMLFormElement;
         toast.success("Catégorie ajoutée avec succès !");
         form.reset();
