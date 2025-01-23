@@ -18,7 +18,8 @@ export default function NewBudgetComponent({ onBudgetCreated }: NewBudgetCompone
 
         const newBudget = {
             total: inputTotal.total,
-            dateBudget: new Date(inputDate.date + "-01").toISOString().split('T')[0]
+            dateBudget: new Date(inputDate.date + "-01").toISOString().split('T')[0],
+            userId: Number(localStorage.getItem("userId"))
         };
         console.log("Budget to be submitted:", newBudget);
         onBudgetCreated(newBudget);

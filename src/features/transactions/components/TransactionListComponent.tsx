@@ -4,6 +4,8 @@ import "./TransactionComponent.css";
 import {useNavigate} from "react-router";
 import {useTransactionDispatch, useTransactions} from "../contexts/TransactionContext.tsx";
 import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
+import {Category} from "../../categories/types/category.ts";
+import {fetchCategories} from "../../categories/services/category-service.tsx";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transactionUpdated: Transaction) => void;
@@ -18,6 +20,8 @@ export default function TransactionListComponent({
     const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
     const [editingTransactionId, setEditingTransactionId] = useState<number | null>(null);
     const [localEdits, setLocalEdits] = useState<Record<number, Transaction>>({});
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     useEffect(() => {
         const userId = Number(localStorage.getItem("userId"));
@@ -42,13 +46,34 @@ export default function TransactionListComponent({
             console.log("Filtered Transactions:", filtered);
             setFilteredTransactions(filtered);
             console.log("Filtered Transactions State Updated:", filtered);
+
+
         };
 
         fetchUserTransactions();
     }, [transactions]);
 
+    useEffect(() => {
+        loadCategories();
+    }, [selectedCategory]);
+
+    async function loadCategories(): Promise<void> {
+        const categoriesFromAPI = await fetchCategories();
+        setCategories(categoriesFromAPI);
+    }
+
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCategory(e.target.value);
+    };
+
+    const getCategoryName = (id: number): string => {
+        const category = categories.find(category => category.id === id);
+        return category ? category.name : "Catégorie pas trouvé";
+    };
+
     const handleEditClick = (transaction: Transaction) => {
         setEditingTransactionId(transaction.id!);
+        setSelectedCategory(String(transaction.categoryId));
         setLocalEdits((prev) => ({
             ...prev,
             [transaction.id!]: {...transaction},
@@ -56,13 +81,18 @@ export default function TransactionListComponent({
     };
 
     const handleSaveClick = (transactionId: number) => {
-        const updatedTransaction = localEdits[transactionId];
-        if (!updatedTransaction) return;
-
-        onTransactionUpdated(updatedTransaction);
-        dispatch({type: "update", transaction: updatedTransaction});
-        setEditingTransactionId(null);
+    const updatedTransaction = {
+        ...localEdits[transactionId],
+        categoryId: Number(selectedCategory),
     };
+    if (!updatedTransaction) return;
+
+    onTransactionUpdated(updatedTransaction);
+    dispatch({type: "update", transaction: updatedTransaction});
+    setEditingTransactionId(null);
+};
+
+
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>, transactionId: number) => {
         const {name, value} = e.target;

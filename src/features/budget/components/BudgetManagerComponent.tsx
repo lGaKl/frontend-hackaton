@@ -18,7 +18,8 @@ export default function BudgetManagerComponent() {
                 console.log("",budget.dateBudget);
                 const budgetCreated = await postBudget({
                     total: budget.total,
-                    dateBudget: budget.dateBudget
+                    dateBudget: budget.dateBudget,
+                    userId: Number(localStorage.getItem("userId"))
                 });
                 console.log("ici : ",budgetCreated);
                 dispatch({ type: "add", budget: budgetCreated });

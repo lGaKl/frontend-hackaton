@@ -55,7 +55,11 @@ export function LoginComponent() {
                 const user = await userResponse.json();
                 localStorage.setItem("userId", user.id);
 
-                window.location.href = "/";
+                console.log("Logging in with", email, password, "Token:", token);
+                toast.success("Connexion réussie !");
+                login(token);
+                navigate("/");
+
             } catch (error) {
                 setError("Login failed. Please try again.");
             }
