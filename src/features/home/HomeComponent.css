@@ -383,6 +383,13 @@ body {
     stroke: #c05088 !important;
 }
 
+.logout-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15rem;
+}
+
 .btn-logout {
     margin: 1rem auto;
     padding: 0.8rem 2rem;

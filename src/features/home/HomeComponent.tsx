@@ -141,24 +141,28 @@ export function HomeComponent() {
 
 
     const handleValueClick = (datapoint: RadialChartPoint) => {
-        const category = categoriesWithRemainingBudget.find((cat) => cat.name === datapoint.label);
-        if (category) {
-            setSelectedCategory({
-                name: category.name,
-                maxBudget: category.maxBudget,
-                percentageOfCategory: category.percentageOfCategory,
-                percentageOfTotal: category.percentageOfTotal
-            });
-            setData((prevData) =>
-                prevData.map((d) =>
-                    d.label === datapoint.label
-                        ? { ...d, radius: 1.1 }
-                        : { ...d, radius: 1 }
-                )
-            );
+        setData((prevData) =>
+            prevData.map((d) =>
+                d.label === datapoint.label
+                    ? { ...d, radius: d.radius === 1.1 ? 1 : 1.1 }
+                    : { ...d, radius: 1 }
+            )
+        );
+        const isSelected = selectedCategory?.name === datapoint.label;
+        if (isSelected) {
+            setSelectedCategory(null);
+        } else {
+            const category = categoriesWithRemainingBudget.find((cat) => cat.name === datapoint.label);
+            if (category) {
+                setSelectedCategory({
+                    name: category.name,
+                    maxBudget: category.maxBudget,
+                    percentageOfCategory: category.percentageOfCategory,
+                    percentageOfTotal: category.percentageOfTotal,
+                });
+            }
         }
     };
-
 
     const percentage = (remainingBudget / (budget?.total || 1)) * 100;
     return (
@@ -213,12 +217,15 @@ export function HomeComponent() {
                                     <span
                                         className="span-home">{selectedCategory.percentageOfCategory.toFixed(2)}%</span>
                                 </p>
+
                             </div>
                         )}
                     </div>
-                    <button className="btn-logout" onClick={handleLogout}>
-                        Déconnexion
-                    </button>
+                    <div className="logout-button-container">
+                        <button className="btn-logout" onClick={handleLogout}>
+                            Déconnexion
+                        </button>
+                    </div>
                 </div>
             )}
             <div className="home-snowflakes" aria-hidden="true">
