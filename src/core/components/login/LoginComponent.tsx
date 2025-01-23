@@ -43,7 +43,7 @@ export function LoginComponent() {
             console.log("API Response:", response);
 
             if (!response.ok) {
-                throw new Error("Échec de la connexion. Vérifiez vos informations.");
+                throw new Error("Mauvais mail ou mot de passe.");
             }
 
             const token = await response.text(); // Récupération du token
@@ -72,6 +72,7 @@ export function LoginComponent() {
                         onChange={handleEmailChange}
                         className="form-control"
                         placeholder="Votre email"
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -83,6 +84,7 @@ export function LoginComponent() {
                         onChange={handlePasswordChange}
                         className="form-control"
                         placeholder="Votre mot de passe"
+                        required
                     />
                 </div>
                 <button type="submit" className="btn-login">
