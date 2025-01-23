@@ -43,7 +43,7 @@ export default function TransactionListComponent({
             }));
 
             const filtered = userTransactions.filter(Boolean) as Transaction[];
-            console.log("Filtered Transactions:", filtered);
+            console.log("Filtered Transactions listComponent:", filtered);
             setFilteredTransactions(filtered);
             console.log("Filtered Transactions State Updated:", filtered);
 

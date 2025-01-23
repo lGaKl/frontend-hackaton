@@ -1,5 +1,7 @@
-import { useTransactions } from "../contexts/TransactionContext.tsx";
+import {useTransactions} from "../contexts/TransactionContext.tsx";
 import "./TransactionComponent.css";
+import {getCurrentUserBudgetId} from "./TransactionFormComponent.tsx";
+import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
 
 export default function TransactionsComponent() {
     const transactions = useTransactions();
@@ -12,22 +14,40 @@ export default function TransactionsComponent() {
         return months[monthIndex];
     };
 
-    const exportToCSV = () => {
+
+    const exportToCSV = async () => {
         if (transactions.length === 0) {
             alert("Aucune transaction à exporter.");
+            return;
+        }
+
+        const userId = Number(localStorage.getItem("userId"));
+        const filteredTransactions = await Promise.all(
+            transactions.map(async (transaction) => {
+                const budget = await fetchBudgetById(transaction.budgetId);
+                if (budget && budget.userId === userId) {
+                    return transaction;
+                }
+                return null;
+            })
+        );
+
+        if (filteredTransactions.length === 0) {
+            alert("Aucune transaction à exporter pour le budget actuel.");
             return;
         }
 
         const now = new Date();
         const monthName = getMonthName(now.getMonth());
 
-        const csvHeader = "Description,Montant,Date,Categorie\n";
-        const csvRows = transactions.map(transaction =>
+        const csvHeader = "Description,MontantEuro,Date,Categorie\n";
+        const csvRows = filteredTransactions.map(transaction =>
             `"${transaction.description}","${transaction.amount}","${transaction.date_transaction}","${transaction.categoryId}"`
         );
         const csvContent = csvHeader + csvRows.join("\n");
 
-        const blob = new Blob([csvContent], { type: "text/csv" });
+        const bom = "\uFEFF";
+        const blob = new Blob([bom + csvContent], {type: "text/csv;charset=utf-8;"});
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
         link.download = `Transactions_${monthName}.csv`;
@@ -51,7 +71,8 @@ export default function TransactionsComponent() {
                         <div className="div-transactions">
                             <>
                                 <span className="span-transactions">
-                                    Description: <span className="span-transactions-data">{transaction.description}</span>
+                                    Description: <span
+                                    className="span-transactions-data">{transaction.description}</span>
                                 </span>
                                 <span className="span-transactions">
                                     Montant: <span className="span-transactions-data">{transaction.amount} €</span>

@@ -118,9 +118,9 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
 
 }
 
-async function getCurrentUserBudgetId(): Promise<number> {
+export async function getCurrentUserBudgetId(): Promise<number> {
     const userId = Number(localStorage.getItem("userId"));
-    const budgets = await fetchBudgets(); // Assuming fetchBudgets fetches all budgets
+    const budgets = await fetchBudgets();
     const userBudget = budgets.find(budget => budget.userId === userId);
-    return userBudget ? userBudget.id : 0; // Return 0 or handle the case where no budget is found
+    return userBudget ? userBudget.id : 0;
 }

@@ -33,7 +33,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!formValid) return;
-        const category = {name: inputs.name, maxBudget: Number(inputs.maxBudget)};
+        const category = {name: inputs.name, maxBudget: Number(inputs.maxBudget), userId: parseInt(localStorage.getItem('userId') || '0', 10)};
         if(onCategoryCreated){
             onCategoryCreated(category);
         }
