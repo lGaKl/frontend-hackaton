@@ -1,6 +1,6 @@
-import { BudgetCreateCommand } from "./commands/BudgetCreateCommand.ts";
-import { Budget } from "../types/Budget.ts";
-import { BudgetUpdateCommand } from "./commands/BudgetUpdateCommand.ts";
+import {BudgetCreateCommand} from "./commands/BudgetCreateCommand.ts";
+import {Budget} from "../types/Budget.ts";
+import {BudgetUpdateCommand} from "./commands/BudgetUpdateCommand.ts";
 
 const BUDGET_API_URL = import.meta.env.VITE_API_URL + "/budgets";
 
@@ -30,11 +30,16 @@ export const deleteBudget = async (id: number): Promise<Response> => {
     });
 };
 
-export const updateBudget: (budget: BudgetUpdateCommand) => Promise<Response> = async (budget) => {
-    return await fetch(BUDGET_API_URL, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
+export const fetchBudgetById : (id: number) => Promise<Budget> = async (id: number) =>{
+    const response = await fetch (`${BUDGET_API_URL}/${id}`);
+    return await response.json();
+}
+
+export const UpdateBudgets : (id: number, budget: BudgetUpdateCommand) => Promise<Response> = async(id:number, budget: BudgetUpdateCommand )=>{
+    return await fetch (`${BUDGET_API_URL}/${id}`,{
+        method: "PATCH",
+        headers:{
+            "content-Type" : "application/json"
         },
         body: JSON.stringify(budget)
     });

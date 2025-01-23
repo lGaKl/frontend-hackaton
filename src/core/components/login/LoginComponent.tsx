@@ -23,37 +23,44 @@ export function LoginComponent() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Form submitted with:", { email, password });
+        if (email && password) {
+            try {
+                const response = await fetch("http://localhost:8080/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
 
-        if (!email || !password) {
-            setError("Veuillez entrer votre email et mot de passe.");
-            return;
-        }
+                if (!response.ok) {
+                    throw new Error("Login failed");
+                }
 
-        try {
-            const response = await fetch("http://localhost:8080/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
+                const token = await response.text();
+                document.cookie = `token=${token}; path=/`;
 
-            console.log("API Response:", response);
+                // Fetch user info by email
+                const userResponse = await fetch(`http://localhost:8080/api/v1/users/email/${encodeURIComponent(email)}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
 
-            if (!response.ok) {
-                throw new Error("Échec de la connexion. Vérifiez vos informations.");
+                if (!userResponse.ok) {
+                    throw new Error("Failed to fetch user info");
+                }
+
+                const user = await userResponse.json();
+                localStorage.setItem("userId", user.id);
+
+                window.location.href = "/";
+            } catch (error) {
+                setError("Login failed. Please try again.");
             }
-
-            const token = await response.text();
-            console.log("Logging in with", email, password, "Token:", token);
-
-            toast.success("Connexion réussie !");
-            login(token);
-            navigate("/");
-        } catch (error) {
-            console.error("Erreur lors de la connexion :", error);
-            setError("Échec de la connexion. Veuillez réessayer.");
+        } else {
+            setError("Please enter both email and password.");
         }
     };
 
@@ -84,15 +91,11 @@ export function LoginComponent() {
                         placeholder="Votre mot de passe"
                     />
                 </div>
-                <button type="submit" className="btn-login">
-                    Connexion
-                </button>
+                <button type="submit" className="btn-login">Connexion</button>
             </form>
-            <br />
-            Vous n'avez pas encore de compte ?<br />
-            <span>
-                Cliquez <a href="/register">ici</a> pour vous enregistrer.
-            </span>
+            <br/>
+            Vous n'avez pas encore de compte?<br/>
+            <span>Cliquez <a href="/register">ici</a> pour vous enregistrer.</span>
         </div>
     );
 }

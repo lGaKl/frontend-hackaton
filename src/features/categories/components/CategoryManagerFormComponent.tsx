@@ -9,10 +9,15 @@ export default function CategoryManagerFormComponent() {
 
     const onCategoryCreated: (category: Category) => void = async (category) => {
         const existingCategories = await fetchCategories();
-        const categoryExists = existingCategories.some(c => c.name === category.name);
-
+        const categoryExists = existingCategories.some(c => c.name === category.name && c.userId === category.userId);
         if (categoryExists) {
             alert("Category with this name already exists!");
+            return;
+        }
+
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            alert("User ID not found in local storage!");
             return;
         }
 
@@ -20,6 +25,7 @@ export default function CategoryManagerFormComponent() {
             const categoryCreated = await postCategory({
                 name: category.name,
                 maxBudget: category.maxBudget,
+                userId: Number(userId)
             });
             dispatch({ type: "add", category: { ...category, id: categoryCreated.id } });
         };

@@ -1,111 +1,77 @@
-﻿import {Transaction} from "../types/transaction.ts";
+import {Transaction} from "../types/transaction";
+import {ChangeEvent, useState, useEffect} from "react";
+import "./TransactionComponent.css";
+import {useNavigate} from "react-router";
 import {useTransactionDispatch, useTransactions} from "../contexts/TransactionContext.tsx";
-import {ChangeEvent, useEffect, useState} from "react";
-import {updateTransaction} from "../services/transaction-service.tsx";
-import "./TransactionComponent.css"
-import {fetchCategories} from "../../categories/services/category-service.tsx";
-import {Category} from "../../categories/types/category.ts";
-import {toast} from "react-toastify";
+import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
 
 interface TransactionListComponentProps {
-    onTransactionUpdated: (transaction: Transaction) => void;
-    onTransactionDeleted: (transactionDeleted: Transaction) => void
+    onTransactionUpdated: (transactionUpdated: Transaction) => void;
 }
 
-export default function TransactionListComponent({onTransactionUpdated,onTransactionDeleted}: TransactionListComponentProps) {
+export default function TransactionListComponent({
+    onTransactionUpdated,
+}: TransactionListComponentProps) {
+    const navigate = useNavigate();
     const dispatch = useTransactionDispatch();
     const transactions = useTransactions();
+    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
     const [editingTransactionId, setEditingTransactionId] = useState<number | null>(null);
     const [localEdits, setLocalEdits] = useState<Record<number, Transaction>>({});
-    //categories
-    const [categories, setCategories] = useState<Category[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState("");
+
+    useEffect(() => {
+        const userId = Number(localStorage.getItem("userId"));
+        console.log("User ID:", userId);
+        if (!userId) {
+            console.error("User ID is not found in localStorage");
+            return;
+        }
+
+        console.log("All Transactions:", transactions);
+
+        const fetchUserTransactions = async () => {
+            const userTransactions = await Promise.all(transactions.map(async (transaction) => {
+                const budget = await fetchBudgetById(transaction.budgetId);
+                console.log("Budget:", budget);
+                const isUserTransaction = budget && budget.userId === userId;
+                console.log("Transaction:", transaction, "Budget:", budget, "Is User Transaction:", isUserTransaction);
+                return isUserTransaction ? transaction : null;
+            }));
+
+            const filtered = userTransactions.filter(Boolean) as Transaction[];
+            console.log("Filtered Transactions:", filtered);
+            setFilteredTransactions(filtered);
+            console.log("Filtered Transactions State Updated:", filtered);
+        };
+
+        fetchUserTransactions();
+    }, [transactions]);
 
     const handleEditClick = (transaction: Transaction) => {
         setEditingTransactionId(transaction.id!);
-        setSelectedCategory(String(transaction.categoryId));
         setLocalEdits((prev) => ({
             ...prev,
-            [transaction.id!]: {
-                ...transaction
-            },
-
+            [transaction.id!]: {...transaction},
         }));
     };
 
-    useEffect(() => {
-        loadCategories();
-    }, [selectedCategory]);
-
-    async function loadCategories(): Promise<void> {
-        const categoriesFromAPI = await fetchCategories();
-        setCategories(categoriesFromAPI);
-    }
-
-    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCategory(e.target.value);
-    };
-
-    const getCategoryName = (id: number): string => {
-        const category = categories.find(category => category.id === id);
-        return category ? category.name : "Catégorie pas trouvé";
-    };
-
-    function processTransactionDelete (transaction: Transaction) {
-        if (!confirm("Are you sure you want to delete?")) return;
-        onTransactionDeleted(transaction);
-    }
-
-
-
-    const handleSaveClick = async (transactionId: number) => {
-        const updatedTransaction = {...localEdits[transactionId]};
+    const handleSaveClick = (transactionId: number) => {
+        const updatedTransaction = localEdits[transactionId];
         if (!updatedTransaction) return;
-        try {
 
-            updatedTransaction.categoryId = parseInt(selectedCategory);
-
-            const selectedCategoryId = parseInt(selectedCategory);
-            const response = await updateTransaction({
-                id: updatedTransaction.id,
-                description: updatedTransaction.description,
-                amount: updatedTransaction.amount,
-                date_transaction: updatedTransaction.date_transaction,
-                budgetId: updatedTransaction.budgetId,
-                categoryId: selectedCategoryId
-            });
-
-            if (!response.ok) {
-                throw new Error("Erreur lors de la mise à jour de la transaction");
-            }
-
-            dispatch({type: "update", transaction: updatedTransaction});
-            onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
-            toast.success("Transaction modifiée avec succès !");
-
-
-            // Réinitialisez l'état d'édition
-            setEditingTransactionId(null);
-            setLocalEdits((prev) => {
-                const newEdits = {...prev};
-                delete newEdits[transactionId];
-                return newEdits;
-            });
-        } catch (error) {
-            console.error("Erreur lors de la mise à jour :", error);
-        }
+        onTransactionUpdated(updatedTransaction);
+        dispatch({type: "update", transaction: updatedTransaction});
+        setEditingTransactionId(null);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>, transactionId: number) => {
         const {name, value} = e.target;
-
         setLocalEdits((prev) => ({
             ...prev,
             [transactionId]: {
                 ...prev[transactionId],
-                //categoryId : newCategoryId,
-                [name]: name === "amount" ? Number(value) : value
-            }
+                [name]: name === "amount" ? parseFloat(value) || 0 : value,
+            },
         }));
     };
 
