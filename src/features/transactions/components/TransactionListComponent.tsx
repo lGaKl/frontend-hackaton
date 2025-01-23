@@ -8,10 +8,12 @@ import {fetchCategories} from "../../categories/services/category-service.tsx";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transactionUpdated: Transaction) => void;
+    onTransactionDeleted: (transactionDeleted: Transaction) => void;
 }
 
 export default function TransactionListComponent({
     onTransactionUpdated,
+    onTransactionDeleted,
 }: TransactionListComponentProps) {
     const dispatch = useTransactionDispatch();
     const transactions = useTransactions();
@@ -84,6 +86,12 @@ export default function TransactionListComponent({
 
 
     const handleSaveClick = (transactionId: number) => {
+
+        const updatedTransaction = {
+            ...localEdits[transactionId],
+            categoryId: Number(selectedCategory),
+        };
+        if (!updatedTransaction) return;
         // Vérifiez chaque champ requis
         if (
             !updatedTransaction ||
@@ -95,12 +103,6 @@ export default function TransactionListComponent({
             alert("Veuillez remplir tous les champs obligatoires !");
             return;
         }
-        const updatedTransaction = {
-            ...localEdits[transactionId],
-            categoryId: Number(selectedCategory),
-        };
-        if (!updatedTransaction) return;
-
     onTransactionUpdated(updatedTransaction);
     dispatch({type: "update", transaction: updatedTransaction});
     setEditingTransactionId(null);

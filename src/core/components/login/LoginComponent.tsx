@@ -61,7 +61,7 @@ export function LoginComponent() {
                 navigate("/");
 
             } catch (error) {
-                setError("Login failed. Please try again.");
+                setError("L'emaile ou mot de pass incorrecte.");
             }
         } else {
             setError("Please enter both email and password.");
