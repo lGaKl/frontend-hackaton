@@ -61,7 +61,7 @@ export function LoginComponent() {
                 navigate("/");
 
             } catch (error) {
-                setError("Mauvais mdp ou email.");
+                setError("Mauvais mots de passe ou email.");
             }
         } else {
             setError("Please enter both email and password.");
