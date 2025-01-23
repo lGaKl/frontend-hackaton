@@ -1,6 +1,7 @@
 ﻿import { Transaction } from "../types/transaction.ts";
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
 import { fetchTransactions } from "../services/transaction-service.tsx";
+import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
 
 interface Action {
     type: "set" | "add" | "update" | "delete";
@@ -36,22 +37,33 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
     const [transactions, dispatch] = useReducer(reducer, []);
 
     useEffect(() => {
-        const getData = async () => {
-            try {
-                const transactions = await fetchTransactions();
-                const userId = Number(localStorage.getItem("userId"));
-                const filteredTransactions = transactions.filter(transaction => {
-                    const budgetId = transaction.budgetId;
-                    const budget = getBudgetById(budgetId);
-                    return budget && budget.id_user_budget === userId;
-                });
-                dispatch({ type: "set", transactions: filteredTransactions });
-            } catch (error) {
-                console.error("Error fetching transactions:", error);
-            }
-        };
-        getData();
-    }, []);
+    const getData = async () => {
+        try {
+            console.log("Fetching transactions...");
+            const transactions = await fetchTransactions();
+            console.log("Fetched transactions:", transactions);
+
+            const userId = Number(localStorage.getItem("userId"));
+            console.log("User ID:", userId);
+
+            const filteredTransactions = await Promise.all(
+                transactions.map(async (transaction) => {
+                    const budget = await fetchBudgetById(transaction.budgetId);
+                    if (budget && budget.id === userId) {
+                        return transaction;
+                    }
+                    return null;
+                })
+            );
+
+            console.log("Filtered transactions:", filteredTransactions);
+            dispatch({ type: "set", transactions: filteredTransactions.filter(Boolean) });
+        } catch (error) {
+            console.error("Error fetching transactions:", error);
+        }
+    };
+    getData();
+}, []);
 
     return (
         <TransactionContext.Provider value={transactions}>
@@ -64,10 +76,3 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
 
 export const useTransactions = () => useContext(TransactionContext);
 export const useTransactionDispatch = () => useContext(TransactionDispatchContext);
-
-// Implement this function to get budget by ID
-function getBudgetById(budgetId: number) {
-    // Fetch or retrieve the budget by its ID
-    // This is a placeholder implementation
-    return { id_user_budget: 1 }; // Replace with actual logic
-}

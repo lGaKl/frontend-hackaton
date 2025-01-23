@@ -1,8 +1,9 @@
-﻿import { Transaction } from "../types/transaction";
-import { ChangeEvent, useState, useEffect } from "react";
+﻿import {Transaction} from "../types/transaction";
+import {ChangeEvent, useState, useEffect} from "react";
 import "./TransactionComponent.css";
-import { useNavigate } from "react-router";
+import {useNavigate} from "react-router";
 import {useTransactionDispatch, useTransactions} from "../contexts/TransactionContext.tsx";
+import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transactionUpdated: Transaction) => void;
@@ -20,18 +21,37 @@ export default function TransactionListComponent({
 
     useEffect(() => {
         const userId = Number(localStorage.getItem("userId"));
-        const userTransactions = transactions.filter(transaction => {
-            const budget = transaction.budget;
-            return budget && budget.id_user_budget === userId;
-        });
-        setFilteredTransactions(userTransactions);
+        console.log("User ID:", userId);
+        if (!userId) {
+            console.error("User ID is not found in localStorage");
+            return;
+        }
+
+        console.log("All Transactions:", transactions);
+
+        const fetchUserTransactions = async () => {
+            const userTransactions = await Promise.all(transactions.map(async (transaction) => {
+                const budget = await fetchBudgetById(transaction.budgetId);
+                console.log("Budget:", budget);
+                const isUserTransaction = budget && budget.userId === userId;
+                console.log("Transaction:", transaction, "Budget:", budget, "Is User Transaction:", isUserTransaction);
+                return isUserTransaction ? transaction : null;
+            }));
+
+            const filtered = userTransactions.filter(Boolean) as Transaction[];
+            console.log("Filtered Transactions:", filtered);
+            setFilteredTransactions(filtered);
+            console.log("Filtered Transactions State Updated:", filtered);
+        };
+
+        fetchUserTransactions();
     }, [transactions]);
 
     const handleEditClick = (transaction: Transaction) => {
         setEditingTransactionId(transaction.id!);
         setLocalEdits((prev) => ({
             ...prev,
-            [transaction.id!]: { ...transaction },
+            [transaction.id!]: {...transaction},
         }));
     };
 
@@ -40,12 +60,12 @@ export default function TransactionListComponent({
         if (!updatedTransaction) return;
 
         onTransactionUpdated(updatedTransaction);
-        dispatch({ type: "update", transaction: updatedTransaction });
+        dispatch({type: "update", transaction: updatedTransaction});
         setEditingTransactionId(null);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>, transactionId: number) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setLocalEdits((prev) => ({
             ...prev,
             [transactionId]: {
@@ -55,7 +75,8 @@ export default function TransactionListComponent({
         }));
     };
 
-    return (
+    return <>
+        <h1 className="h1-transactions">Liste des transactions</h1>
         <ul className="ul-transaction">
             <li
                 className="li-transaction add-transaction"
@@ -109,5 +130,5 @@ export default function TransactionListComponent({
                 </li>
             ))}
         </ul>
-    );
+    </>;
 }

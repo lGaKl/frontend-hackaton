@@ -3,10 +3,10 @@ import {Category} from "../../categories/types/category.ts";
 import {fetchCategories} from "../../categories/services/category-service.tsx";
 import "./TransactionComponent.css"
 import {TransactionCreateCommand} from "../services/commands/transaction-create-command.ts";
+import {fetchBudgets} from "../../budget/services/BudgetService.tsx";
 
 interface TransactionFormComponentProps {
     onTransactionCreated: (t: TransactionCreateCommand) => void;
-
 }
 
 export default function TransactionFormComponent({onTransactionCreated}: TransactionFormComponentProps) {
@@ -25,11 +25,10 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
         setInputsAmount({ amount: parseFloat(value) });
     }
 
-
     useEffect(() => {
         checkFormValidity();
         loadCategories();
-    },[inputsDescription, inputsAmount,selectedCategory]);
+    }, [inputsDescription, inputsAmount, selectedCategory]);
 
     function checkFormValidity() {
         const isDescriptionValid = !!inputsDescription.description;
@@ -38,31 +37,38 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
         setFormValid(isDescriptionValid && isAmountValid && isCategoryValid);
     }
 
-    async function loadCategories() : Promise<void> {
+    async function loadCategories(): Promise<void> {
+        const userId = Number(localStorage.getItem("userId"));
         const categoriesFromAPI = await fetchCategories();
-        setCategories(categoriesFromAPI);
+        const filteredCategories = categoriesFromAPI.filter(category => category.userId === userId);
+        setCategories(filteredCategories);
     }
+
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCategory(e.target.value);
     };
 
-    function handleSubmit(e : FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if(!formValid) return;
-        const transaction = {
-            amount: inputsAmount.amount,
-            date_transaction: new Date().toISOString().split('T')[0],
-            description: inputsDescription.description,
-            //Ajouter idCategory et idBudget
-            budgetId: 1,
-            categoryId: parseInt(selectedCategory),
-
-        };
-        console.log(transaction);
-        onTransactionCreated(transaction);
-        const form = e.target as HTMLFormElement;
-        form.reset();
-        setFormValid(false);
+        if (!formValid) return;
+        try {
+            const budgetId = await getCurrentUserBudgetId();
+            const transaction = {
+                amount: inputsAmount.amount,
+                date_transaction: new Date().toISOString().split('T')[0],
+                description: inputsDescription.description,
+                budgetId: budgetId,
+                categoryId: parseInt(selectedCategory)
+            };
+            console.log("current budget id", budgetId);
+            console.log(transaction);
+            onTransactionCreated(transaction);
+            const form = e.target as HTMLFormElement;
+            form.reset();
+            setFormValid(false);
+        } catch (error) {
+            console.error('Error getting budget ID:', error);
+        }
     }
 
     return (
@@ -106,7 +112,11 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
             </div>
         </form>
     );
-
-
 }
 
+async function getCurrentUserBudgetId(): Promise<number> {
+    const userId = Number(localStorage.getItem("userId"));
+    const budgets = await fetchBudgets(); // Assuming fetchBudgets fetches all budgets
+    const userBudget = budgets.find(budget => budget.userId === userId);
+    return userBudget ? userBudget.id : 0; // Return 0 or handle the case where no budget is found
+}
