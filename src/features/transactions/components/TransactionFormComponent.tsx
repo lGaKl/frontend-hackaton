@@ -11,7 +11,6 @@ interface TransactionFormComponentProps {
 }
 
 export default function TransactionFormComponent({onTransactionCreated}: TransactionFormComponentProps) {
-    const [formValid, setFormValid] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [inputsDescription, setInputsDescription] = useState({ description: "" });
     const [inputsAmount, setInputsAmount] = useState({ amount: 0 });
@@ -28,16 +27,10 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
 
 
     useEffect(() => {
-        checkFormValidity();
         loadCategories();
     },[inputsDescription, inputsAmount,selectedCategory]);
 
-    function checkFormValidity() {
-        const isDescriptionValid = !!inputsDescription.description;
-        const isAmountValid = !!inputsAmount.amount && inputsAmount.amount > 0;
-        const isCategoryValid = !!selectedCategory;
-        setFormValid(isDescriptionValid && isAmountValid && isCategoryValid);
-    }
+
 
     async function loadCategories() : Promise<void> {
         const categoriesFromAPI = await fetchCategories();
@@ -49,7 +42,6 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
 
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if(!formValid) return;
         const transaction = {
             amount: inputsAmount.amount,
             date_transaction: new Date().toISOString().split('T')[0],
@@ -64,7 +56,10 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
         toast.success("Transaction créée avec succès !");
         const form = e.target as HTMLFormElement;
         form.reset();
-        setFormValid(false);
+    }
+    function validateAmount() {
+        if(inputsAmount.amount < 0)
+            alert("Le montant doit être différent de 0.");
     }
 
     return (
@@ -77,6 +72,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                     name="Description"
                     className="input-transaction"
                     onChange={handleDescriptionChange}
+                    required
                 /><br/>
                 <label className="label-transaction">Montant :</label>
                 <input
@@ -86,6 +82,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                     className="input-transaction"
                     step="any"
                     onChange={handleAmountChange}
+                    required
                 /><br/>
                 <label htmlFor="options" className="label-transaction">Séléction de la catégorie  :</label>
                 <select
@@ -93,6 +90,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                     className="option-transaction"
                     value={selectedCategory}
                     onChange={handleCategoryChange}
+                    required
                 >
                     <option value="">--Catégories--</option>
                     {categories.map(category => (
@@ -105,7 +103,7 @@ export default function TransactionFormComponent({onTransactionCreated}: Transac
                 <input
                     type="submit"
                     className="submit-transaction"
-                    disabled={!formValid}
+                    onClick={validateAmount}
                 />
             </div>
         </form>
