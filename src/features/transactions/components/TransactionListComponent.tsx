@@ -1,5 +1,5 @@
 import {Transaction} from "../types/transaction";
-import {ChangeEvent, useState, useEffect} from "react";
+import React, {ChangeEvent, useState, useEffect} from "react";
 import "./TransactionComponent.css";
 import {useTransactionDispatch, useTransactions} from "../contexts/TransactionContext.tsx";
 import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
@@ -8,10 +8,11 @@ import {fetchCategories} from "../../categories/services/category-service.tsx";
 
 interface TransactionListComponentProps {
     onTransactionUpdated: (transactionUpdated: Transaction) => void;
+    onTransactionDeleted: (transactionDeleted: Transaction) => void;
 }
 
 export default function TransactionListComponent({
-    onTransactionUpdated,
+    onTransactionUpdated,onTransactionDeleted
 }: TransactionListComponentProps) {
     const dispatch = useTransactionDispatch();
     const transactions = useTransactions();
@@ -79,16 +80,16 @@ export default function TransactionListComponent({
     };
 
     const handleSaveClick = (transactionId: number) => {
-    const updatedTransaction = {
-        ...localEdits[transactionId],
-        categoryId: Number(selectedCategory),
-    };
-    if (!updatedTransaction) return;
+        const updatedTransaction = {
+            ...localEdits[transactionId],
+            categoryId: Number(selectedCategory),
+        };
+        if (!updatedTransaction) return;
 
-    onTransactionUpdated(updatedTransaction);
-    dispatch({type: "update", transaction: updatedTransaction});
-    setEditingTransactionId(null);
-};
+        onTransactionUpdated(updatedTransaction);
+        dispatch({type: "update", transaction: updatedTransaction});
+        setEditingTransactionId(null);
+    };
 
 
 
@@ -102,6 +103,11 @@ export default function TransactionListComponent({
             },
         }));
     };
+
+    function processTransactionDelete (transaction: Transaction) {
+        if (!confirm("Voulez vous supprimer la transaction?")) return;
+        onTransactionDeleted(transaction);
+    }
 
     return (
         <div>
@@ -148,7 +154,7 @@ export default function TransactionListComponent({
                                     </select>
                                     <div className="button-container">
                                         <button
-                                            className="button-delete-transaction">Supprimer
+                                            className="button-delete-transaction" onClick={()=> processTransactionDelete(transaction)}>Supprimer
                                         </button>
                                         <button onClick={() => handleSaveClick(transaction.id!)}
                                                 className="button-transaction">Confirmer

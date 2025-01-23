@@ -13,7 +13,7 @@ body {
     margin: 1rem 0;
 }
 
-h3 {
+.category-h3 {
     color: #d32f2f;
     -webkit-text-stroke: 1px #cdb878;
     text-align: center;
@@ -85,10 +85,18 @@ h3 {
     opacity: 90%;
 }
 
+.span-category-name {
+    font-size: 1.0rem;
+    color: #9e4d0d;
+    margin-bottom: 0.3rem;
+    text-align: center;
+    width: 100%;
+}
+
 .span-category {
+    font-size: 1.0rem;
     color: black;
     margin-bottom: 0.3rem;
-    font-size: 1.1rem;
     text-align: center;
     width: 100%;
 }
@@ -112,7 +120,7 @@ h3 {
     border: none;
     border-radius: 5px;
     padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -183,13 +191,13 @@ h3 {
         padding: 0.8rem;
     }
 
-    .span-category {
-        font-size: 1.1rem;
+    .span-category-name {
+        font-size: 1.2rem;
     }
 
     .button-category {
         padding: 0.6rem 0.8rem;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .plus-icon {
@@ -228,13 +236,13 @@ h3 {
         padding: 0.6rem;
     }
 
-    .span-category {
-        font-size: 1.1rem;
+    .span-category-name {
+        font-size: 1.2rem;
     }
 
     .button-category {
         padding: 0.5rem 0.6rem;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .plus-icon {

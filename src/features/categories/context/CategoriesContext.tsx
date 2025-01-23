@@ -3,8 +3,9 @@ import {createContext, ReactNode, useContext, useEffect, useReducer} from "react
 import {fetchCategories} from "../services/category-service.tsx";
 
 export interface Action {
-    type: string
+    type:  "set" | "add" | "update" | "delete";
     category: Category
+    categories?: Category[]
 }
 
 const CategoryContext = createContext<Category[]>([]);
@@ -17,6 +18,8 @@ function reducer(categories: Category[], action: Action) {
                 return categories;
             }
             return [...categories, action.category];
+        case "set":
+            return action.categories ?? [];
         case "update":
             return categories.map(category => category.id === action.category.id ? action.category : category);
         case "delete":

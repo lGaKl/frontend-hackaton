@@ -41,9 +41,11 @@ export function HomeComponent() {
 
     async function loadBudget(): Promise<void> {
         try {
-            const budgetFromAPI = await fetchBudgets();
-            if (budgetFromAPI.length > 0) {
-                setBudget(budgetFromAPI[0]);
+            const userId = Number(localStorage.getItem("userId"));
+            const budgetsFromAPI = await fetchBudgets();
+            const userBudget = budgetsFromAPI.find(budget => budget.userId === userId);
+            if (userBudget) {
+                setBudget(userBudget);
             }
         } catch (error) {
             console.error("Error fetching budget:", error);
@@ -52,8 +54,10 @@ export function HomeComponent() {
 
     async function loadCategories(): Promise<void> {
         try {
+            const userId = Number(localStorage.getItem("userId"));
             const categoriesFromAPI = await fetchCategories();
-            setCategories(categoriesFromAPI);
+            const userCategories = categoriesFromAPI.filter(category => category.userId === userId);
+            setCategories(userCategories);
         } catch (error) {
             console.error("Error fetching categories:", error);
         }
@@ -121,25 +125,19 @@ export function HomeComponent() {
             "blue", "silver", "darkblue", "lightblue", "pink"
         ];
 
-        const chartData = categoriesWithRemainingBudget.map((category, index) => ({
-            angle: category.remainingBudget,
-            label: category.name,
-            className: `radial-segment-${colors[index % colors.length]}`
-        }));
-
-        const totalCategoryBudget = chartData.reduce((sum, category) => sum + category.angle, 0);
-        const remainingBudgetOutsideCategories = remainingBudget - totalCategoryBudget;
-
-        if (remainingBudgetOutsideCategories > 0) {
-            chartData.push({
-                angle: remainingBudgetOutsideCategories,
-                label: "reste",
-                className: "radial-segment-white"
-            });
-        }
+        // Recalcul des données pour le graphique
+        const chartData = categories.map((category, index) => {
+            return {
+                angle: category.maxBudget,
+                label: category.name, // Conservez uniquement le nom
+                id: category.id, // Ajoutez un ID unique
+                className: `radial-segment-${colors[index % colors.length]}`
+            };
+        });
 
         setData(chartData);
-    }, [categoriesWithRemainingBudget, remainingBudget, budget]);
+    }, [categories, transactions, budget]);
+
 
 
     const handleValueClick = (datapoint: RadialChartPoint) => {
@@ -205,15 +203,11 @@ export function HomeComponent() {
                         {selectedCategory && (
                             <div className="home-category-details">
                                 <h3 className="home-title-category">{selectedCategory.name}</h3>
-                                <p className="category-data">
+                                <p className="home-category-data">
                                     <span className="category-home-label">Budget maximum :</span> <span
                                     className="span-home">{selectedCategory.maxBudget} €</span>
                                 </p>
-                                <p className="category-data">
-                                    <span className="category-home-label">Pourcentage du budget total :</span> <span
-                                    className="span-home">{selectedCategory.percentageOfTotal.toFixed(2)}%</span>
-                                </p>
-                                <p className="category-data">
+                                <p className="home-category-data">
                                     <span
                                         className="category-home-label">Pourcentage des dépenses de la catégorie :</span>
                                     <span

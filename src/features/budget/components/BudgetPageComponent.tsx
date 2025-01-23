@@ -7,6 +7,8 @@ import { fetchBudgets } from "../services/BudgetService.tsx";
 import { Transaction } from "../../transactions/types/transaction.ts";
 import { fetchTransactions } from "../../transactions/services/transaction-service.tsx";
 import { useNavigate } from "react-router";
+import {useBudgetDispatch} from "../context/BudgetContext.tsx";
+import {useCategoryDispatch} from "../../categories/context/CategoriesContext.tsx";
 
 export default function BudgetPageComponent() {
     const navigate = useNavigate();
@@ -14,6 +16,8 @@ export default function BudgetPageComponent() {
     const [budget, setBudget] = useState<Budget | null>(null);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [showRemainingBudget, setShowRemainingBudget] = useState(false);
+    let dispatch = useBudgetDispatch();
+    let dipatchCategories = useCategoryDispatch();
 
     useEffect(() => {
         loadBudget();
@@ -23,10 +27,13 @@ export default function BudgetPageComponent() {
 
     async function loadBudget(): Promise<void> {
         try {
-            const budgetFromAPI = await fetchBudgets();
-            if (budgetFromAPI.length > 0) {
-                setBudget(budgetFromAPI[0]);
+            const userId = Number(localStorage.getItem("userId"));
+            const budgetsFromAPI = await fetchBudgets();
+            const userBudget = budgetsFromAPI.find(budget => budget.userId === userId);
+            if (userBudget) {
+                setBudget(userBudget);
             }
+            dispatch = ({ type: "set", budgets: budgetsFromAPI });
         } catch (error) {
             console.error("Error fetching budget:", error);
         }
@@ -34,8 +41,11 @@ export default function BudgetPageComponent() {
 
     async function loadCategories(): Promise<void> {
         try {
+            const userId = Number(localStorage.getItem("userId"));
             const categoriesFromAPI = await fetchCategories();
-            setCategories(categoriesFromAPI);
+            const userCategories = categoriesFromAPI.filter(category => category.userId === userId);
+            setCategories(userCategories);
+            dipatchCategories = ({ type: "set", categories: categoriesFromAPI });
         } catch (error) {
             console.error("Error fetching categories:", error);
         }
@@ -52,7 +62,16 @@ export default function BudgetPageComponent() {
 
     const calculateRemainingBudget = () => {
         if (!budget) return 0;
-        const totalSpent = transactions.reduce((amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        const totalSpent = transactions
+            .filter(transaction => {
+                const transactionDate = new Date(transaction.date_transaction);
+                return transaction.budgetId === budget.id &&
+                    transactionDate.getMonth() === currentMonth &&
+                    transactionDate.getFullYear() === currentYear;
+            })
+            .reduce((amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
         const remaining = budget.total - totalSpent;
         return parseFloat(remaining.toFixed(2));
     };
@@ -61,9 +80,14 @@ export default function BudgetPageComponent() {
 
     const calculateRemainingBudgetByCategory = (categoryId: number | undefined) => {
         if (!categoryId) return 0;
-        const categoryTransactions = transactions.filter((transaction) => transaction.categoryId === categoryId);
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        const categoryTransactions = transactions.filter(transaction => {
+            const transactionDate = new Date(transaction.date_transaction);
+            return transaction.categoryId === categoryId && transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear;
+        });
         const totalSpent = categoryTransactions.reduce((amount, transaction) => amount + parseFloat(transaction.amount.toString()), 0);
-        const category = categories.find((cat) => cat.id === categoryId);
+        const category = categories.find(cat => cat.id === categoryId);
         if (!category) return 0;
         return category.maxBudget - totalSpent;
     };
@@ -81,7 +105,7 @@ export default function BudgetPageComponent() {
 
     const getMonthAndYear = () => {
         const date = new Date();
-        return date.toLocaleString('default', { month: 'short', year: 'numeric' });
+        return date.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
     };
 
     const showBudgetVisibility = () => {

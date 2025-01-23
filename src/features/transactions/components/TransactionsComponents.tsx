@@ -45,7 +45,8 @@ export default function TransactionsComponent() {
         );
         const csvContent = csvHeader + csvRows.join("\n");
 
-        const blob = new Blob([csvContent], { type: "text/csv" });
+        const bom = "\uFEFF";
+        const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
         link.download = `Transactions_${monthName}.csv`;

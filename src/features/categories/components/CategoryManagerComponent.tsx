@@ -38,7 +38,7 @@ export default function CategoryManagerComponent() {
     }, 500);
 
     return <>
-        <h3>Vos catégories</h3>
+        <h3 className="category-h3">Vos catégories</h3>
         <CategoryListComponent onCategoryDeleted={onCategoryDeleted} onCategoryUpdated={debounce(onCategoryUpdated, 500)}/>
     </>
 }
