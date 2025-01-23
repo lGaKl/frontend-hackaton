@@ -61,7 +61,7 @@ export function LoginComponent() {
                 navigate("/");
 
             } catch (error) {
-                setError("Login failed. Please try again.");
+                setError("Mauvais mdp ou email.");
             }
         } else {
             setError("Please enter both email and password.");
@@ -82,6 +82,7 @@ export function LoginComponent() {
                         onChange={handleEmailChange}
                         className="form-control"
                         placeholder="Votre email"
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -93,6 +94,7 @@ export function LoginComponent() {
                         onChange={handlePasswordChange}
                         className="form-control"
                         placeholder="Votre mot de passe"
+                        required
                     />
                 </div>
                 <button type="submit" className="btn-login">Connexion</button>
