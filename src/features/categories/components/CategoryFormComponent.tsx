@@ -12,7 +12,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
     const navigate = useNavigate(); //hook de navigation askip
     const [inputs, setInputs] = useState({name: "", maxBudget:""});
     const [formValid, setFormValid] = useState(false);
-
+    const userId = 1;
     useEffect(() => {
         checkFormValidity();
     }, [inputs]);
@@ -33,7 +33,7 @@ export default function CategoryFormComponent({onCategoryCreated}: CategoryFormC
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!formValid) return;
-        const category = {name: inputs.name, maxBudget: Number(inputs.maxBudget)};
+        const category = {name: inputs.name, maxBudget: Number(inputs.maxBudget), userId};
         if(onCategoryCreated){
             onCategoryCreated(category);
         }

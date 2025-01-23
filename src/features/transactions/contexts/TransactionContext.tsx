@@ -37,33 +37,37 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
     const [transactions, dispatch] = useReducer(reducer, []);
 
     useEffect(() => {
-    const getData = async () => {
-        try {
-            console.log("Fetching transactions...");
-            const transactions = await fetchTransactions();
-            console.log("Fetched transactions:", transactions);
+        const getData = async () => {
+            try {
+                console.log("Fetching transactions...");
+                const transactions = await fetchTransactions();
+                console.log("Fetched transactions:", transactions);
 
-            const userId = Number(localStorage.getItem("userId"));
-            console.log("User ID:", userId);
+                const userId = Number(localStorage.getItem("userId"));
+                console.log("User ID:", userId);
 
-            const filteredTransactions = await Promise.all(
-                transactions.map(async (transaction) => {
-                    const budget = await fetchBudgetById(transaction.budgetId);
-                    if (budget && budget.id === userId) {
-                        return transaction;
-                    }
-                    return null;
-                })
-            );
+                const filteredTransactions = await Promise.all(
+                    transactions.map(async (transaction) => {
+                        const budget = await fetchBudgetById(transaction.budgetId);
+                        if (budget && budget.id === userId) {
+                            return transaction;
+                        }
+                        return null;
+                    })
+                );
 
-            console.log("Filtered transactions:", filteredTransactions);
-            dispatch({ type: "set", transactions: filteredTransactions.filter(Boolean) });
-        } catch (error) {
-            console.error("Error fetching transactions:", error);
-        }
-    };
-    getData();
-}, []);
+                const validTransactions = filteredTransactions.filter(
+                    (transaction): transaction is Transaction => transaction !== null
+                );
+
+                console.log("Filtered transactions:", validTransactions);
+                dispatch({ type: "set", transactions: validTransactions });
+            } catch (error) {
+                console.error("Error fetching transactions:", error);
+            }
+        };
+        getData();
+    }, []);
 
     return (
         <TransactionContext.Provider value={transactions}>
