@@ -43,7 +43,11 @@ export function RegisterComponent() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newErrors: Record<string, string> = {}
+        const newErrors: { email: string; password: string; confirmPassword: string } = {
+            email: "",
+            password: "",
+            confirmPassword: "",
+        };
             //mail bien écrit
             const mailRegex =/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!mailRegex.test(email)) {
@@ -60,10 +64,9 @@ export function RegisterComponent() {
             if (password !== confirmPassword) {
                 newErrors.confirmPassword = "Les mots de passes ne correspondent pas.";
             }
-            if (Object.keys(newErrors).length > 0) {
+            if (Object.keys(newErrors).length>0) {
                 setError(newErrors);
                 return;
-                toast.error("Une erreur est survenue lors de l'inscription.");
             }
 
             try {
@@ -83,6 +86,7 @@ export function RegisterComponent() {
                 toast.success("Enregistrement réussi !");
                 window.location.href = "/login";
             } catch (error) {
+                toast.error("Une erreur est survenue lors de l'inscription.");
                 return;
             }
     };
