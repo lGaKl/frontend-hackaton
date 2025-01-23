@@ -90,7 +90,7 @@ export default function BudgetPageComponent() {
                         </div>
                     </div>
                     <br />
-                    <div className="li-category">
+                    <div className="li-category-budget">
                         <h2 className="title-name">Budget Total</h2>
                         <p className="p-budget">{budget ? `${budget.total} €` : "- €"}</p>
                         {!budget && (
