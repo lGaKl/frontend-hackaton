@@ -10,7 +10,7 @@ import {LoginComponent} from "./core/components/login/LoginComponent.tsx";
 import {RegisterComponent} from "./core/components/register/RegisterComponent.tsx";
 import {AuthProvider} from "./features/auth/AuthContext.tsx";
 import 'react-toastify/dist/ReactToastify.css';
-import {NewBudgetComponent} from "./core/components/budget-page/NewBudgetComponent.tsx";
+import budgetRoutes from "./features/budget/budget-routes.tsx";
 
 function App() {
     return <>
@@ -21,15 +21,14 @@ function App() {
                     <Route path="/" element={<HomeComponent/>} />
                     {categoriesRoutes}
                     <Route path="/budget" element={<BudgetPageComponent/>} />
-                    <Route path="/budget/newBudget" element={<NewBudgetComponent/>}></Route>
                     <Route index element={<HomeComponent/>}></Route>
+                    {budgetRoutes}
                     {transactionRoutes}
                     <Route path="/login" element={<LoginComponent/>} />
                     <Route path="/register" element={<RegisterComponent/>} />
                 </Routes>
             </Container>
         </AuthProvider>
-
     </>
 }
 

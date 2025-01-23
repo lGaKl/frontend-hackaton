@@ -1,3 +1,6 @@
+/* NewBudgetComponent.css */
+
+/* Title styles */
 .title-h2 {
     color: #d32f2f;
     -webkit-text-stroke: 1px #cdb878;
@@ -7,6 +10,7 @@
     font-size: 2rem;
 }
 
+/* Form container */
 .form-container {
     font-family: "Elephant", sans-serif;
     background-color: #fdf6e3;
@@ -20,10 +24,12 @@
     text-align: center;
 }
 
+/* Form group */
 .form-group {
     margin-bottom: 1.5rem;
 }
 
+/* Form labels */
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
@@ -32,6 +38,7 @@
     font-size: 1rem;
 }
 
+/* Form inputs */
 .form-group input {
     width: 100%;
     padding: 0.5rem;
@@ -41,6 +48,7 @@
     box-sizing: border-box;
 }
 
+/* Buttons */
 button[type="submit"], .back-button {
     width: 100%;
     padding: 10px;
@@ -58,6 +66,7 @@ button[type="submit"]:hover, .back-button:hover {
     background-color: #7f8e50;
 }
 
+/* Additional style for back button */
 .back-button {
     background-color: #d32f2f;
     margin-top: 0.5rem;
