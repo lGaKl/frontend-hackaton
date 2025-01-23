@@ -4,7 +4,6 @@ import {fetchCategories} from "../../categories/services/category-service.tsx";
 import "./TransactionComponent.css"
 import {TransactionCreateCommand} from "../services/commands/transaction-create-command.ts";
 import {fetchBudgets} from "../../budget/services/BudgetService.tsx";
-import {toast} from "react-toastify";
 
 interface TransactionFormComponentProps {
     onTransactionCreated: (t: TransactionCreateCommand) => void;

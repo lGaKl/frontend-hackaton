@@ -1,7 +1,6 @@
 import {Transaction} from "../types/transaction";
 import {ChangeEvent, useState, useEffect} from "react";
 import "./TransactionComponent.css";
-import {useNavigate} from "react-router";
 import {useTransactionDispatch, useTransactions} from "../contexts/TransactionContext.tsx";
 import {fetchBudgetById} from "../../budget/services/BudgetService.tsx";
 import {Category} from "../../categories/types/category.ts";
@@ -14,10 +13,9 @@ interface TransactionListComponentProps {
 export default function TransactionListComponent({
     onTransactionUpdated,
 }: TransactionListComponentProps) {
-    const navigate = useNavigate();
     const dispatch = useTransactionDispatch();
     const transactions = useTransactions();
-    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
+    const [, setFilteredTransactions] = useState<Transaction[]>([]);
     const [editingTransactionId, setEditingTransactionId] = useState<number | null>(null);
     const [localEdits, setLocalEdits] = useState<Record<number, Transaction>>({});
     const [categories, setCategories] = useState<Category[]>([]);
@@ -150,7 +148,6 @@ export default function TransactionListComponent({
                                     </select>
                                     <div className="button-container">
                                         <button
-                                            onClick={()=> processTransactionDelete(transaction)}
                                             className="button-delete-transaction">Supprimer
                                         </button>
                                         <button onClick={() => handleSaveClick(transaction.id!)}
