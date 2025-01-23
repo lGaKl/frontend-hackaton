@@ -52,7 +52,7 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
     };
 
     function processTransactionDelete (transaction: Transaction) {
-        if (!confirm("Are you sure you want to delete?")) return;
+        if (!confirm("Voulez vous supprimer la transaction?")) return;
         onTransactionDeleted(transaction);
     }
 
@@ -64,6 +64,18 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
         try {
 
             updatedTransaction.categoryId = parseInt(selectedCategory);
+
+            // Vérifiez chaque champ requis
+            if (
+                !updatedTransaction ||
+                !updatedTransaction.description ||
+                updatedTransaction.amount === undefined ||
+                updatedTransaction.amount <= 0 || // Vérifie également si le montant est valide
+                !updatedTransaction.date_transaction
+            ) {
+                alert("Veuillez remplir tous les champs obligatoires !");
+                return;
+            }
 
             const selectedCategoryId = parseInt(selectedCategory);
             const response = await updateTransaction({
@@ -78,6 +90,7 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
             if (!response.ok) {
                 throw new Error("Erreur lors de la mise à jour de la transaction");
             }
+
 
             dispatch({type: "update", transaction: updatedTransaction});
             onTransactionUpdated(updatedTransaction); // Assurez-vous que cette ligne est correcte
@@ -125,6 +138,7 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
                                         name="description"
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
+                                        required
                                     />
                                     <input
                                         type="number"
@@ -132,6 +146,7 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
                                         name="amount"
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
+                                        required
                                     />
                                     <input
                                         type="date"
@@ -139,8 +154,13 @@ export default function TransactionListComponent({onTransactionUpdated,onTransac
                                         name="date_transaction"
                                         onChange={(e) => handleChange(e, transaction.id!)}
                                         className="input-transaction"
+                                        required
                                     />
-                                    <select id="options" name="categoryName" className="option-transaction"
+                                    <select
+                                        id="options"
+                                        name="categoryName"
+                                        className="option-transaction"
+                                        required
                                             value={selectedCategory} onChange={handleCategoryChange}>
                                         <option
                                             value={localEdits[transaction.id]?.categoryId || " "}>{getCategoryName(transaction.categoryId)}</option>

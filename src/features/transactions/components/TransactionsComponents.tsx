@@ -50,7 +50,7 @@ export default function TransactionsComponent() {
                         <h2 className="span-transactions-title">Transaction #{index + 1}</h2>
                         <div className="div-transactions">
                             <>
-                                <span className="span-transactions">
+                                <span className="span-transactions" >
                                     Description: <span className="span-transactions-data">{transaction.description}</span>
                                 </span>
                                 <span className="span-transactions">
