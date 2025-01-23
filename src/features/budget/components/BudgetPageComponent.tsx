@@ -13,6 +13,7 @@ export default function BudgetPageComponent() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [budget, setBudget] = useState<Budget | null>(null);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [showRemainingBudget, setShowRemainingBudget] = useState(false);
 
     useEffect(() => {
         loadBudget();
@@ -83,6 +84,11 @@ export default function BudgetPageComponent() {
         return date.toLocaleString('default', { month: 'short', year: 'numeric' });
     };
 
+    const showBudgetVisibility = () => {
+        setShowRemainingBudget(!showRemainingBudget);
+    };
+
+
     return (
         <>
             <h1 className="title-h1">Budget</h1>
@@ -91,7 +97,15 @@ export default function BudgetPageComponent() {
                     <div className="li-category-budget">
                         <h2 className="month">{getMonthAndYear()}</h2>
                         <h2 className="title-name">Budget restant</h2>
-                        <p className="p-budget">{budget ? `${remainingBudget} €` : "Loading..."}</p>
+                        <button
+                            className="edit-btn"
+                            onClick={showBudgetVisibility}
+                        >
+                            {showRemainingBudget ? "🔒 Cacher" : "🔓 Afficher"}  le budget
+                        </button>
+                        {showRemainingBudget && (
+                            <p className="p-budget">{budget ? `${remainingBudget} €` : " - €"}</p>
+                        )}
                     </div>
                     <br/>
                     <div className="li-category-budget">
